@@ -183,11 +183,52 @@
   display: none;
   align-items: flex-end;
   overflow: hidden;
-  background: var(--cream);
+  background: transparent;
+  z-index: 2;
   padding-bottom: clamp(40px, 7vh, 90px);
 }
 .hgrid.on {
   display: flex;
+}
+
+/* aperçu plein écran qui se révèle au survol d'une carte */
+.gridBg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.55s ease;
+}
+.gridBg.on {
+  opacity: 1;
+}
+
+/* phrase d'intro, en haut de la grille */
+.gridIntro {
+  position: fixed;
+  top: clamp(86px, 16vh, 170px);
+  left: var(--pad);
+  right: var(--pad);
+  z-index: 2;
+  max-width: 620px;
+  font-family: var(--fc);
+  font-weight: 500;
+  font-size: clamp(24px, 3.2vw, 44px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.gridIntro.on {
+  opacity: 1;
+}
+.gridIntro em {
+  font-style: italic;
+  opacity: 0.55;
 }
 .htrack {
   display: flex;
@@ -199,7 +240,13 @@
   flex: 0 0 auto;
   width: clamp(340px, 38vw, 560px);
   cursor: pointer;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease, filter 0.4s ease;
+}
+/* les autres cartes se désaturent au survol d'une carte */
+.hcard.dim {
+  opacity: 0.22;
+  filter: grayscale(0.85);
 }
 .hcard .thumb {
   width: 100%;
@@ -249,6 +296,11 @@
   text-align: right;
   flex-shrink: 0;
 }
+/* texte des métas lisible quand l'aperçu sombre est en fond */
+.hgrid.hovering .meta .t,
+.hgrid.hovering .meta .c {
+  color: var(--cream);
+}
 /* virgule arabe (séparateur catégories en grille) — forcée LTR */
 .sep {
   direction: ltr;
@@ -267,7 +319,29 @@
     text-align: left;
     font-size: clamp(28px, 9vw, 44px);
   }
+  /* pas de hover tactile : image-curseur désactivée */
   .floatImg {
     display: none;
+  }
+  .nlogo {
+    width: 84px;
+  }
+  .nlinks {
+    font-size: 12px;
+    gap: 4px;
+  }
+  .hgrid {
+    padding-bottom: clamp(28px, 6vh, 64px);
+  }
+  .hcard {
+    width: clamp(230px, 74vw, 360px);
+  }
+  .htrack {
+    gap: clamp(14px, 4vw, 28px);
+  }
+  .gridIntro {
+    top: clamp(72px, 12vh, 120px);
+    max-width: none;
+    font-size: clamp(22px, 6.5vw, 34px);
   }
 }

@@ -131,8 +131,9 @@ video {
   text-decoration: none;
 }
 @media (max-width: 640px) {
-  .nav .nav-r a:not(:last-child) {
-    display: none;
+  .nav .nav-r {
+    gap: 12px;
+    font-size: 11px;
   }
 }
 
@@ -485,5 +486,21 @@ video {
 @media (max-width: 640px) {
   .hero-sub {
     font-size: 19px;
+  }
+  /* dossier : empile label / valeur */
+  .details li {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 19px;
+  }
+  .details li b {
+    min-width: 0;
+    align-self: flex-start;
+  }
+  /* témoignage : le bandeau passe à la ligne */
+  .testi-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
   }
 }

@@ -8,6 +8,7 @@ import type { Work } from "@/lib/works";
 import styles from "./Work.module.css";
 
 type View = "list" | "grid";
+type GridHover = { key: string; proj: number } | null;
 
 /** style inline portant la couleur de placeholder --c */
 function cVar(color: string): CSSProperties {
@@ -15,10 +16,12 @@ function cVar(color: string): CSSProperties {
 }
 
 export default function WorkPage({ works }: { works: Work[] }) {
-  const [view, setView] = useState<View>("list");
+  const [view, setView] = useState<View>("grid"); // vue par défaut : Grille
   const [active, setActive] = useState<number>(-1); // projet survolé (liste)
+  const [gridHover, setGridHover] = useState<GridHover>(null); // carte survolée (grille)
+  const [bg, setBg] = useState<Work | null>(null); // dernier aperçu (persiste pour le fondu)
 
-  const viewRef = useRef<View>("list");
+  const viewRef = useRef<View>("grid");
   viewRef.current = view;
 
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -162,6 +165,7 @@ export default function WorkPage({ works }: { works: Work[] }) {
     }
   });
 
+  // ---- survol liste ----
   const enterRow = (projIdx: number) => {
     const C = cursor.current;
     C.active = projIdx;
@@ -179,6 +183,17 @@ export default function WorkPage({ works }: { works: Work[] }) {
     setActive(-1);
   };
 
+  // ---- survol grille ----
+  const enterCard = (key: string, projIdx: number) => {
+    grid.current.pause = true; // l'avance auto s'arrête (la molette reste active)
+    setBg(works[projIdx]);
+    setGridHover({ key, proj: projIdx });
+  };
+  const leaveCard = () => {
+    grid.current.pause = false;
+    setGridHover(null); // on garde `bg` pour le fondu sortant
+  };
+
   // 3 sets répétés pour la boucle (wrap sur 1/3 de la longueur)
   const sets = [0, 1, 2];
 
@@ -189,6 +204,12 @@ export default function WorkPage({ works }: { works: Work[] }) {
         {c}
       </span>
     ));
+
+  const bgStyle: CSSProperties | undefined = bg
+    ? bg.image
+      ? { backgroundImage: `url(${bg.image})` }
+      : { backgroundColor: bg.color }
+    : undefined;
 
   return (
     <div className={styles.work}>
@@ -219,6 +240,25 @@ export default function WorkPage({ works }: { works: Work[] }) {
           <Link href="/contact">Contact</Link>
         </div>
       </nav>
+
+      {/* aperçu plein écran (grille, au survol) */}
+      <div
+        className={`${styles.gridBg} ${gridHover ? styles.on : ""}`}
+        style={bgStyle}
+        aria-hidden
+      />
+
+      {/* phrase d'intro (grille) */}
+      <p
+        className={`${styles.gridIntro} ${
+          view === "grid" && !gridHover ? styles.on : ""
+        }`}
+        aria-hidden={view !== "grid"}
+      >
+        Une sélection.
+        <br />
+        <em>Le reste se raconte de vive voix.</em>
+      </p>
 
       {/* ---------- VUE LISTE ---------- */}
       <div
@@ -252,32 +292,38 @@ export default function WorkPage({ works }: { works: Work[] }) {
       {/* ---------- VUE GRILLE ---------- */}
       <div
         ref={hgridRef}
-        className={`${styles.hgrid} ${view === "grid" ? styles.on : ""}`}
+        className={`${styles.hgrid} ${view === "grid" ? styles.on : ""} ${
+          gridHover ? styles.hovering : ""
+        }`}
       >
         <div ref={htrackRef} className={styles.htrack}>
           {sets.map((s) =>
-            works.map((w, i) => (
-              <Link
-                key={`${s}-${i}`}
-                href={`/travaux/${w.slug}`}
-                className={styles.hcard}
-                style={cVar(w.color)}
-                onMouseEnter={() => (grid.current.pause = true)}
-                onMouseLeave={() => (grid.current.pause = false)}
-              >
-                <div className={styles.thumb}>
-                  {w.image ? (
-                    <img src={w.image} alt={w.title} />
-                  ) : (
-                    <span>{w.title}</span>
-                  )}
-                </div>
-                <div className={styles.meta}>
-                  <span className={styles.t}>{w.title}</span>
-                  <span className={styles.c}>{catLine(w.categories)}</span>
-                </div>
-              </Link>
-            ))
+            works.map((w, i) => {
+              const key = `${s}-${i}`;
+              const dim = gridHover != null && gridHover.key !== key;
+              return (
+                <Link
+                  key={key}
+                  href={`/travaux/${w.slug}`}
+                  className={`${styles.hcard} ${dim ? styles.dim : ""}`}
+                  style={cVar(w.color)}
+                  onMouseEnter={() => enterCard(key, i)}
+                  onMouseLeave={leaveCard}
+                >
+                  <div className={styles.thumb}>
+                    {w.image ? (
+                      <img src={w.image} alt={w.title} />
+                    ) : (
+                      <span>{w.title}</span>
+                    )}
+                  </div>
+                  <div className={styles.meta}>
+                    <span className={styles.t}>{w.title}</span>
+                    <span className={styles.c}>{catLine(w.categories)}</span>
+                  </div>
+                </Link>
+              );
+            })
           )}
         </div>
       </div>
