@@ -61,9 +61,12 @@ export default async function ProjectPage({
     Did,
     Manifesto,
     Details: () => <Details meta={meta} />,
-    Media: ({ n }: { n: number }) => <Media n={n} visuals={visuels} />,
-    MediaDuo: ({ a, b }: { a: number; b: number }) => (
-      <MediaDuo a={a} b={b} visuals={visuels} />
+    // Les attributs MDX arrivent en chaînes — on coerce en nombre.
+    Media: ({ n }: { n: string | number }) => (
+      <Media n={Number(n)} visuals={visuels} />
+    ),
+    MediaDuo: ({ a, b }: { a: string | number; b: string | number }) => (
+      <MediaDuo a={Number(a)} b={Number(b)} visuals={visuels} />
     ),
   };
 

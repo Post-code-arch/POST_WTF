@@ -83,7 +83,7 @@ export function Section({
   num: string;
   kicker: string;
   heading: string;
-  level?: 2 | 3;
+  level?: 2 | 3 | "2" | "3";
   children: ReactNode;
 }) {
   return (
@@ -95,7 +95,7 @@ export function Section({
         {kicker}
       </div>
       <div className="sec-body">
-        {level === 3 ? <h3>{heading}</h3> : <h2>{heading}</h2>}
+        {Number(level) === 3 ? <h3>{heading}</h3> : <h2>{heading}</h2>}
         {children}
       </div>
     </Reveal>
