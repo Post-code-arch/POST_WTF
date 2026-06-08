@@ -352,3 +352,27 @@
     text-align: left;
   }
 }
+
+/* ---------------- VARIANTE STATIQUE (sans animation) ---------------- */
+/* nav toujours visible, couleur auto via mix-blend ; logos affichés en place
+   (pas d'instance voyageuse) ; pas de transition au survol. */
+.static .nav {
+  opacity: 1;
+  pointer-events: auto;
+  mix-blend-mode: difference;
+}
+.static .nlinks {
+  color: #fff;
+}
+.static .heroLogo {
+  visibility: visible;
+}
+.static .footLogo {
+  visibility: visible;
+}
+.static .workThumb {
+  transition: none;
+}
+.static .workItem:hover .workThumb {
+  transform: none;
+}
