@@ -1,6 +1,6 @@
-import HomePage from "@/components/home/HomePage";
+import HomeStatic from "@/components/home/HomeStatic";
 import { works } from "@/lib/works";
 
 export default function Page() {
-  return <HomePage works={works} />;
+  return <HomeStatic works={works} />;
 }
