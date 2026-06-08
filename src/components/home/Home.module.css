@@ -166,6 +166,10 @@
 .workItem:nth-child(even) .workThumb {
   height: clamp(200px, 24vw, 370px);
 }
+/* décalage en quinconce : les vignettes paires descendent */
+.workItem:nth-child(even) {
+  margin-top: clamp(48px, 10vw, 150px);
+}
 .workThumb {
   width: 100%;
   background: var(--espresso);
@@ -339,6 +343,10 @@
 @media (max-width: 760px) {
   .workGrid {
     grid-template-columns: 1fr 1fr;
+  }
+  /* pas de quinconce sur mobile */
+  .workItem:nth-child(even) {
+    margin-top: 0;
   }
   .introInner {
     margin-right: 0;
