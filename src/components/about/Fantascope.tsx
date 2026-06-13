@@ -19,14 +19,13 @@ const CFG = {
   zoomA: 3.4, // 1er palier du zoom (le trou devient un grand cercle)
   zoomB: 13, // 2e palier (le noir avale tout)
   punchScale: 1.55, // scale final de la punchline (F9)
-  exitMid: -70, // yPercent : disque remonté, moitié basse visible (F7)
-  exitTop: -195, // yPercent : disque sorti par le haut (F9)
+  exitMargin: 0.46, // marge de sortie (≈ rayon visible du disque, en fraction de sa hauteur)
   miniSpin: 7, // vitesse du mini-disque inline (s)
   heroWeight: 560, // graisse de départ du titre hero
 };
 
-// état initial du disque (F1)
-const DISC_INIT = { scale: 1.85, yPercent: 86 };
+// scale initial du disque (F1) — la position est calculée depuis le viewport
+const DISC_INIT = { scale: 1.85 };
 
 // durées relatives de chaque phase sur la timeline (tunables)
 const DUR = {
@@ -146,8 +145,15 @@ export default function Fantascope({
       const wordEls = wordsRef.current.filter(Boolean);
       const nWords = wordEls.length || 1;
 
+      // --- positions calculées depuis le viewport ---
+      // « 50 % visible » = centre du disque pile sur un bord de l'écran.
+      const vh = window.innerHeight;
+      const discH = pos.offsetHeight || vh * 0.64;
+      const Y_EDGE = ((vh / 2) / discH) * 100; // centre sur le bord bas (haut du disque visible)
+      const Y_GONE = ((vh / 2 + discH * CFG.exitMargin) / discH) * 100; // disque entièrement sorti
+
       // états initiaux
-      gsap.set(pos, { yPercent: DISC_INIT.yPercent });
+      gsap.set(pos, { yPercent: Y_EDGE }); // F1 : on voit la moitié HAUTE
       gsap.set(scale, { scale: DISC_INIT.scale });
       gsap.set(rot, { rotation: 0 });
       gsap.set(hero, {
@@ -168,6 +174,7 @@ export default function Fantascope({
           pin: true,
           scrub: CFG.scrub,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -225,7 +232,7 @@ export default function Fantascope({
       tl.to(scale, { scale: 1, ease: "power2.inOut", duration: DUR.dezoom }, tDe + DUR.paraOut);
       tl.to(
         pos,
-        { yPercent: CFG.exitMid, ease: "power2.inOut", duration: DUR.remontee },
+        { yPercent: -Y_EDGE, ease: "power2.inOut", duration: DUR.remontee }, // F4 utilisateur : on voit la moitié BASSE (centre sur le bord haut)
         tDe + DUR.paraOut + DUR.dezoom
       );
 
@@ -236,7 +243,7 @@ export default function Fantascope({
       // F9 — SORTIE : disque sort par le haut (yPercent→-195), la punchline
       //      glisse au centre (top→50%) et grossit (scale→1.55).
       const tOut = tl.duration();
-      tl.to(pos, { yPercent: CFG.exitTop, ease: "power1.in", duration: DUR.sortie }, tOut);
+      tl.to(pos, { yPercent: -Y_GONE, ease: "power1.in", duration: DUR.sortie }, tOut);
       tl.to(punch, { top: "50%", scale: CFG.punchScale, ease: "power2.out", duration: DUR.sortie }, tOut);
 
       // ROTATION tween 3 : 1240 → 1750, couvre zoom + reveal + sortie
