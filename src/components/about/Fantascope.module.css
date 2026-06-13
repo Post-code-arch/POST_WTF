@@ -1,0 +1,175 @@
+/* Section Fantascope (/about) — section scroll-driven pinnée.
+   Trois wrappers de transform imbriqués et indépendants autour du disque :
+   .discPos (translateY) > .discScale (scale) > .discRot (rotation).
+   Couleurs : l'inversion noir/clair vient du disque qui scale, pas du fond. */
+
+.section {
+  position: relative;
+  height: 100vh;
+  background: var(--fanta-bg);
+  color: var(--cream);
+  overflow: hidden;
+  --fanta-bg: #1c0f08; /* fond sombre = couleur du trou (zoom seamless) */
+  --fanta-ring: #e4e4e1; /* anneau clair du disque */
+  --fanta-dot: #0e0e0e; /* points / marqueur */
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* --- wrappers de transform (un seul type de transform chacun) --- */
+.discPos {
+  width: min(64vh, 92vw);
+  aspect-ratio: 1;
+  transform: translateY(86%); /* état initial F1 (gsap.set le reprend) */
+  will-change: transform;
+}
+.discScale {
+  width: 100%;
+  height: 100%;
+  transform: scale(1.85); /* état initial F1 */
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.discRot {
+  width: 100%;
+  height: 100%;
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.disc {
+  width: 100%;
+  height: 100%;
+}
+.disc svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- HERO (F1) --- */
+.hero {
+  position: absolute;
+  top: clamp(72px, 11vh, 150px);
+  left: var(--pad, clamp(20px, 4vw, 56px));
+  right: var(--pad, clamp(20px, 4vw, 56px));
+  z-index: 3;
+  text-align: center;
+  font-family: var(--fd);
+  font-weight: 560;
+  font-size: clamp(30px, 4.6vw, 68px);
+  line-height: 1.04;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+/* --- PARAGRAPHE (F5/F6) --- */
+.para {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  width: min(620px, 80vw);
+  text-align: center;
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(15px, 1.5vw, 20px);
+  line-height: 1.5;
+  opacity: 0; /* révélé en F5 */
+  pointer-events: none;
+}
+.word {
+  display: inline-block;
+  margin-right: 0.26em;
+  opacity: 0.14;
+  filter: blur(3px);
+  will-change: opacity, filter;
+}
+/* la seconde moitié du texte, plus discrète (cf. storyboard) */
+.word.soft {
+  opacity: 0.14;
+}
+
+/* --- PUNCHLINE (F8/F9) --- */
+.punch {
+  position: absolute;
+  left: var(--pad, clamp(20px, 4vw, 56px));
+  right: var(--pad, clamp(20px, 4vw, 56px));
+  top: 61%;
+  z-index: 4;
+  text-align: center;
+  font-family: var(--fd);
+  font-weight: 520;
+  font-size: clamp(26px, 3.4vw, 52px);
+  line-height: 1.06;
+  opacity: 0; /* apparaît en F8 */
+  pointer-events: none;
+}
+/* mini-disque inline = la braise qui ne s'arrête jamais */
+.miniDisc {
+  display: inline-block;
+  width: 0.52em;
+  height: 0.52em;
+  vertical-align: -0.06em;
+  margin-left: 0.18em;
+  animation: fantaSpin var(--mini-spin, 7s) linear infinite;
+}
+.miniDisc svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+@keyframes fantaSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------- REDUCED MOTION (statique, pas de pin) ---------------- */
+.reduced {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+}
+.reduced .stage {
+  position: relative;
+  inset: auto;
+  height: auto;
+  flex-direction: column;
+  gap: clamp(32px, 6vh, 80px);
+  padding: clamp(80px, 12vh, 160px) var(--pad, clamp(20px, 4vw, 56px));
+  overflow: visible;
+}
+.reduced .discPos,
+.reduced .discScale,
+.reduced .discRot {
+  transform: none;
+}
+.reduced .discPos {
+  width: min(46vh, 70vw);
+  flex: 0 0 auto;
+}
+.reduced .hero,
+.reduced .para,
+.reduced .punch {
+  position: relative;
+  inset: auto;
+  left: auto;
+  right: auto;
+  top: auto;
+  transform: none;
+  opacity: 1;
+  margin: 0 auto;
+}
+.reduced .word {
+  opacity: 1;
+  filter: none;
+}
