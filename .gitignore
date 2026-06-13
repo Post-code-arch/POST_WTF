@@ -32,3 +32,6 @@ next-env.d.ts
 
 # kit (source assets, not part of the app)
 /_kit
+
+# Claude Code local-only settings
+.claude/settings.local.json
