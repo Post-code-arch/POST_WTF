@@ -5,7 +5,7 @@
   --bg: #14110d;
   --cream: #f6f5f0;
   --orange: #d94e1f;
-  --pad: clamp(24px, 4vw, 60px);
+  --pad: clamp(14px, 1.8vw, 30px);
   background: var(--bg);
   color: var(--cream);
   font-family: var(--fb);
