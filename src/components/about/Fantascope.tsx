@@ -26,7 +26,7 @@ const CFG = {
   frac: {
     hero: 1.0, // F1 : centre sur le bord bas → moitié haute visible
     lower: 0.15, // F7 : disque haut, trou + moitié basse visibles
-    punchUnder: -0.04, // F8 : disque presque sorti, punchline dessous
+    punchUnder: -0.06, // F8 : disque dégagé en haut, la punchline tient sous lui sans contact
     gone: -1.1, // F9 : disque entièrement sorti par le haut
   },
 };
@@ -188,10 +188,11 @@ export default function Fantascope({ disc }: { disc?: ReactNode }) {
         tDe + DUR.paraOut + DUR.dezoom
       );
 
-      // F8 — PUNCHLINE : le disque monte encore un peu, la punchline apparaît dessous
+      // F8 — PUNCHLINE : le disque finit de dégager vers le haut, PUIS la
+      //      punchline apparaît dessous (décalée → ne touche jamais le disque).
       const tPunch = tl.duration();
       tl.to(pos, { y: yPx(CFG.frac.punchUnder), ease: "power1.inOut", duration: DUR.punchIn }, tPunch);
-      tl.to(punch, { opacity: 1, ease: "power1.out", duration: DUR.punchIn }, tPunch);
+      tl.to(punch, { opacity: 1, ease: "power1.out", duration: DUR.punchIn }, tPunch + DUR.punchIn);
 
       // F9 — SORTIE : disque sort par le haut, la punchline glisse au centre
       //      (top→50%) et grossit (scale→1.55).
