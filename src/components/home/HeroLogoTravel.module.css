@@ -1,0 +1,16 @@
+.travel {
+  position: fixed;
+  z-index: 95;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  line-height: 0;
+  color: var(--cream, #f2efe6);
+  pointer-events: none;
+  will-change: left, top, width, opacity;
+}
+.travel svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}

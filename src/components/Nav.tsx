@@ -34,7 +34,12 @@ export default function Nav() {
   return (
     <>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.logo} aria-label="KINAYA — accueil">
+        <Link
+          href="/"
+          className={styles.logo}
+          aria-label="KINAYA — accueil"
+          data-nav-logo
+        >
           <KinayaLogo />
         </Link>
         <div className={styles.links}>

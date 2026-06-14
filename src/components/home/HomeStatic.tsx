@@ -1,6 +1,7 @@
 import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
+import HeroLogoTravel from "./HeroLogoTravel";
 import DepartementsSection from "./DepartementsSection";
 import type { Work } from "@/lib/works";
 import styles from "./Home.module.css";
@@ -18,12 +19,13 @@ export default function HomeStatic({ works }: { works: Work[] }) {
 
   return (
     <div className={`${styles.home} ${styles.static}`}>
-      {/* nav partagée */}
+      {/* nav partagée + logo voyageur (hero → nav) */}
       <Nav />
+      <HeroLogoTravel />
 
       {/* HERO */}
-      <section className={styles.hero} data-theme="dark">
-        <div className={styles.heroLogo}>
+      <section className={styles.hero} data-theme="dark" data-hero>
+        <div className={styles.heroLogo} data-hero-logo>
           <KinayaLogo className="klogo" />
         </div>
         <div className={styles.heroBlock} />
