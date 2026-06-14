@@ -55,17 +55,40 @@ const PARA_SOFT =
 const useIso = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /* ------------------------------------------------------------------ *
- * PLACEHOLDER DISQUE — donut lisse (conforme aux frames). Isolé : le
- * remplacement final = 12 frames du sloughi disposées radialement, sans
- * toucher la mécanique scale/rotation (accepté en prop `disc`).
+ * DISQUE FANTASCOPE — 12 frames du sloughi disposées en couronne
+ * (i × 30°, tangentielles → galop autour du cercle = cercle vertueux),
+ * trou central crème conservé pour le zoom. Le blanc des dessins se fond
+ * dans la crème via mix-blend multiply. Isolé : remplaçable via prop `disc`.
  * ------------------------------------------------------------------ */
-function buildDisc(): ReactNode {
+const RING = {
+  count: 12, // nombre de frames
+  radius: 33, // % du disque : rayon des centres de chaque sloughi
+  dogW: 46, // % du disque : largeur d'un sloughi
+};
+
+function buildSloughiDisc(): ReactNode {
   return (
-    <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      <circle cx={500} cy={500} r={440} fill="var(--fanta-ring)" />
-      {/* trou central = couleur du fond → zoom seamless (ratio ≈ 0.24) */}
-      <circle cx={500} cy={500} r={105} fill="var(--fanta-bg)" />
-    </svg>
+    <div className={styles.ring}>
+      {Array.from({ length: RING.count }).map((_, i) => (
+        <div
+          key={i}
+          className={styles.slot}
+          style={{ transform: `rotate(${(i * 360) / RING.count}deg)` }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/about/sloughi/sloughi-${String(i + 1).padStart(2, "0")}.webp`}
+            alt=""
+            className={styles.dog}
+            style={{
+              width: `${RING.dogW}%`,
+              top: `${50 - RING.radius}%`,
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -222,7 +245,7 @@ export default function Fantascope({ disc }: { disc?: ReactNode }) {
         <div ref={posRef} className={styles.discPos}>
           <div ref={scaleRef} className={styles.discScale}>
             <div ref={rotRef} className={styles.discRot}>
-              <div className={styles.disc}>{disc ?? buildDisc()}</div>
+              <div className={styles.disc}>{disc ?? buildSloughiDisc()}</div>
             </div>
           </div>
         </div>

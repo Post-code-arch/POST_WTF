@@ -6,13 +6,12 @@
   position: relative;
   height: 100vh;
   overflow: hidden;
-  --fanta-bg: #1a1a1a; /* fond = couleur du trou (zoom seamless) */
-  --fanta-ring: #d9d9d9; /* anneau clair du disque */
-  --fanta-white: #f4f4f2; /* texte clair */
-  --fanta-soft: #8a8a8a; /* texte gris (2e partie du paragraphe) */
+  --fanta-bg: #f2efe6; /* crème = fond des images du sloughi */
+  --fanta-ink: #14110d; /* texte sombre */
+  --fanta-soft: #b3ac9f; /* 2e partie du paragraphe (gris doux sur crème) */
   --pad: clamp(20px, 4vw, 64px);
   background: var(--fanta-bg);
-  color: var(--fanta-white);
+  color: var(--fanta-ink);
 }
 
 .stage {
@@ -44,11 +43,31 @@
   transform-origin: 50% 50%;
   will-change: transform;
 }
-.disc,
-.disc svg {
-  display: block;
+.disc {
+  position: relative;
   width: 100%;
   height: 100%;
+  /* crème : sert de fond pour le multiply ET de "trou" central pour le zoom */
+  background: var(--fanta-bg);
+}
+/* couronne de sloughis (fantascope) */
+.ring {
+  position: absolute;
+  inset: 0;
+}
+.slot {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+.dog {
+  position: absolute;
+  left: 50%;
+  height: auto;
+  /* le blanc du dessin se fond dans la crème, seule l'encre ressort */
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* --- HERO (F1) — Clash Display fin --- */
@@ -64,7 +83,7 @@
   font-size: clamp(28px, 4vw, 60px);
   line-height: 1.12;
   letter-spacing: 0;
-  color: var(--fanta-white);
+  color: var(--fanta-ink);
   pointer-events: none;
 }
 
@@ -90,7 +109,7 @@
   margin-right: 0.28em;
   opacity: 0.14;
   filter: blur(3px);
-  color: var(--fanta-white);
+  color: var(--fanta-ink);
   will-change: opacity, filter;
 }
 .word.soft {
@@ -109,7 +128,7 @@
   font-weight: 400;
   font-size: clamp(26px, 3.4vw, 52px);
   line-height: 1.1;
-  color: var(--fanta-white);
+  color: var(--fanta-ink);
   opacity: 0; /* apparaît en F8 */
   pointer-events: none;
 }
