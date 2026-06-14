@@ -232,7 +232,7 @@
 }
 .htrack {
   display: flex;
-  gap: clamp(20px, 3vw, 48px);
+  gap: clamp(8px, 1.2vw, 18px);
   padding: 0 var(--pad);
   will-change: transform;
 }
@@ -337,7 +337,7 @@
     width: clamp(230px, 74vw, 360px);
   }
   .htrack {
-    gap: clamp(14px, 4vw, 28px);
+    gap: clamp(6px, 2vw, 14px);
   }
   .gridIntro {
     top: clamp(72px, 12vh, 120px);
