@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useAnimationFrame } from "framer-motion";
-import KinayaLogo from "@/components/KinayaLogo";
+import Nav from "@/components/Nav";
 import type { Work } from "@/lib/works";
 import styles from "./Work.module.css";
 
@@ -102,16 +102,7 @@ export default function WorkPage({ works }: { works: Work[] }) {
 
   return (
     <div className={styles.work}>
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.nlogo} aria-label="KINAYA — accueil">
-          <KinayaLogo />
-        </Link>
-        <div className={styles.nlinks}>
-          <Link href="/about">À propos</Link>
-          <Link href="/services">Champs</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
-      </nav>
+      <Nav />
 
       {/* aperçu plein écran au survol */}
       <div

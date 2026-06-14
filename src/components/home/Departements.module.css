@@ -1,0 +1,154 @@
+/* Section Départements (accueil) — portée de proto-departements-hover.html.
+   Fond sombre, deux colonnes, interaction « Monolog ». */
+
+.sec {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: clamp(30px, 5vw, 90px);
+  padding: clamp(50px, 9vh, 120px) var(--pad, clamp(24px, 4vw, 70px));
+  min-height: 100vh;
+  align-items: center;
+  background: #121212;
+  color: #fff;
+}
+
+/* ---------- colonne gauche ---------- */
+.srvTimer {
+  position: relative;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  width: clamp(120px, 40%, 200px);
+  margin-bottom: clamp(28px, 4vh, 52px);
+  overflow: hidden;
+}
+.srvTimer i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: #fff;
+  will-change: width;
+}
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--fh);
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+.kicker .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fff;
+}
+.note {
+  font-family: var(--fh);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(246, 245, 240, 0.5);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+.desc {
+  font-family: var(--fh);
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 400px;
+  min-height: 150px;
+}
+.tags {
+  margin-top: 22px;
+  font-family: var(--fh);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.6);
+}
+.tags i {
+  font-style: normal;
+}
+.tags i + i::before {
+  content: "، ";
+  direction: ltr;
+  unicode-bidi: isolate;
+  opacity: 0.6;
+}
+
+/* ---------- colonne droite ---------- */
+.right {
+  position: relative;
+}
+.srvList {
+  list-style: none;
+  max-width: 62%;
+}
+.srv {
+  font-family: var(--fd);
+  font-weight: 600;
+  font-size: clamp(46px, 7vw, 104px);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: color 0.4s ease;
+  will-change: color;
+}
+.srv:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 6px;
+}
+.srv.active {
+  color: #fff;
+}
+
+.preview {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: clamp(240px, 24vw, 380px);
+  aspect-ratio: 4 / 3;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.pv {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0;
+  background: var(--c);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.94);
+  will-change: opacity, transform;
+}
+.pv.on {
+  opacity: 1;
+  transform: scale(1);
+}
+.pv span {
+  font-family: var(--fh);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: rgba(246, 245, 240, 0.5);
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .sec {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .preview {
+    display: none;
+  }
+  .srv {
+    font-size: clamp(44px, 13vw, 72px);
+  }
+}

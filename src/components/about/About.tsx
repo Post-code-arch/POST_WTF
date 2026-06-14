@@ -1,5 +1,4 @@
-import Link from "next/link";
-import KinayaLogo from "@/components/KinayaLogo";
+import Nav from "@/components/Nav";
 import styles from "./About.module.css";
 
 const CHAMPS = [
@@ -24,21 +23,7 @@ const TRAVAUX = [
 export default function About() {
   return (
     <main className={styles.about}>
-      <nav className={styles.nav}>
-        <div className={styles.left}>
-          <Link href="/" className={styles.logo} aria-label="KINAYA — accueil">
-            <KinayaLogo />
-          </Link>
-          <Link href="/travaux">Travaux</Link>
-          <Link href="/services">Champs</Link>
-        </div>
-        <div className={styles.right}>
-          <Link href="/contact">Contact</Link>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">
-            Instagram
-          </a>
-        </div>
-      </nav>
+      <Nav />
 
       <div className={styles.grid}>
         {/* colonne texte */}

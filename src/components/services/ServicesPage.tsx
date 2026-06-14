@@ -6,7 +6,7 @@ import {
   useRef,
   type CSSProperties,
 } from "react";
-import Link from "next/link";
+import Nav from "@/components/Nav";
 import KinayaLogo from "@/components/KinayaLogo";
 import type { Service } from "@/lib/services";
 import styles from "./Services.module.css";
@@ -109,16 +109,7 @@ export default function ServicesPage({ services }: { services: Service[] }) {
 
   return (
     <div className={styles.page}>
-      <nav className={styles.nav}>
-        <Link href="/" className={styles.nlogo} aria-label="KINAYA — accueil">
-          <KinayaLogo />
-        </Link>
-        <div className={styles.nlinks}>
-          <Link href="/travaux">Travaux</Link>
-          <Link href="/about">À propos</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
-      </nav>
+      <Nav />
 
       <section
         ref={stageRef}

@@ -1,0 +1,66 @@
+/* Nav desktop partagée — logo à gauche, liens, Contact à droite.
+   Fixe, s'adapte au fond via mix-blend-mode (encre sur clair, clair sur sombre). */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  padding: clamp(16px, 1.8vw, 26px) clamp(20px, 4vw, 56px);
+  color: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none; /* les liens réactivent */
+}
+.logo {
+  width: clamp(116px, 11vw, 150px);
+  flex-shrink: 0;
+  display: block;
+  color: #fff;
+  pointer-events: auto;
+}
+.logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.links {
+  display: flex;
+  gap: clamp(22px, 3vw, 52px);
+  margin-left: clamp(34px, 9vw, 150px);
+}
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--fl);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+.nav a:hover {
+  opacity: 0.6;
+}
+.contact {
+  margin-left: auto;
+}
+
+@media (max-width: 760px) {
+  .links {
+    gap: 16px;
+    margin-left: clamp(18px, 6vw, 40px);
+  }
+  .nav a {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .logo {
+    width: 96px;
+  }
+}
+@media (max-width: 520px) {
+  .links a:not(:first-child) {
+    display: none;
+  }
+}

@@ -7,7 +7,7 @@
   background: var(--cream);
   color: var(--ink);
   font-family: var(--fb);
-  padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 56px) clamp(40px, 6vw, 80px);
+  padding: clamp(96px, 13vh, 150px) clamp(20px, 4vw, 56px) clamp(40px, 6vw, 80px);
   overflow: hidden;
 }
 

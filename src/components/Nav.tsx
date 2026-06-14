@@ -1,21 +1,26 @@
 import Link from "next/link";
 import KinayaLogo from "./KinayaLogo";
+import styles from "./Nav.module.css";
 
 /**
- * Nav fixe, en mix-blend-mode:difference — s'inverse selon le fond.
- * (La version theme-aware de l'accueil viendra plus tard.)
+ * Nav desktop partagée (toutes les pages) :
+ * logo à gauche · Travaux · Champs · À propos … Contact à droite.
+ * Fixe, s'adapte au fond via mix-blend-mode.
  */
 export default function Nav() {
   return (
-    <nav className="nav">
-      <Link href="/" className="logo" aria-label="KINAYA — accueil">
+    <nav className={styles.nav}>
+      <Link href="/" className={styles.logo} aria-label="KINAYA — accueil">
         <KinayaLogo />
       </Link>
-      <div className="nav-r">
-        <Link href="/studio">Studio</Link>
+      <div className={styles.links}>
         <Link href="/travaux">Travaux</Link>
-        <Link href="/contact">Contact</Link>
+        <Link href="/services">Champs</Link>
+        <Link href="/about">À propos</Link>
       </div>
+      <Link href="/contact" className={styles.contact}>
+        Contact
+      </Link>
     </nav>
   );
 }

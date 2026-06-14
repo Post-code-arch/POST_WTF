@@ -1,5 +1,7 @@
 import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
+import Nav from "@/components/Nav";
+import DepartementsSection from "./DepartementsSection";
 import type { Work } from "@/lib/works";
 import styles from "./Home.module.css";
 
@@ -16,17 +18,8 @@ export default function HomeStatic({ works }: { works: Work[] }) {
 
   return (
     <div className={`${styles.home} ${styles.static}`}>
-      {/* nav (liens seulement — le hero porte déjà le grand logo) */}
-      <nav className={styles.nav}>
-        <div className={styles.nlogo}>
-          <KinayaLogo className="klogo" />
-        </div>
-        <div className={styles.nlinks}>
-          <Link href="/studio">Studio</Link>
-          <Link href="/travaux">Work</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
-      </nav>
+      {/* nav partagée */}
+      <Nav />
 
       {/* HERO */}
       <section className={styles.hero} data-theme="dark">
@@ -107,6 +100,9 @@ export default function HomeStatic({ works }: { works: Work[] }) {
           AVENTURES
         </div>
       </section>
+
+      {/* DÉPARTEMENTS */}
+      <DepartementsSection />
 
       {/* FOOTER */}
       <section className={styles.footer} data-theme="light">
