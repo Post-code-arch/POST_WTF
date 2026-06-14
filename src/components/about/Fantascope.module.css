@@ -64,8 +64,7 @@
   position: absolute;
   left: 50%;
   height: auto;
-  /* le blanc du dessin se fond dans la crème, seule l'encre ressort */
-  mix-blend-mode: multiply;
+  /* frames déjà en encre-sur-transparent → composition normale sur la crème */
   pointer-events: none;
   user-select: none;
 }
