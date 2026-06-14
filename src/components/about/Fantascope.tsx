@@ -63,7 +63,7 @@ const useIso = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 const RING = {
   count: 12, // nombre de frames
   radius: 33, // % du disque : rayon des centres de chaque sloughi
-  dogW: 46, // % du disque : largeur d'un sloughi
+  dogW: 32, // % du disque : largeur d'un sloughi
 };
 
 function buildSloughiDisc(): ReactNode {
