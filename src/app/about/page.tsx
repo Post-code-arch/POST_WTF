@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
-import Fantascope from "@/components/about/Fantascope";
+import About from "@/components/about/About";
 
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "On expérimente, et on applique. Puis on recommence. C'est ce qu'on appelle un cercle vertueux.",
+    "Kinaya est une agence créative basée à Alger. On préfère montrer que raconter.",
 };
 
 export default function AboutPage() {
-  return (
-    <main>
-      <Fantascope />
-    </main>
-  );
+  return <About />;
 }
