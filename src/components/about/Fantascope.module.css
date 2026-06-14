@@ -28,7 +28,7 @@
 .discPos {
   width: min(72vh, 92vw);
   aspect-ratio: 1;
-  transform: translateY(69%); /* ≈ F1 (gsap.set calcule l'exact) */
+  transform: translateY(50vh); /* F1 : centre sur le bord bas (gsap reprend en px) */
   will-change: transform;
 }
 .discScale {

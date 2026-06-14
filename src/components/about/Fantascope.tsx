@@ -107,14 +107,15 @@ export default function Fantascope({ disc }: { disc?: ReactNode }) {
       const wordEls = wordsRef.current.filter(Boolean);
       const nWords = wordEls.length || 1;
 
-      // positions calculées depuis le viewport :
-      // yPercent qui place le CENTRE du disque à `frac` (fraction depuis le haut).
+      // position du disque : translateY en PIXELS depuis le centre du viewport
+      // (indépendant de la taille du disque → robuste). Le disque est centré
+      // par flex ; y = (frac - 0.5) * hauteur viewport place son CENTRE à
+      // `frac` (fraction depuis le haut : 0 = bord haut, 1 = bord bas).
       const vh = window.innerHeight;
-      const discH = pos.offsetHeight || vh * 0.72;
-      const yFor = (frac: number) => ((frac - 0.5) * vh) / discH * 100;
+      const yPx = (frac: number) => (frac - 0.5) * vh;
 
       // états initiaux (F1)
-      gsap.set(pos, { yPercent: yFor(CFG.frac.hero) });
+      gsap.set(pos, { y: yPx(CFG.frac.hero) });
       gsap.set(scale, { scale: CFG.scaleBig });
       gsap.set(rot, { rotation: 0 });
       gsap.set(hero, {
@@ -145,7 +146,7 @@ export default function Fantascope({ disc }: { disc?: ReactNode }) {
       // F2 — CENTRAGE : le disque monte (centre→milieu) ET rétrécit (scale→1),
       //      le titre s'évapore, la rotation arrive lentement (tween 1).
       const tCenter = tl.duration();
-      tl.to(pos, { yPercent: 0, ease: "power2.inOut", duration: DUR.center }, tCenter);
+      tl.to(pos, { y: 0, ease: "power2.inOut", duration: DUR.center }, tCenter);
       tl.to(scale, { scale: 1, ease: "power2.inOut", duration: DUR.center }, tCenter);
       tl.to(
         hero,
@@ -183,19 +184,19 @@ export default function Fantascope({ disc }: { disc?: ReactNode }) {
       tl.to(scale, { scale: CFG.scaleBig, ease: "power2.inOut", duration: DUR.dezoom }, tDe + DUR.paraOut);
       tl.to(
         pos,
-        { yPercent: yFor(CFG.frac.lower), ease: "power2.inOut", duration: DUR.remontee },
+        { y: yPx(CFG.frac.lower), ease: "power2.inOut", duration: DUR.remontee },
         tDe + DUR.paraOut + DUR.dezoom
       );
 
       // F8 — PUNCHLINE : le disque monte encore un peu, la punchline apparaît dessous
       const tPunch = tl.duration();
-      tl.to(pos, { yPercent: yFor(CFG.frac.punchUnder), ease: "power1.inOut", duration: DUR.punchIn }, tPunch);
+      tl.to(pos, { y: yPx(CFG.frac.punchUnder), ease: "power1.inOut", duration: DUR.punchIn }, tPunch);
       tl.to(punch, { opacity: 1, ease: "power1.out", duration: DUR.punchIn }, tPunch);
 
       // F9 — SORTIE : disque sort par le haut, la punchline glisse au centre
       //      (top→50%) et grossit (scale→1.55).
       const tOut = tl.duration();
-      tl.to(pos, { yPercent: yFor(CFG.frac.gone), ease: "power1.in", duration: DUR.sortie }, tOut);
+      tl.to(pos, { y: yPx(CFG.frac.gone), ease: "power1.in", duration: DUR.sortie }, tOut);
       tl.to(punch, { top: "50%", scale: CFG.punchScale, ease: "power2.out", duration: DUR.sortie }, tOut);
 
       // ROTATION tween 3 : 1240 → 1750, couvre zoom + reveal + sortie
