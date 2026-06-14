@@ -44,8 +44,11 @@ export default function HeroLogoTravel() {
       const p = ease(clamp(y / (heroH * 0.65)));
       const h = heroSlot.getBoundingClientRect();
       const n = navLogo.getBoundingClientRect();
+      // le slot hero défile avec la page : on fige son top à sa position
+      // « scroll 0 » (rect.top + scrollY) pour rester dans le viewport.
+      const heroTop = h.top + window.scrollY;
       travel.style.left = `${lerp(h.left, n.left, p)}px`;
-      travel.style.top = `${lerp(h.top, n.top, p)}px`;
+      travel.style.top = `${lerp(heroTop, n.top, p)}px`;
       travel.style.width = `${lerp(h.width, n.width, p)}px`;
       // passage de relais sur la fin : le voyageur s'efface, le logo nav apparaît
       travel.style.opacity = String(1 - clamp((p - 0.88) / 0.12));
