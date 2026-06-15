@@ -5,7 +5,8 @@
   top: 0;
   opacity: 0;
   line-height: 0;
-  color: var(--cream, #f2efe6);
+  color: #fff;
+  mix-blend-mode: difference; /* s'adapte au fond comme la nav */
   pointer-events: none;
   will-change: left, top, width, opacity;
 }

@@ -28,8 +28,9 @@ export default function HeroLogoTravel() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      // pas de voyage : hero logo + nav logo statiques
+      // pas de voyage : on garde le logo de la nav (unique), pas de grand logo hero
       travel.style.opacity = "0";
+      heroSlot.style.visibility = "hidden";
       return;
     }
 
@@ -50,9 +51,7 @@ export default function HeroLogoTravel() {
       travel.style.left = `${lerp(h.left, n.left, p)}px`;
       travel.style.top = `${lerp(heroTop, n.top, p)}px`;
       travel.style.width = `${lerp(h.width, n.width, p)}px`;
-      // passage de relais sur la fin : le voyageur s'efface, le logo nav apparaît
-      travel.style.opacity = String(1 - clamp((p - 0.88) / 0.12));
-      navLogo.style.opacity = String(clamp((p - 0.82) / 0.18));
+      travel.style.opacity = "1"; // instance unique : pas de crossfade, pas de doublon
     };
 
     let ticking = false;
