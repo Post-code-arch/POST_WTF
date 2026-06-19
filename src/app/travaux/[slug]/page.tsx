@@ -5,7 +5,6 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import Nav from "@/components/Nav";
 import {
   Hero,
-  HeroImage,
   Section,
   Did,
   Details,
@@ -80,8 +79,7 @@ export default async function ProjectPage({
     <>
       <Nav />
       <main>
-        <Hero titre={meta.titre} sousTitre={meta.sousTitre} />
-        <HeroImage visuals={visuels} />
+        <Hero titre={meta.titre} sousTitre={meta.sousTitre} visuals={visuels} />
         {content}
         <Testimonial
           citation={meta.temoignage.citation}

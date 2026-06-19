@@ -39,12 +39,20 @@ function MediaInner({ v }: { v: Visual }) {
 export function Hero({
   titre,
   sousTitre,
+  visuals,
 }: {
   titre: string;
   sousTitre: string;
+  visuals: Visual[];
 }) {
+  const v = byN(visuals, 1);
   return (
     <header className="hero">
+      {v && (
+        <div className="hero-media" aria-hidden>
+          <MediaInner v={v} />
+        </div>
+      )}
       <h1 className="hero-title">
         <Marquee items={titre} repeat={4} />
       </h1>
@@ -54,16 +62,6 @@ export function Hero({
         <Link href="/travaux">Tous les travaux →</Link>
       </div>
     </header>
-  );
-}
-
-export function HeroImage({ visuals }: { visuals: Visual[] }) {
-  const v = byN(visuals, 1);
-  if (!v) return null;
-  return (
-    <div className="hero-img ph" data-label={v.label}>
-      <MediaInner v={v} />
-    </div>
   );
 }
 
