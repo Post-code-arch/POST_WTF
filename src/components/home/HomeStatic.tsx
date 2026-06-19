@@ -73,9 +73,8 @@ export default function HomeStatic({ works }: { works: Work[] }) {
                   />
                 </div>
                 <div className={styles.workCap}>
-                  {w.title}
-                  <span className={styles.d} />
-                  {w.categories[0]}
+                  <span className={styles.workName}>{w.title}</span>
+                  <span className={styles.workDisc}>{w.categories[0]}</span>
                 </div>
               </Link>
             </div>

@@ -159,16 +159,12 @@
 .workItem {
   cursor: pointer;
 }
-/* alternance hauteur pleine / demi */
+/* alternance hauteur pleine / demi — toutes calées en haut (pas de quinconce) */
 .workItem:nth-child(odd) .workThumb {
   height: clamp(280px, 34vw, 520px);
 }
 .workItem:nth-child(even) .workThumb {
   height: clamp(200px, 24vw, 370px);
-}
-/* décalage en quinconce : les vignettes paires descendent */
-.workItem:nth-child(even) {
-  margin-top: clamp(48px, 10vw, 150px);
 }
 .workThumb {
   width: 100%;
@@ -216,17 +212,33 @@
   object-fit: cover;
 }
 .workCap {
-  margin-top: 12px;
-  font-family: var(--fl);
-  font-size: 13px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+}
+/* nom du projet — Cabinet Grotesk, calé à gauche */
+.workName {
+  font-family: var(--fc);
+  font-weight: 500;
+  font-size: clamp(17px, 1.5vw, 24px);
+  letter-spacing: -0.005em;
   color: var(--ink);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.workItem:hover .workCap {
+.workItem:hover .workName {
   transform: translateX(6px);
 }
-.workCap .d::before {
-  content: " · ";
+/* discipline — Space Grotesk, calée à droite, opacité réduite */
+.workDisc {
+  font-family: var(--fh);
+  font-size: clamp(13px, 1.1vw, 17px);
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  opacity: 0.5;
+  text-align: right;
+  white-space: nowrap;
 }
 
 /* Aventures : déplacé dans AventuresStage + Aventures.module.css */

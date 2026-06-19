@@ -9,18 +9,19 @@
   font-size: clamp(20px, 2.5vw, 33px);
   line-height: 1.32;
   letter-spacing: 0.005em;
-  /* le dégradé radial est clippé sur le texte : encre au centre (révélé),
-     encre très atténuée à l'extérieur (à révéler) */
+  /* dégradé radial clippé sur le texte : l'encre se remplit depuis le centre
+     vers l'extérieur (--r 0 → 1). Hors-révélation : quasi invisible, pour que
+     le remplissage soit nettement perceptible. */
   background: radial-gradient(
-    115% 135% at 50% 42%,
-    var(--ink) calc(var(--r) * 165% - 35%),
-    rgba(28, 15, 8, 0.16) calc(var(--r) * 165% + 6%)
+    120% 150% at 50% 46%,
+    var(--ink) calc(var(--r) * 175% - 45%),
+    rgba(28, 15, 8, 0.07) calc(var(--r) * 175% + 18%)
   );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-/* le carré garde l'encre pleine (élément à part, pas clippé) */
+/* le carré suit le même remplissage (élément à part, pas clippé) */
 .sq {
   display: inline-block;
   width: 0.62em;
@@ -28,7 +29,7 @@
   background: var(--ink);
   margin-right: 0.5em;
   vertical-align: baseline;
-  opacity: calc(0.2 + var(--r) * 0.8);
+  opacity: calc(0.07 + var(--r) * 0.93);
 }
 
 @media (prefers-reduced-motion: reduce) {
