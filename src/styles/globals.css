@@ -139,13 +139,13 @@ video {
 
 /* ---------- HERO ---------- */
 .hero {
-  min-height: 100vh;
+  min-height: 54vh;
   background: var(--espresso);
   color: var(--cream);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 22vh var(--gutter) 48px;
+  padding: 13vh var(--gutter) 48px;
   position: relative;
 }
 .hero-title {
@@ -196,11 +196,21 @@ video {
   padding-bottom: 2px;
 }
 
+/* l'image du hero : bande de 76vh sur fond sombre — le hero total fait ~130vh.
+   l'image se loge ENTIÈREMENT (contain), peu importe son format. */
 .hero-img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
+  height: 76vh;
   margin-top: 0;
+  background: var(--espresso);
+}
+.hero-img img,
+.hero-img video {
+  object-fit: contain;
+}
+/* image toujours présente : pas de libellé placeholder dans les marges */
+.hero-img::before {
+  content: none;
 }
 
 /* ---------- SECTION (numérotée) ---------- */

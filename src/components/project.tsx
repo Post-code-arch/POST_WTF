@@ -61,11 +61,7 @@ export function HeroImage({ visuals }: { visuals: Visual[] }) {
   const v = byN(visuals, 1);
   if (!v) return null;
   return (
-    <div
-      className="hero-img ph"
-      data-label={v.label}
-      style={{ aspectRatio: "16 / 10" }}
-    >
+    <div className="hero-img ph" data-label={v.label}>
       <MediaInner v={v} />
     </div>
   );
