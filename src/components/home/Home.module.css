@@ -176,11 +176,23 @@
   overflow: hidden;
   position: relative;
   border-radius: 2px;
-  /* survol : léger scale, retenu */
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.workItem:hover .workThumb {
-  transform: scale(1.025);
+/* survol : l'image zoome dans le cadre, un voile chaud se lève */
+.workThumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    rgba(26, 15, 8, 0.45)
+  );
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  z-index: 1;
+}
+.workItem:hover .workThumb::after {
+  opacity: 1;
 }
 .workMedia {
   position: absolute;
@@ -191,6 +203,10 @@
   background-size: cover;
   background-position: center;
   will-change: transform;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.workItem:hover .workMedia {
+  transform: scale(1.06);
 }
 .workMedia img {
   position: absolute;
@@ -204,88 +220,16 @@
   font-family: var(--fl);
   font-size: 13px;
   color: var(--ink);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.workItem:hover .workCap {
+  transform: translateX(6px);
 }
 .workCap .d::before {
   content: " · ";
 }
 
-/* ---------------- AVENTURES ---------------- */
-.adv {
-  background: var(--cream);
-  min-height: 100vh;
-  position: relative;
-  padding: clamp(40px, 6vw, 80px) var(--pad);
-  overflow: hidden;
-}
-.advStage {
-  position: absolute;
-  inset: 0;
-}
-.advPhoto {
-  position: absolute;
-  background: var(--espresso);
-  will-change: transform;
-  background-image: radial-gradient(
-      circle at 40% 35%,
-      #3a2418,
-      transparent 60%
-    ),
-    radial-gradient(circle at 70% 70%, #1a0f08, transparent 55%);
-  background-size: cover;
-  background-position: center;
-}
-.advPhoto:nth-child(1) {
-  left: 30%;
-  top: 22%;
-  width: 19%;
-  aspect-ratio: 16/11;
-  z-index: 1;
-}
-.advPhoto:nth-child(2) {
-  left: 43%;
-  top: 18%;
-  width: 15%;
-  aspect-ratio: 3/4;
-  z-index: 3;
-}
-.advPhoto:nth-child(3) {
-  left: 55%;
-  top: 24%;
-  width: 20%;
-  aspect-ratio: 4/3;
-  z-index: 2;
-}
-.advPhoto:nth-child(4) {
-  left: 36%;
-  top: 44%;
-  width: 17%;
-  aspect-ratio: 1/1;
-  z-index: 4;
-}
-.advPhoto:nth-child(5) {
-  left: 49%;
-  top: 48%;
-  width: 22%;
-  aspect-ratio: 16/10;
-  z-index: 5;
-}
-.advLabel {
-  position: absolute;
-  left: var(--pad);
-  bottom: clamp(40px, 7vw, 110px);
-  font-family: var(--fl);
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  z-index: 2;
-}
-.advLabel .sq {
-  display: inline-block;
-  width: 11px;
-  height: 11px;
-  background: var(--ink);
-  margin-right: 11px;
-  vertical-align: middle;
-}
+/* Aventures : déplacé dans AventuresStage + Aventures.module.css */
 
 /* ---------------- FOOTER ---------------- */
 .footer {
@@ -377,10 +321,4 @@
 }
 .static .footLogo {
   visibility: visible;
-}
-.static .workThumb {
-  transition: none;
-}
-.static .workItem:hover .workThumb {
-  transform: none;
 }

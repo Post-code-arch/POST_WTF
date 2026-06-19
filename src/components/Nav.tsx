@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import KinayaLogo from "./KinayaLogo";
 import styles from "./Nav.module.css";
 
@@ -18,6 +19,27 @@ const LINKS: [string, string][] = [
  */
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  // sur l'accueil, les liens n'apparaissent qu'une fois le logo « calé » dans
+  // la nav (événement émis par HeroLogoTravel). Ailleurs : visibles d'emblée.
+  const [docked, setDocked] = useState(!isHome);
+
+  useEffect(() => {
+    if (!isHome) {
+      setDocked(true);
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDocked(true);
+      return;
+    }
+    setDocked(false);
+    const onDock = (e: Event) =>
+      setDocked((e as CustomEvent<boolean>).detail === true);
+    window.addEventListener("kinaya:dock", onDock);
+    return () => window.removeEventListener("kinaya:dock", onDock);
+  }, [isHome]);
 
   useEffect(() => {
     if (!open) return;
@@ -42,7 +64,7 @@ export default function Nav() {
         >
           <KinayaLogo />
         </Link>
-        <div className={styles.links}>
+        <div className={`${styles.links} ${docked ? "" : styles.hidden}`}>
           <Link href="/travaux">Travaux</Link>
           <Link href="/services">Champs</Link>
           <Link href="/about">À propos</Link>

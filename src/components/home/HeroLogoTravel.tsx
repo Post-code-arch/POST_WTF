@@ -39,6 +39,7 @@ export default function HeroLogoTravel() {
     heroSlot.style.visibility = "hidden";
     navLogo.style.opacity = "0";
 
+    let lastDocked = false;
     const place = () => {
       const y = window.scrollY;
       const heroH = heroSec.offsetHeight || window.innerHeight;
@@ -52,6 +53,12 @@ export default function HeroLogoTravel() {
       travel.style.top = `${lerp(heroTop, n.top, p)}px`;
       travel.style.width = `${lerp(h.width, n.width, p)}px`;
       travel.style.opacity = "1"; // instance unique : pas de crossfade, pas de doublon
+      // signal « logo calé » : la nav révèle ses liens une fois le voyage fini
+      const docked = p >= 0.96;
+      if (docked !== lastDocked) {
+        lastDocked = docked;
+        window.dispatchEvent(new CustomEvent("kinaya:dock", { detail: docked }));
+      }
     };
 
     let ticking = false;

@@ -6,7 +6,7 @@
   grid-template-columns: 1fr 1.4fr;
   gap: clamp(30px, 5vw, 90px);
   padding: clamp(50px, 9vh, 120px) var(--pad, clamp(24px, 4vw, 70px));
-  min-height: 100vh;
+  height: 100vh; /* hauteur fixe : ne suit plus le contenu */
   align-items: center;
   background: #121212;
   color: #fff;
@@ -58,7 +58,9 @@
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
   max-width: 400px;
-  min-height: 150px;
+  /* hauteur réservée sur la plus longue description : pas de reflow au swap */
+  height: clamp(210px, 28vh, 280px);
+  overflow: hidden;
 }
 .tags {
   margin-top: 22px;
@@ -144,6 +146,12 @@
   .sec {
     grid-template-columns: 1fr;
     gap: 40px;
+    height: auto;
+    min-height: 100vh;
+  }
+  .desc {
+    height: auto;
+    min-height: 180px;
   }
   .preview {
     display: none;

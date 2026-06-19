@@ -1,0 +1,44 @@
+/* Intro accueil — révélation radiale du texte au scroll.
+   Le même typage que .introInner p (Home.module.css). */
+
+.fill {
+  --r: 0;
+  font-family: var(--fh);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: clamp(20px, 2.5vw, 33px);
+  line-height: 1.32;
+  letter-spacing: 0.005em;
+  /* le dégradé radial est clippé sur le texte : encre au centre (révélé),
+     encre très atténuée à l'extérieur (à révéler) */
+  background: radial-gradient(
+    115% 135% at 50% 42%,
+    var(--ink) calc(var(--r) * 165% - 35%),
+    rgba(28, 15, 8, 0.16) calc(var(--r) * 165% + 6%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* le carré garde l'encre pleine (élément à part, pas clippé) */
+.sq {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.62em;
+  background: var(--ink);
+  margin-right: 0.5em;
+  vertical-align: baseline;
+  opacity: calc(0.2 + var(--r) * 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: var(--ink);
+  }
+  .sq {
+    opacity: 1;
+  }
+}

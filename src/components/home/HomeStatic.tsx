@@ -2,6 +2,8 @@ import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
 import HeroLogoTravel from "./HeroLogoTravel";
+import IntroReveal from "./IntroReveal";
+import AventuresStage from "./AventuresStage";
 import DepartementsSection from "./DepartementsSection";
 import type { Work } from "@/lib/works";
 import styles from "./Home.module.css";
@@ -47,17 +49,10 @@ export default function HomeStatic({ works }: { works: Work[] }) {
         </div>
       </section>
 
-      {/* INTRO */}
+      {/* INTRO — révélation radiale au scroll */}
       <section className={styles.intro} data-theme="light">
         <div className={styles.introInner}>
-          <p>
-            <span className={styles.sq} />
-            Une agence créative qui travaille la stratégie, l&apos;identité, le
-            web et la production avec la même attention. Une moitié du temps à
-            comprendre ce qui est déjà là. L&apos;autre à faire les choses
-            jusqu&apos;au bout, en laissant au client l&apos;autonomie pour la
-            suite.
-          </p>
+          <IntroReveal />
         </div>
       </section>
 
@@ -88,23 +83,11 @@ export default function HomeStatic({ works }: { works: Work[] }) {
         </div>
       </section>
 
-      {/* AVENTURES */}
-      <section className={styles.adv} data-theme="light">
-        <div className={styles.advStage}>
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-        </div>
-        <div className={styles.advLabel}>
-          <span className={styles.sq} />
-          AVENTURES
-        </div>
-      </section>
-
-      {/* DÉPARTEMENTS */}
+      {/* DÉPARTEMENTS — placé avant Aventures */}
       <DepartementsSection />
+
+      {/* AVENTURES — composition + parallaxe curseur */}
+      <AventuresStage />
 
       {/* FOOTER */}
       <section className={styles.footer} data-theme="light">
