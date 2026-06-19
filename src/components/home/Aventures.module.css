@@ -35,37 +35,37 @@
   display: block;
 }
 
-/* cluster agrandi et poussé vers la gauche */
+/* cluster agrandi et poussé vers la droite */
 .p1 {
-  left: 4%;
+  left: 30%;
   top: 16%;
   width: 25%;
   aspect-ratio: 4 / 3;
   z-index: 1;
 }
 .p2 {
-  left: 26%;
+  left: 52%;
   top: 23%;
   width: 19%;
   aspect-ratio: 4 / 3;
   z-index: 3;
 }
 .p3 {
-  left: 45%;
+  left: 71%;
   top: 13%;
   width: 23%;
   aspect-ratio: 3 / 4;
   z-index: 2;
 }
 .p4 {
-  left: 16%;
+  left: 42%;
   top: 44%;
   width: 21%;
   aspect-ratio: 3 / 4;
   z-index: 4;
 }
 .p5 {
-  left: 33%;
+  left: 58%;
   top: 52%;
   width: 31%;
   aspect-ratio: 16 / 10;

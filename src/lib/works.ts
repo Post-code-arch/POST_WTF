@@ -34,8 +34,9 @@ export const works: Work[] = [
   {
     slug: "astarte",
     title: "Astarté",
-    categories: ["Branding", "Art Direction"],
+    categories: ["Branding", "Éditorial"],
     color: "#241f2a",
+    image: "/travaux/astarte/mockup-4.webp",
   },
   {
     slug: "imlead",

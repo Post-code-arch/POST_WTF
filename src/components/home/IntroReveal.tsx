@@ -25,10 +25,9 @@ export default function IntroReveal() {
       ticking = false;
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // le remplissage se joue pendant que le texte traverse la moitié basse
-      // du viewport, là où il est déjà lisible : reveal bien visible.
-      const start = vh * 0.95; // début quand le haut entre par le bas
-      const end = vh * 0.45; // plein vers le milieu de l'écran
+      // remplissage lent : étalé sur quasi toute la traversée du viewport.
+      const start = vh * 1.05; // commence dès l'entrée par le bas
+      const end = vh * 0.1; // ne se termine que près du haut de l'écran
       const p = Math.min(Math.max((start - r.top) / (start - end), 0), 1);
       el.style.setProperty("--r", p.toFixed(3));
     };
