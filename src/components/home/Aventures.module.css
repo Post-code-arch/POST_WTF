@@ -5,7 +5,7 @@
   --mx: 0;
   --my: 0;
   background: var(--cream);
-  min-height: 100vh;
+  min-height: 132vh;
   position: relative;
   padding: clamp(40px, 6vw, 80px) var(--pad);
   overflow: hidden;
@@ -35,41 +35,79 @@
   display: block;
 }
 
-/* cluster agrandi et poussé vers la droite */
+/* collage dispersé — 10 clichés répartis sur trois bandes, dérive diagonale */
+/* bande haute */
 .p1 {
-  left: 30%;
-  top: 16%;
-  width: 25%;
-  aspect-ratio: 4 / 3;
-  z-index: 1;
-}
-.p2 {
-  left: 52%;
-  top: 23%;
-  width: 19%;
-  aspect-ratio: 4 / 3;
-  z-index: 3;
-}
-.p3 {
-  left: 71%;
-  top: 13%;
-  width: 23%;
-  aspect-ratio: 3 / 4;
+  left: 3%;
+  top: 7%;
+  width: 21%;
+  aspect-ratio: 3 / 2;
   z-index: 2;
 }
+.p2 {
+  left: 27%;
+  top: 4%;
+  width: 15%;
+  aspect-ratio: 2 / 3;
+  z-index: 5;
+}
+.p3 {
+  left: 45%;
+  top: 9%;
+  width: 23%;
+  aspect-ratio: 3 / 2;
+  z-index: 3;
+}
 .p4 {
-  left: 42%;
-  top: 44%;
-  width: 21%;
-  aspect-ratio: 3 / 4;
+  left: 71%;
+  top: 6%;
+  width: 22%;
+  aspect-ratio: 3 / 2;
+  z-index: 2;
+}
+/* bande médiane */
+.p5 {
+  left: 10%;
+  top: 38%;
+  width: 19%;
+  aspect-ratio: 3 / 2;
   z-index: 4;
 }
-.p5 {
-  left: 58%;
-  top: 52%;
-  width: 31%;
-  aspect-ratio: 16 / 10;
+.p6 {
+  left: 33%;
+  top: 40%;
+  width: 15%;
+  aspect-ratio: 2 / 3;
+  z-index: 6;
+}
+.p7 {
+  left: 51%;
+  top: 42%;
+  width: 21%;
+  aspect-ratio: 3 / 2;
+  z-index: 4;
+}
+.p8 {
+  left: 74%;
+  top: 39%;
+  width: 20%;
+  aspect-ratio: 3 / 2;
+  z-index: 3;
+}
+/* bande basse */
+.p9 {
+  left: 22%;
+  top: 70%;
+  width: 23%;
+  aspect-ratio: 3 / 2;
   z-index: 5;
+}
+.p10 {
+  left: 50%;
+  top: 72%;
+  width: 25%;
+  aspect-ratio: 3 / 2;
+  z-index: 7;
 }
 
 .label {
@@ -92,33 +130,31 @@
 }
 
 @media (max-width: 760px) {
+  /* sur petit écran : on abandonne le collage absolu pour une grille 2 colonnes */
   .adv {
-    min-height: 80vh;
+    min-height: auto;
+    padding-bottom: clamp(80px, 22vw, 140px);
   }
-  /* resserrer le cluster sur petit écran */
-  .p1 {
-    left: 6%;
-    top: 14%;
-    width: 40%;
+  .stage {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: clamp(40px, 12vw, 70px);
   }
-  .p2 {
-    left: 50%;
-    top: 12%;
-    width: 32%;
+  .photo {
+    position: static;
+    width: auto !important;
+    transform: none !important;
   }
-  .p3 {
-    left: 64%;
-    top: 30%;
-    width: 30%;
+  /* on alterne les hauteurs pour garder du rythme */
+  .photo:nth-child(odd) {
+    aspect-ratio: 3 / 2;
   }
-  .p4 {
-    left: 10%;
-    top: 44%;
-    width: 32%;
+  .photo:nth-child(even) {
+    aspect-ratio: 2 / 3;
   }
-  .p5 {
-    left: 40%;
-    top: 52%;
-    width: 46%;
+  .label {
+    bottom: clamp(30px, 9vw, 60px);
   }
 }
