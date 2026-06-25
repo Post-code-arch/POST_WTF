@@ -4,8 +4,8 @@
 .adv {
   --mx: 0;
   --my: 0;
-  background: var(--cream);
-  min-height: 132vh;
+  background: var(--espresso);
+  min-height: 128vh;
   position: relative;
   padding: clamp(40px, 6vw, 80px) var(--pad);
   overflow: hidden;
@@ -19,8 +19,8 @@
   overflow: hidden;
   border-radius: 2px;
   background: var(--espresso);
-  box-shadow: 0 30px 70px -30px rgba(26, 15, 8, 0.7),
-    0 0 0 1px rgba(242, 239, 230, 0.06);
+  box-shadow: 0 26px 60px -34px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(242, 239, 230, 0.08);
   transform: translate3d(
     calc(var(--mx) * var(--d) * 1px),
     calc(var(--my) * var(--d) * 1px),
@@ -36,81 +36,88 @@
   display: block;
 }
 
-/* pile chevauchée — 10 clichés agrandis qui se superposent les uns sur les
-   autres ; l'ordre d'empilement (z-index) crée la profondeur, la parallaxe
-   curseur les fait jouer en strates. */
-/* bande haute */
+/* composition chevauchée sur fond sombre — clichés émergeant du noir, la
+   « meuf qui dort » en pièce maîtresse ; chat et portraits débordent à droite,
+   le clap chaud ancre le bas. z-index = profondeur, parallaxe = strates. */
+/* haut-gauche large */
 .p1 {
   left: 0%;
-  top: 4%;
-  width: 34%;
-  aspect-ratio: 3 / 2;
-  z-index: 2;
-}
-.p2 {
-  left: 27%;
-  top: 0%;
-  width: 22%;
-  aspect-ratio: 2 / 3;
-  z-index: 6;
-}
-.p3 {
-  left: 40%;
-  top: 7%;
-  width: 36%;
+  top: 5%;
+  width: 35%;
   aspect-ratio: 3 / 2;
   z-index: 3;
 }
-.p4 {
-  left: 66%;
-  top: 2%;
-  width: 34%;
-  aspect-ratio: 3 / 2;
-  z-index: 2;
+/* portrait, haut-centre */
+.p2 {
+  left: 37%;
+  top: 7%;
+  width: 25%;
+  aspect-ratio: 2 / 3;
+  z-index: 4;
 }
-/* bande médiane — chevauche la bande haute */
-.p5 {
-  left: 4%;
-  top: 28%;
+/* chat, déborde au bord droit */
+.p3 {
+  left: 69%;
+  top: 0%;
   width: 33%;
+  aspect-ratio: 3 / 2;
+  z-index: 3;
+}
+/* PIÈCE MAÎTRESSE — la meuf qui dort, centre-gauche, dominante */
+.p4 {
+  left: 8%;
+  top: 31%;
+  width: 45%;
+  aspect-ratio: 3 / 2;
+  z-index: 6;
+}
+/* caméra, en retrait derrière la maîtresse */
+.p5 {
+  left: 50%;
+  top: 22%;
+  width: 25%;
   aspect-ratio: 3 / 2;
   z-index: 4;
 }
+/* portrait, déborde au bord droit */
 .p6 {
-  left: 34%;
-  top: 31%;
-  width: 22%;
+  left: 75%;
+  top: 34%;
+  width: 25%;
   aspect-ratio: 2 / 3;
-  z-index: 8;
+  z-index: 7;
 }
+/* clap (chaud), bas-centre */
 .p7 {
-  left: 46%;
-  top: 29%;
-  width: 35%;
+  left: 43%;
+  top: 47%;
+  width: 31%;
+  aspect-ratio: 3 / 2;
+  z-index: 6;
+}
+/* storage, bas-droite */
+.p8 {
+  left: 70%;
+  top: 60%;
+  width: 30%;
   aspect-ratio: 3 / 2;
   z-index: 5;
 }
-.p8 {
-  left: 68%;
-  top: 35%;
-  width: 33%;
-  aspect-ratio: 3 / 2;
-  z-index: 3;
-}
-/* bande basse — chevauche la bande médiane */
+/* four, en retrait gauche derrière la maîtresse */
 .p9 {
-  left: 11%;
-  top: 54%;
-  width: 36%;
+  left: 0%;
+  top: 38%;
+  width: 22%;
   aspect-ratio: 3 / 2;
-  z-index: 7;
+  z-index: 2;
 }
+/* bas-gauche */
 .p10 {
-  left: 43%;
-  top: 56%;
-  width: 38%;
+  left: 22%;
+  top: 67%;
+  width: 28%;
   aspect-ratio: 3 / 2;
-  z-index: 9;
+  z-index: 4;
 }
 
 .label {
@@ -120,14 +127,14 @@
   font-family: var(--fl);
   font-size: 13px;
   letter-spacing: 0.18em;
-  z-index: 6;
-  color: var(--ink);
+  z-index: 10;
+  color: var(--cream);
 }
 .sq {
   display: inline-block;
   width: 11px;
   height: 11px;
-  background: var(--ink);
+  background: var(--cream);
   margin-right: 11px;
   vertical-align: middle;
 }

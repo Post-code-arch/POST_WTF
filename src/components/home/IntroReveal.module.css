@@ -1,27 +1,28 @@
-/* Intro accueil — révélation radiale du texte au scroll.
-   Le même typage que .introInner p (Home.module.css). */
+/* Intro accueil — révélation accentuée mot à mot au scroll.
+   Même typage que .introInner p (Home.module.css). */
 
 .fill {
-  --r: 0;
   font-family: var(--fh);
   font-weight: 500;
   text-transform: uppercase;
   font-size: clamp(20px, 2.5vw, 33px);
   line-height: 1.32;
   letter-spacing: 0.005em;
-  /* dégradé radial clippé sur le texte : l'encre se remplit depuis le centre
-     vers l'extérieur (--r 0 → 1). Hors-révélation : quasi invisible, pour que
-     le remplissage soit nettement perceptible. */
-  background: radial-gradient(
-    120% 150% at 50% 46%,
-    var(--ink) calc(var(--r) * 175% - 45%),
-    rgba(28, 15, 8, 0.07) calc(var(--r) * 175% + 18%)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
 }
-/* le carré suit le même remplissage (élément à part, pas clippé) */
+
+/* chaque mot : --w 0 → 1 pilote opacité, flou et glissement vertical.
+   À 0 : estompé, flou, légèrement abaissé. À 1 : net, plein, en place. */
+.word {
+  --w: 0;
+  display: inline-block;
+  opacity: calc(0.1 + var(--w) * 0.9);
+  filter: blur(calc((1 - var(--w)) * 6px));
+  transform: translateY(calc((1 - var(--w)) * 0.32em));
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+  will-change: opacity, filter, transform;
+}
+
 .sq {
   display: inline-block;
   width: 0.62em;
@@ -29,17 +30,12 @@
   background: var(--ink);
   margin-right: 0.5em;
   vertical-align: baseline;
-  opacity: calc(0.07 + var(--r) * 0.93);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fill {
-    background: none;
-    -webkit-background-clip: border-box;
-    background-clip: border-box;
-    color: var(--ink);
-  }
-  .sq {
+  .word {
     opacity: 1;
+    filter: none;
+    transform: none;
   }
 }

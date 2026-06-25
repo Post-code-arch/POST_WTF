@@ -10,16 +10,16 @@ import styles from "./Aventures.module.css";
  * une parallaxe douce au mouvement du curseur. Respecte reduced-motion.
  */
 const PHOTOS = [
-  { src: "/home/aventures/av-1.webp", cls: "p1", depth: 12 },
-  { src: "/home/aventures/av-5.webp", cls: "p2", depth: 22 },
-  { src: "/home/aventures/av-2.webp", cls: "p3", depth: 8 },
-  { src: "/home/aventures/av-3.webp", cls: "p4", depth: 18 },
-  { src: "/home/aventures/av-4.webp", cls: "p5", depth: 28 },
-  { src: "/home/aventures/av-10.webp", cls: "p6", depth: 34 },
-  { src: "/home/aventures/av-6.webp", cls: "p7", depth: 16 },
-  { src: "/home/aventures/av-7.webp", cls: "p8", depth: 24 },
-  { src: "/home/aventures/av-8.webp", cls: "p9", depth: 30 },
-  { src: "/home/aventures/av-9.webp", cls: "p10", depth: 38 },
+  { src: "/home/aventures/av-2.webp", cls: "p1", depth: 14 }, // haut-gauche large
+  { src: "/home/aventures/av-5.webp", cls: "p2", depth: 26 }, // portrait haut-centre
+  { src: "/home/aventures/av-3.webp", cls: "p3", depth: 10 }, // chat, déborde à droite
+  { src: "/home/aventures/av-1.webp", cls: "p4", depth: 20 }, // LA MEUF QUI DORT — pièce maîtresse
+  { src: "/home/aventures/av-7.webp", cls: "p5", depth: 16 }, // caméra, derrière
+  { src: "/home/aventures/av-10.webp", cls: "p6", depth: 34 }, // portrait, déborde à droite
+  { src: "/home/aventures/av-6.webp", cls: "p7", depth: 22 }, // clap, bas-centre (chaud)
+  { src: "/home/aventures/av-9.webp", cls: "p8", depth: 30 }, // storage, bas-droite
+  { src: "/home/aventures/av-8.webp", cls: "p9", depth: 8 }, // four, en retrait gauche
+  { src: "/home/aventures/av-4.webp", cls: "p10", depth: 38 }, // bas-gauche
 ];
 
 export default function AventuresStage() {
@@ -59,7 +59,7 @@ export default function AventuresStage() {
   }, []);
 
   return (
-    <section ref={secRef} className={styles.adv} data-theme="light">
+    <section ref={secRef} className={styles.adv} data-theme="dark">
       <div className={styles.stage}>
         {PHOTOS.map((p) => (
           <div
