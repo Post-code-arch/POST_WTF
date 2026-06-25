@@ -25,27 +25,30 @@ export default function HomeStatic({ works }: { works: Work[] }) {
       <Nav />
       <HeroLogoTravel />
 
-      {/* HERO */}
+      {/* HERO — image plein cadre, KINAYA en bandeau, accroche en bas */}
       <section className={styles.hero} data-theme="dark" data-hero>
-        <div className={styles.heroLogo} data-hero-logo>
-          <KinayaLogo className="klogo" />
-        </div>
-        <div className={styles.heroBlock} />
-        <div className={styles.heroGrow} />
-        <div className={styles.heroTag}>
-          On est une agence créative.
-          <br />
-          On essaie de ne pas en avoir l&apos;air.
-        </div>
-        <div className={styles.heroChips}>
-          <span>Stratégie</span>
-          <span>Motion</span>
-          <span>Ai</span>
-          <span>Production</span>
-          <span>Branding</span>
-          <span>Rédaction</span>
-          <span>Digital</span>
-          <span>Web</span>
+        <div className={styles.heroFrame}>
+          <img
+            className={styles.heroBg}
+            src="/home/aventures/av-8.webp"
+            alt=""
+            aria-hidden
+          />
+          <div className={styles.heroLogo} data-hero-logo>
+            <KinayaLogo className="klogo" />
+          </div>
+          <div className={styles.heroFoot}>
+            <h1 className={styles.heroHeadline}>
+              Les bonnes idées n&apos;ont pas besoin de hausser le ton.
+            </h1>
+            <div className={styles.heroMeta}>
+              Agence créative
+              <span className={styles.dot}>·</span>
+              Alger
+              <span className={styles.dot}>·</span>
+              36.7°N
+            </div>
+          </div>
         </div>
       </section>
 
