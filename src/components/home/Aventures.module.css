@@ -87,21 +87,21 @@
   aspect-ratio: 2 / 3;
   z-index: 7;
 }
-/* clap (chaud), bas-centre */
-.p7 {
-  left: 43%;
+/* storage, bas-centre */
+.p8 {
+  left: 40%;
   top: 47%;
   width: 31%;
   aspect-ratio: 3 / 2;
-  z-index: 6;
+  z-index: 5;
 }
-/* storage, bas-droite */
-.p8 {
+/* clap (chaud / lueur orange) — poussé en bas-droite du cadre */
+.p7 {
   left: 70%;
-  top: 60%;
+  top: 62%;
   width: 30%;
   aspect-ratio: 3 / 2;
-  z-index: 5;
+  z-index: 8;
 }
 /* four, en retrait gauche derrière la maîtresse */
 .p9 {

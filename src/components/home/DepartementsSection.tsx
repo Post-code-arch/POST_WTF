@@ -18,6 +18,7 @@ const DEPARTEMENTS: Dept[] = [
     desc: "Le pôle marque. On accompagne une entreprise de la réflexion stratégique jusqu’aux supports finaux : on étudie son marché et son positionnement, on définit son identité, on conçoit son site et ses outils de communication.",
     tags: ["Stratégie", "Identité", "Web", "Production"],
     color: "#2a2620",
+    image: "/home/departements/studio.webp",
   },
   {
     name: "Atelier",
