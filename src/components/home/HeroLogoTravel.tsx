@@ -55,6 +55,9 @@ export default function HeroLogoTravel() {
       travel.style.opacity = "1"; // instance unique : pas de crossfade, pas de doublon
       // signal « logo calé » : la nav révèle ses liens une fois le voyage fini
       const docked = p >= 0.96;
+      // dans le hero : blanc plein (pas de fusion) pour une opacité franche ;
+      // une fois calé dans la nav : « difference » pour s'adapter aux fonds.
+      travel.style.mixBlendMode = docked ? "difference" : "normal";
       if (docked !== lastDocked) {
         lastDocked = docked;
         window.dispatchEvent(new CustomEvent("kinaya:dock", { detail: docked }));

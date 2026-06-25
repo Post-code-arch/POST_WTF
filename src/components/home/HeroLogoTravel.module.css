@@ -6,7 +6,7 @@
   opacity: 0;
   line-height: 0;
   color: #fff;
-  mix-blend-mode: difference; /* s'adapte au fond comme la nav */
+  mix-blend-mode: normal; /* hero : blanc plein ; passe en « difference » une fois calé (JS) */
   pointer-events: none;
   will-change: left, top, width, opacity;
 }

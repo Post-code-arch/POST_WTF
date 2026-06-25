@@ -151,8 +151,9 @@
 }
 
 /* ---------------- INTRO ---------------- */
+/* couleurs inversées : fond sombre, texte clair */
 .intro {
-  background: var(--cream);
+  background: var(--espresso);
   padding: clamp(70px, 12vw, 150px) var(--pad);
 }
 .introInner {
@@ -180,7 +181,18 @@
 /* ---------------- WORK ---------------- */
 .work {
   background: var(--cream);
-  padding: 0 var(--pad) clamp(80px, 12vw, 160px);
+  padding: clamp(70px, 11vw, 150px) var(--pad) clamp(80px, 12vw, 160px);
+}
+.workTitle {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(32px, 5.2vw, 82px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--ink);
+  text-wrap: balance;
+  margin: 0 auto clamp(48px, 7vw, 110px);
 }
 .workGrid {
   display: grid;

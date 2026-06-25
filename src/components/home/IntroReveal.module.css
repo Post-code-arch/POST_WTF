@@ -8,7 +8,7 @@
   font-size: clamp(20px, 2.5vw, 33px);
   line-height: 1.32;
   letter-spacing: 0.005em;
-  color: var(--ink);
+  color: var(--cream);
 }
 
 /* chaque mot : --w 0 → 1 pilote opacité, flou et glissement vertical.
@@ -27,7 +27,7 @@
   display: inline-block;
   width: 0.62em;
   height: 0.62em;
-  background: var(--ink);
+  background: var(--cream);
   margin-right: 0.5em;
   vertical-align: baseline;
 }

@@ -52,8 +52,8 @@ export default function HomeStatic({ works }: { works: Work[] }) {
         </div>
       </section>
 
-      {/* INTRO — révélation radiale au scroll */}
-      <section className={styles.intro} data-theme="light">
+      {/* INTRO — révélation mot à mot au scroll, couleurs inversées (fond sombre) */}
+      <section className={styles.intro} data-theme="dark">
         <div className={styles.introInner}>
           <IntroReveal />
         </div>
@@ -61,6 +61,11 @@ export default function HomeStatic({ works }: { works: Work[] }) {
 
       {/* WORK */}
       <section className={styles.work} data-theme="light">
+        <h2 className={styles.workTitle}>
+          L&rsquo;art de dire une chose
+          <br />
+          pour en signifier une autre.
+        </h2>
         <div className={styles.workGrid}>
           {featured.map((w) => (
             <div key={w.slug} className={styles.workItem}>
