@@ -8,8 +8,8 @@ annee: 2026
 champs: Identité · Charte · Content · Site
 ideeDirectrice: « Là où d'autres exécutent, IMLEAD arbitre. »
 suivant:
-  titre: Spoon Atelier
-  slug: spoon-atelier
+  titre: Astarté Conseils
+  slug: astarte-conseils
 ---
 
 ## (01) Lecture — (Le dossier)
