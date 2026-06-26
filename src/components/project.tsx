@@ -113,6 +113,80 @@ export function Media({ v }: { v: Visual }) {
   );
 }
 
+/* ---------- GALERIE (compositions multi-visuels) ----------
+   Cellules cadrées (cover) : duo côte à côte, mosaïque 1 grande + 2 empilées.
+   Les visuels seuls restent en <Media> pleine largeur (non recadrés). */
+
+function Cell({ v, className }: { v: Visual; className?: string }) {
+  return (
+    <div className={`gal-cell${className ? ` ${className}` : ""}`}>
+      <MediaInner v={v} />
+    </div>
+  );
+}
+
+function Duo({ a, b }: { a: Visual; b: Visual }) {
+  return (
+    <Reveal className="gal gal-duo">
+      <Cell v={a} />
+      <Cell v={b} />
+    </Reveal>
+  );
+}
+
+function Mosaic({
+  big,
+  a,
+  b,
+  flip,
+}: {
+  big: Visual;
+  a: Visual;
+  b: Visual;
+  flip?: boolean;
+}) {
+  return (
+    <Reveal className={`gal gal-mosaic${flip ? " flip" : ""}`}>
+      <Cell v={big} className="cell-big" />
+      <Cell v={a} className="cell-a" />
+      <Cell v={b} className="cell-b" />
+    </Reveal>
+  );
+}
+
+/** dispose une liste de visuels en compositions : 1→pleine largeur,
+ *  2→duo, 3→mosaïque, 4→duo+duo, ≥5→mosaïque puis le reste. */
+export function Gallery({ visuals }: { visuals: Visual[] }) {
+  const blocks: ReactNode[] = [];
+  let i = 0;
+  let flip = false;
+  while (i < visuals.length) {
+    const left = visuals.length - i;
+    if (left === 1) {
+      blocks.push(<Media key={visuals[i].src} v={visuals[i]} />);
+      i += 1;
+    } else if (left === 3 || left >= 5) {
+      blocks.push(
+        <Mosaic
+          key={visuals[i].src}
+          big={visuals[i]}
+          a={visuals[i + 1]}
+          b={visuals[i + 2]}
+          flip={flip}
+        />
+      );
+      i += 3;
+      flip = !flip;
+    } else {
+      blocks.push(
+        <Duo key={visuals[i].src} a={visuals[i]} b={visuals[i + 1]} />
+      );
+      i += 2;
+    }
+  }
+  return <>{blocks}</>;
+}
+
 /* ---------- MANIFESTO (idée directrice) ---------- */
 
 export function Manifesto({

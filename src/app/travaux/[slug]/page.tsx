@@ -7,6 +7,7 @@ import {
   Section,
   Details,
   Media,
+  Gallery,
   Manifesto,
   Testimonial,
   NextCase,
@@ -89,16 +90,20 @@ export default async function ProjectPage({
                 ))}
                 {s.bloc === "lecture" && <Details meta={meta} />}
               </Section>
-              {sectionVisuals.map((v) => (
-                <Media key={v.src} v={v} />
-              ))}
+              {sectionVisuals.length === 1 ? (
+                <Media v={sectionVisuals[0]} />
+              ) : sectionVisuals.length > 1 ? (
+                <Gallery visuals={sectionVisuals} />
+              ) : null}
             </Fragment>
           );
         })}
 
-        {assets.map((v) => (
-          <Media key={v.src} v={v} />
-        ))}
+        {assets.length === 1 ? (
+          <Media v={assets[0]} />
+        ) : assets.length > 1 ? (
+          <Gallery visuals={assets} />
+        ) : null}
 
         {meta.ideeDirectrice && <Manifesto>{meta.ideeDirectrice}</Manifesto>}
         {meta.temoignage && (

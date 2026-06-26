@@ -370,6 +370,76 @@ video {
   object-fit: contain;
 }
 
+/* ---------- GALERIE (compositions multi-visuels) ----------
+   Cellules cadrées (cover) : duo côte à côte, mosaïque 1 grande + 2 empilées.
+   (Les visuels seuls passent par .media-full, eux jamais recadrés.) */
+.gal {
+  display: grid;
+  gap: clamp(12px, 2vw, 28px);
+  padding: 0 var(--gutter) clamp(20px, 3vw, 40px);
+}
+.gal-duo {
+  grid-template-columns: 1fr 1fr;
+}
+.gal-mosaic {
+  grid-template-columns: 1fr 1fr;
+}
+.gal-mosaic .cell-big {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+.gal-mosaic .cell-a {
+  grid-column: 2;
+  grid-row: 1;
+}
+.gal-mosaic .cell-b {
+  grid-column: 2;
+  grid-row: 2;
+}
+.gal-mosaic.flip .cell-big {
+  grid-column: 2;
+}
+.gal-mosaic.flip .cell-a,
+.gal-mosaic.flip .cell-b {
+  grid-column: 1;
+}
+.gal-cell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--espresso);
+}
+.gal-duo .gal-cell {
+  aspect-ratio: 4 / 5;
+}
+.gal-mosaic .cell-a,
+.gal-mosaic .cell-b {
+  aspect-ratio: 16 / 10;
+}
+.gal-cell img,
+.gal-cell video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 760px) {
+  .gal-duo,
+  .gal-mosaic {
+    grid-template-columns: 1fr;
+  }
+  .gal-mosaic .cell-big,
+  .gal-mosaic .cell-a,
+  .gal-mosaic .cell-b {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .gal-mosaic .cell-big {
+    aspect-ratio: 4 / 5;
+  }
+}
+
 /* manifesto interstitial — scroll-réactif */
 .manifesto {
   background: var(--cream);
