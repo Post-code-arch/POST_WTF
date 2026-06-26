@@ -23,6 +23,7 @@ export const services: Service[] = [
       "cadrage stratégique.",
     ],
     bg: "linear-gradient(135deg,#6b8cae,#3a5573)",
+    image: "/home/aventures/av-1.webp",
   },
   {
     name: "Branding",
@@ -36,6 +37,7 @@ export const services: Service[] = [
       "Cadrage stratégique.",
     ],
     bg: "linear-gradient(135deg,#2f5fc4,#1a3a8a)",
+    image: "/travaux/astarte-conseils/07-fabrication-logo.webp",
   },
   {
     name: "Digital",
@@ -49,6 +51,7 @@ export const services: Service[] = [
       "Animation web",
     ],
     bg: "linear-gradient(135deg,#caa07a,#7a5a3a)",
+    image: "/travaux/astarte-conseils/03-application-site.webp",
   },
   {
     name: "Production",
@@ -57,5 +60,6 @@ export const services: Service[] = [
     tagsLeft: ["Film documentaire", "Motion Design", "Compositing", "Pipeline AI"],
     tagsRight: ["Marque blanche", "Direction technique"],
     bg: "linear-gradient(135deg,#3a3228,#1a1510)",
+    image: "/home/aventures/av-7.webp",
   },
 ];
