@@ -4,34 +4,13 @@ import Marquee from "./Marquee";
 import Reveal from "./Reveal";
 import type { ProjectMeta, Visual } from "@/lib/projects";
 
-/* ---------- helpers visuels ---------- */
-
-function byN(visuals: Visual[], n: number): Visual | undefined {
-  return visuals.find((v) => v.n === n);
-}
-
-function variantClass(slot: Visual["slot"]): string {
-  if (slot === "vibe") return "vibe";
-  if (slot === "motion") return "motion";
-  if (slot === "asset") return "cream";
-  return "";
-}
+/* ---------- média ---------- */
 
 function MediaInner({ v }: { v: Visual }) {
-  if (!v.src) return null; // placeholder via .ph::before
-  if (v.slot === "motion") {
-    return (
-      <video
-        src={v.src}
-        autoPlay
-        loop
-        muted
-        playsInline
-        aria-label={v.alt || v.label}
-      />
-    );
+  if (v.isVideo) {
+    return <video src={v.src} autoPlay loop muted playsInline aria-hidden />;
   }
-  return <img src={v.src} alt={v.alt || ""} />;
+  return <img src={v.src} alt="" />;
 }
 
 /* ---------- HERO ---------- */
@@ -39,18 +18,17 @@ function MediaInner({ v }: { v: Visual }) {
 export function Hero({
   titre,
   sousTitre,
-  visuals,
+  hero,
 }: {
   titre: string;
   sousTitre: string;
-  visuals: Visual[];
+  hero?: Visual;
 }) {
-  const v = byN(visuals, 1);
   return (
     <header className="hero">
-      {v && (
+      {hero && (
         <div className="hero-media" aria-hidden>
-          <MediaInner v={v} />
+          <MediaInner v={hero} />
         </div>
       )}
       <h1 className="hero-title">
@@ -71,13 +49,11 @@ export function Section({
   num,
   kicker,
   heading,
-  level = 2,
   children,
 }: {
   num: string;
   kicker: string;
   heading: string;
-  level?: 2 | 3 | "2" | "3";
   children: ReactNode;
 }) {
   return (
@@ -89,26 +65,10 @@ export function Section({
         {kicker}
       </div>
       <div className="sec-body">
-        {Number(level) === 3 ? <h3>{heading}</h3> : <h2>{heading}</h2>}
+        <h2>{heading}</h2>
         {children}
       </div>
     </Reveal>
-  );
-}
-
-/* liste « ce qu'on a posé / fabriqué / livré » */
-export function Did({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="did">
-      <div className="did-label">{label}</div>
-      {children}
-    </div>
   );
 }
 
@@ -141,39 +101,13 @@ export function Details({ meta }: { meta: ProjectMeta }) {
   );
 }
 
-/* ---------- MEDIA ---------- */
+/* ---------- MEDIA (un visuel pleine largeur, jamais recadré) ---------- */
 
-export function Media({ n, visuals }: { n: number; visuals: Visual[] }) {
-  const v = byN(visuals, n);
-  if (!v) return null;
+export function Media({ v }: { v: Visual }) {
   return (
     <Reveal className="media-full">
-      <div className={["ph", variantClass(v.slot)].filter(Boolean).join(" ")} data-label={v.label}>
+      <div className={`ph${v.slot === "vibe" ? " vibe" : ""}`}>
         <MediaInner v={v} />
-      </div>
-    </Reveal>
-  );
-}
-
-export function MediaDuo({
-  a,
-  b,
-  visuals,
-}: {
-  a: number;
-  b: number;
-  visuals: Visual[];
-}) {
-  const va = byN(visuals, a);
-  const vb = byN(visuals, b);
-  if (!va || !vb) return null;
-  return (
-    <Reveal className="media-duo">
-      <div className={["ph", variantClass(va.slot)].filter(Boolean).join(" ")} data-label={va.label}>
-        <MediaInner v={va} />
-      </div>
-      <div className={["ph", variantClass(vb.slot)].filter(Boolean).join(" ")} data-label={vb.label}>
-        <MediaInner v={vb} />
       </div>
     </Reveal>
   );

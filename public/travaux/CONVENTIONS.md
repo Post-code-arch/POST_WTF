@@ -6,7 +6,7 @@ co-localisés. On enrichit projet par projet.
 ## Arborescence
 
 ```
-travaux/
+public/travaux/
 ├─ CONVENTIONS.md            ← ce fichier (guide, pas un projet)
 ├─ EXEMPLE-index.md          ← gabarit à copier (fill-in)
 └─ <slug>/                   ← un dossier = un projet
@@ -17,6 +17,10 @@ travaux/
    ├─ 04-fabrication-typographie.png
    └─ 05-application-mockup.png
 ```
+
+> Les dossiers projet vivent sous `public/travaux/` : les médias sont alors
+> servis directement (CDN) à `/travaux/<slug>/<fichier>`, sans étape de build.
+> L'app lit `index.md` et déduit les visuels du nommage `NN-bloc`.
 
 - **slug** : minuscules, tirets (`astarte-conseils`, `spoon-atelier`, `imlead`).
   Le nom du dossier = le `slug` du frontmatter.

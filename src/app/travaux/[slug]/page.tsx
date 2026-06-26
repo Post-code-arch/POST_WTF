@@ -1,23 +1,20 @@
 import { notFound } from "next/navigation";
+import { Fragment } from "react";
 import type { Metadata } from "next";
-import matter from "gray-matter";
-import { compileMDX } from "next-mdx-remote/rsc";
 import Nav from "@/components/Nav";
 import {
   Hero,
   Section,
-  Did,
   Details,
   Media,
-  MediaDuo,
   Manifesto,
   Testimonial,
   NextCase,
 } from "@/components/project";
 import {
+  getProject,
   getProjectSlugs,
-  getProjectSource,
-  type ProjectMeta,
+  SECTION_VISUAL_SLOT,
 } from "@/lib/projects";
 
 export const dynamicParams = false;
@@ -32,13 +29,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const source = getProjectSource(slug);
-  if (!source) return {};
-  const { data } = matter(source);
-  const meta = data as ProjectMeta;
+  const project = getProject(slug);
+  if (!project) return {};
   return {
-    title: meta.titre,
-    description: meta.sousTitre,
+    title: project.meta.titre,
+    description: project.meta.sousTitre,
   };
 }
 
@@ -48,44 +43,56 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const source = getProjectSource(slug);
-  if (!source) notFound();
+  const project = getProject(slug);
+  if (!project) notFound();
 
-  const meta = matter(source).data as ProjectMeta;
-  const { visuels } = meta;
-
-  // Composants MDX, liés au frontmatter (visuels / méta du projet).
-  const components = {
-    Section,
-    Did,
-    Manifesto,
-    Details: () => <Details meta={meta} />,
-    // Les attributs MDX arrivent en chaînes — on coerce en nombre.
-    Media: ({ n }: { n: string | number }) => (
-      <Media n={Number(n)} visuals={visuels} />
-    ),
-    MediaDuo: ({ a, b }: { a: string | number; b: string | number }) => (
-      <MediaDuo a={Number(a)} b={Number(b)} visuals={visuels} />
-    ),
-  };
-
-  const { content } = await compileMDX({
-    source,
-    components,
-    options: { parseFrontmatter: true },
-  });
+  const { meta, sections, visuals } = project;
+  const hero = visuals.find((v) => v.slot === "hero") ?? visuals[0];
+  const assets = visuals.filter((v) => v.slot === "asset");
 
   return (
     <>
       <Nav />
       <main>
-        <Hero titre={meta.titre} sousTitre={meta.sousTitre} visuals={visuels} />
-        {content}
-        <Testimonial
-          citation={meta.temoignage.citation}
-          source={meta.temoignage.source}
-        />
-        <NextCase titre={meta.suivant.titre} slug={meta.suivant.slug} />
+        <Hero titre={meta.titre} sousTitre={meta.sousTitre} hero={hero} />
+
+        {sections.map((s, i) => {
+          const sectionVisuals = visuals.filter(
+            (v) => v.slot === SECTION_VISUAL_SLOT[s.bloc]
+          );
+          return (
+            <Fragment key={s.bloc}>
+              <Section
+                num={String(i + 1).padStart(2, "0")}
+                kicker={s.kicker}
+                heading={s.heading}
+              >
+                {s.body.map((para, k) => (
+                  <p key={k}>{para}</p>
+                ))}
+                {s.bloc === "lecture" && <Details meta={meta} />}
+              </Section>
+              {sectionVisuals.map((v) => (
+                <Media key={v.src} v={v} />
+              ))}
+            </Fragment>
+          );
+        })}
+
+        {assets.map((v) => (
+          <Media key={v.src} v={v} />
+        ))}
+
+        {meta.ideeDirectrice && <Manifesto>{meta.ideeDirectrice}</Manifesto>}
+        {meta.temoignage && (
+          <Testimonial
+            citation={meta.temoignage.citation}
+            source={meta.temoignage.source}
+          />
+        )}
+        {meta.suivant && (
+          <NextCase titre={meta.suivant.titre} slug={meta.suivant.slug} />
+        )}
       </main>
     </>
   );

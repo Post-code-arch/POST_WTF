@@ -34,28 +34,30 @@ suivant:                      # (optionnel) projet suivant (nav bas de page)
 
 <!--
   CORPS — 4 sections, voix Bruno × A, pronom « on », ~250-450 mots/section.
-  Garde les 4 titres tels quels. Donne-moi la matière brute (ce qui s'est
-  passé) ; je rédige dans la voix. Les visuels s'intercalent tout seuls via
-  leur nommage NN-bloc.
+  Titre de section : « Bloc · ta phrase d'accroche ». Le mot-clé du bloc
+  (Lecture / Direction / Fabrication / Application) sert au mapping ; la phrase
+  après le « · » s'affiche en titre. Le kicker (« Le dossier », etc.) est ajouté
+  automatiquement. Donne-moi la matière brute ; je rédige dans la voix. Les
+  visuels s'intercalent tout seuls via leur nommage NN-bloc.
 -->
 
-## 01 · Lecture — Le dossier
+## Lecture · On a lu le terrain entre les lignes.
 
 Ce qu'on a trouvé en arrivant : le contexte, le problème réel, ce qui se
 voyait et ce qui ne se voyait pas. (matière : situation de départ, secteur,
 ce qui clochait)
 
-## 02 · Direction — Ce qu'on a posé
+## Direction · On a posé l'axe avant tout le reste.
 
 L'axe, le parti-pris, le ton. Pourquoi cette direction et pas une autre.
 (matière : l'idée directrice, les choix d'identité / de ton)
 
-## 03 · Fabrication — Ce qu'on a fabriqué
+## Fabrication · On a fabriqué le système, pièce par pièce.
 
 Le concret : système graphique, typographie, motion, gabarits, site.
 (matière : ce qui a été produit, les pièces, les outils)
 
-## 04 · Application — Ce qu'on a livré
+## Application · On a livré, et laissé la main.
 
 Le résultat en situation : supports finaux, mise en œuvre, autonomie laissée
 au client. (matière : livrables, déploiement, suite)
