@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import {
@@ -18,6 +18,23 @@ import {
 } from "@/lib/projects";
 
 export const dynamicParams = false;
+
+/** rendu inline minimal : **gras** et *italique* */
+function inline(text: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*/g;
+  let last = 0;
+  let key = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) nodes.push(text.slice(last, m.index));
+    if (m[1] !== undefined) nodes.push(<strong key={key++}>{m[1]}</strong>);
+    else nodes.push(<em key={key++}>{m[2]}</em>);
+    last = re.lastIndex;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return nodes;
+}
 
 export function generateStaticParams() {
   return getProjectSlugs().map((slug) => ({ slug }));
@@ -68,7 +85,7 @@ export default async function ProjectPage({
                 heading={s.heading}
               >
                 {s.body.map((para, k) => (
-                  <p key={k}>{para}</p>
+                  <p key={k}>{inline(para)}</p>
                 ))}
                 {s.bloc === "lecture" && <Details meta={meta} />}
               </Section>

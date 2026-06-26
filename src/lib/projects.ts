@@ -92,6 +92,16 @@ const KICKER: Record<SectionBloc, string> = {
   fabrication: "Ce qu'on a fabriqué",
   application: "Ce qu'on a livré",
 };
+const CANONICAL: Record<SectionBloc, string> = {
+  lecture: "Lecture",
+  direction: "Direction",
+  fabrication: "Fabrication",
+  application: "Application",
+};
+/** lignes du bloc « (Le dossier) » écrit à la main dans le corps — on les
+ *  retire (le dossier est rendu depuis le frontmatter). */
+const DOSSIER_LINE =
+  /^\s*(\*\*\(?\s*le dossier\s*\)?\*\*|type\s*·|secteur\s*·|ann[ée]e\s*·|champs\s*·)/i;
 /** quel bloc de visuel alimente chaque section (Lecture ← visuels « vibe ») */
 export const SECTION_VISUAL_SLOT: Record<SectionBloc, VisualSlot> = {
   lecture: "vibe",
@@ -122,16 +132,20 @@ function detectBloc(heading: string): SectionBloc | null {
   return null;
 }
 
-/** retire les préfixes « NN · » et « Bloc — » pour ne garder que la phrase. */
-function cleanHeading(raw: string): string {
+/** retire « (01) », « NN · », parenthèses « (Le dossier) » et le mot-clé de bloc
+ *  pour ne garder que la phrase éditoriale ; à défaut, le label canonique. */
+function cleanHeading(raw: string, bloc: SectionBloc): string {
   const h = raw
-    .replace(/^\s*\d+\s*[·.\-—:]*\s*/, "")
+    .replace(/\(\s*\d+\s*\)/g, " ") // (01)
+    .replace(/\([^)]*\)/g, " ") // (Le dossier)
+    .replace(/^\s*\d+[\s·.\-—:]*/, " ") // NN en tête
     .replace(
-      /^(lecture|direction|fabrication|application)\s*[·.\-—:]*\s*/i,
-      ""
+      /^[\s·.\-—:]*(lecture|direction|fabrication|application)[\s·.\-—:]*/i,
+      " "
     )
+    .replace(/[\s·.\-—:]+$/, "")
     .trim();
-  return h || raw.trim();
+  return h || CANONICAL[bloc];
 }
 
 function parseSections(body: string): ProjectSection[] {
@@ -143,9 +157,13 @@ function parseSections(body: string): ProjectSection[] {
   for (const part of parts) {
     const nl = part.indexOf("\n");
     const rawHeading = (nl === -1 ? part : part.slice(0, nl)).trim();
-    const rest = nl === -1 ? "" : part.slice(nl + 1).trim();
     const bloc = detectBloc(rawHeading);
     if (!bloc) continue;
+    const rest = (nl === -1 ? "" : part.slice(nl + 1))
+      .split("\n")
+      .filter((l) => !DOSSIER_LINE.test(l))
+      .join("\n")
+      .trim();
     const paragraphs = rest
       .split(/\n\s*\n/)
       .map((p) => p.replace(/\s*\n\s*/g, " ").trim())
@@ -153,7 +171,7 @@ function parseSections(body: string): ProjectSection[] {
     out.push({
       bloc,
       kicker: KICKER[bloc],
-      heading: cleanHeading(rawHeading),
+      heading: cleanHeading(rawHeading, bloc),
       body: paragraphs,
     });
   }
@@ -187,7 +205,16 @@ export function getProject(slug: string): Project | null {
   const { data, content } = matter(fs.readFileSync(file, "utf8"));
   const meta = { slug, ...(data as Record<string, unknown>) } as ProjectMeta;
   if (!meta.titre) meta.titre = slug;
-  if (!Array.isArray(meta.champs)) meta.champs = [];
+  // champs accepté en liste YAML OU en chaîne « a · b · c »
+  const rawChamps = (data as Record<string, unknown>).champs;
+  meta.champs = Array.isArray(rawChamps)
+    ? (rawChamps as string[])
+    : typeof rawChamps === "string"
+      ? rawChamps
+          .split(/\s*[·,]\s*/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+      : [];
   return {
     meta,
     sections: parseSections(content),
