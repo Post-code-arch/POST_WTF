@@ -67,6 +67,11 @@ export default async function ProjectPage({
   const { meta, sections, visuals } = project;
   const hero = visuals.find((v) => v.slot === "hero") ?? visuals[0];
   const assets = visuals.filter((v) => v.slot === "asset");
+  const nextProject = meta.suivant ? getProject(meta.suivant.slug) : null;
+  const nextHero = nextProject
+    ? nextProject.visuals.find((v) => v.slot === "hero") ??
+      nextProject.visuals[0]
+    : undefined;
 
   return (
     <>
@@ -113,7 +118,11 @@ export default async function ProjectPage({
           />
         )}
         {meta.suivant && (
-          <NextCase titre={meta.suivant.titre} slug={meta.suivant.slug} />
+          <NextCase
+            titre={meta.suivant.titre}
+            slug={meta.suivant.slug}
+            preview={nextHero}
+          />
         )}
       </main>
     </>

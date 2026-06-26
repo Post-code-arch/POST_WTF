@@ -229,10 +229,23 @@ export function Testimonial({
 
 /* ---------- NEXT CASE ---------- */
 
-export function NextCase({ titre, slug }: { titre: string; slug: string }) {
+export function NextCase({
+  titre,
+  slug,
+  preview,
+}: {
+  titre: string;
+  slug: string;
+  preview?: Visual;
+}) {
   return (
     <div className="next">
       <div className="small">Projet suivant</div>
+      {preview && (
+        <div className="next-preview" aria-hidden>
+          <MediaInner v={preview} />
+        </div>
+      )}
       <Link href={`/travaux/${slug}`}>
         <Marquee items={titre} repeat={3} />
       </Link>

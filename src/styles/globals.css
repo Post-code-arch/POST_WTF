@@ -371,12 +371,14 @@ video {
 }
 
 /* ---------- GALERIE (compositions multi-visuels) ----------
-   Cellules cadrées (cover) : duo côte à côte, mosaïque 1 grande + 2 empilées.
-   (Les visuels seuls passent par .media-full, eux jamais recadrés.) */
+   Duo côte à côte, mosaïque 1 grande + 2 empilées — jamais recadrés :
+   chaque cellule garde le ratio naturel du visuel, les rangées de la
+   grille s'ajustent à son contenu. */
 .gal {
   display: grid;
   gap: clamp(12px, 2vw, 28px);
   padding: 0 var(--gutter) clamp(20px, 3vw, 40px);
+  align-items: start;
 }
 .gal-duo {
   grid-template-columns: 1fr 1fr;
@@ -391,6 +393,7 @@ video {
 .gal-mosaic .cell-a {
   grid-column: 2;
   grid-row: 1;
+  align-self: end;
 }
 .gal-mosaic .cell-b {
   grid-column: 2;
@@ -404,25 +407,14 @@ video {
   grid-column: 1;
 }
 .gal-cell {
-  position: relative;
-  overflow: hidden;
   border-radius: 2px;
   background: var(--espresso);
 }
-.gal-duo .gal-cell {
-  aspect-ratio: 4 / 5;
-}
-.gal-mosaic .cell-a,
-.gal-mosaic .cell-b {
-  aspect-ratio: 16 / 10;
-}
 .gal-cell img,
 .gal-cell video {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 @media (max-width: 760px) {
   .gal-duo,
@@ -434,9 +426,7 @@ video {
   .gal-mosaic .cell-b {
     grid-column: 1;
     grid-row: auto;
-  }
-  .gal-mosaic .cell-big {
-    aspect-ratio: 4 / 5;
+    align-self: stretch;
   }
 }
 
@@ -529,6 +519,18 @@ video {
   text-transform: uppercase;
   opacity: 0.6;
   margin-bottom: 30px;
+}
+.next-preview {
+  width: clamp(220px, 30vw, 420px);
+  margin-bottom: clamp(24px, 4vw, 48px);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.next-preview img,
+.next-preview video {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 .next a {
   font-family: var(--fd);
