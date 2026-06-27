@@ -1,7 +1,7 @@
 import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
-import Reveal from "@/components/Reveal";
+import RevealWords from "./RevealWords";
 import HeroLogoTravel from "./HeroLogoTravel";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
@@ -40,7 +40,9 @@ export default function HomeStatic({ works }: { works: Work[] }) {
           </div>
           <div className={styles.heroFoot}>
             <h1 className={styles.heroHeadline}>
-              Les bonnes idées n&apos;ont pas besoin de hausser le ton.
+              Les bonnes idées n&apos;ont pas
+              <br />
+              besoin de hausser le ton.
             </h1>
             <div className={styles.heroMeta}>
               Agence créative
@@ -62,11 +64,10 @@ export default function HomeStatic({ works }: { works: Work[] }) {
 
       {/* WORK */}
       <section className={styles.work} data-theme="light">
-        <Reveal as="h2" className={styles.workTitle}>
-          L&rsquo;art de dire une chose
-          <br />
-          pour en signifier une autre.
-        </Reveal>
+        <RevealWords
+          className={styles.workTitle}
+          lines={["L’art de dire une chose", "pour en signifier une autre."]}
+        />
         <div className={styles.workGrid}>
           {featured.map((w) => (
             <div key={w.slug} className={styles.workItem}>
