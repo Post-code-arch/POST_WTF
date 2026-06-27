@@ -8,8 +8,8 @@ annee: 2026
 champs: Identité · Charte · Visualisation 3D · Fiches produit
 ideeDirectrice: « Chaque meuble est une pièce, pas un produit. »
 suivant:
-  titre: Astarté Conseils
-  slug: astarte-conseils
+  titre: Marpharmal
+  slug: marpharmal
 ---
 
 ## (01) Lecture — (Le dossier)
