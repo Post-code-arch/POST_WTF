@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { imageSize } from "image-size";
 
 /* ════════════════════════════════════════════════════════════════
    Loader des pages-objets « travaux ».
@@ -26,6 +27,8 @@ export interface Visual {
   /** URL servie (/travaux/<slug>/<fichier>) */
   src: string;
   isVideo: boolean;
+  /** ratio largeur/hauteur naturel (pour composer des galeries sans recadrage) */
+  ratio: number;
 }
 
 export interface Temoignage {
@@ -179,6 +182,19 @@ function parseSections(body: string): ProjectSection[] {
   return out;
 }
 
+/** ratio par défaut pour les vidéos (la sonde de dimensions ne lit pas les conteneurs vidéo) */
+const DEFAULT_VIDEO_RATIO = 16 / 9;
+
+function readRatio(absPath: string, isVideo: boolean): number {
+  if (isVideo) return DEFAULT_VIDEO_RATIO;
+  try {
+    const { width, height } = imageSize(fs.readFileSync(absPath));
+    return width / height;
+  } catch {
+    return 1;
+  }
+}
+
 function readVisuals(slug: string): Visual[] {
   const dir = path.join(TRAVAUX_DIR, slug);
   return fs
@@ -188,11 +204,13 @@ function readVisuals(slug: string): Visual[] {
       if (!m) return null;
       let slot = m[2].toLowerCase() as VisualSlot;
       if (!KNOWN_SLOTS.includes(slot)) slot = "asset";
+      const isVideo = VIDEO_EXT.test(f);
       return {
         n: parseInt(m[1], 10),
         slot,
         src: `/travaux/${slug}/${f}`,
-        isVideo: VIDEO_EXT.test(f),
+        isVideo,
+        ratio: readRatio(path.join(dir, f), isVideo),
       } as Visual;
     })
     .filter((v): v is Visual => v !== null)

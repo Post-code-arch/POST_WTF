@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import Marquee from "./Marquee";
 import Reveal from "./Reveal";
@@ -114,52 +114,43 @@ export function Media({ v }: { v: Visual }) {
 }
 
 /* ---------- GALERIE (compositions multi-visuels) ----------
-   Cellules cadrées (cover) : duo côte à côte, mosaïque 1 grande + 2 empilées.
-   Les visuels seuls restent en <Media> pleine largeur (non recadrés). */
+   Rangées « justifiées » : chaque cellule garde le ratio naturel de son
+   visuel (flex-basis 0, flex-grow/shrink = ratio) et la rangée elle-même
+   est mise à l'échelle (aspect-ratio = somme des ratios) — aucun visuel
+   n'est jamais recadré, et la rangée occupe toujours 100% de la largeur. */
 
-function Cell({ v, className }: { v: Visual; className?: string }) {
+function Cell({ v }: { v: Visual }) {
   return (
-    <div className={`gal-cell${className ? ` ${className}` : ""}`}>
+    <div
+      className="gal-cell"
+      style={
+        {
+          flex: `${v.ratio} ${v.ratio} 0`,
+          "--ratio": v.ratio,
+        } as CSSProperties
+      }
+    >
       <MediaInner v={v} />
     </div>
   );
 }
 
-function Duo({ a, b }: { a: Visual; b: Visual }) {
+function Row({ visuals }: { visuals: Visual[] }) {
+  const sumRatio = visuals.reduce((s, v) => s + v.ratio, 0);
   return (
-    <Reveal className="gal gal-duo">
-      <Cell v={a} />
-      <Cell v={b} />
+    <Reveal className="gal" style={{ aspectRatio: sumRatio }}>
+      {visuals.map((v) => (
+        <Cell key={v.src} v={v} />
+      ))}
     </Reveal>
   );
 }
 
-function Mosaic({
-  big,
-  a,
-  b,
-  flip,
-}: {
-  big: Visual;
-  a: Visual;
-  b: Visual;
-  flip?: boolean;
-}) {
-  return (
-    <Reveal className={`gal gal-mosaic${flip ? " flip" : ""}`}>
-      <Cell v={big} className="cell-big" />
-      <Cell v={a} className="cell-a" />
-      <Cell v={b} className="cell-b" />
-    </Reveal>
-  );
-}
-
-/** dispose une liste de visuels en compositions : 1→pleine largeur,
- *  2→duo, 3→mosaïque, 4→duo+duo, ≥5→mosaïque puis le reste. */
+/** dispose une liste de visuels en rangées justifiées (2 ou 3 par rangée,
+ *  jamais 1 seul — qui reste en <Media> pleine largeur, non recadré). */
 export function Gallery({ visuals }: { visuals: Visual[] }) {
   const blocks: ReactNode[] = [];
   let i = 0;
-  let flip = false;
   while (i < visuals.length) {
     const left = visuals.length - i;
     if (left === 1) {
@@ -167,19 +158,12 @@ export function Gallery({ visuals }: { visuals: Visual[] }) {
       i += 1;
     } else if (left === 3 || left >= 5) {
       blocks.push(
-        <Mosaic
-          key={visuals[i].src}
-          big={visuals[i]}
-          a={visuals[i + 1]}
-          b={visuals[i + 2]}
-          flip={flip}
-        />
+        <Row key={visuals[i].src} visuals={visuals.slice(i, i + 3)} />
       );
       i += 3;
-      flip = !flip;
     } else {
       blocks.push(
-        <Duo key={visuals[i].src} a={visuals[i]} b={visuals[i + 1]} />
+        <Row key={visuals[i].src} visuals={visuals.slice(i, i + 2)} />
       );
       i += 2;
     }

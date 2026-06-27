@@ -6,7 +6,14 @@ import { Fragment } from "react";
 const container = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.05, delayChildren: 0.04 },
+    transition: { staggerChildren: 0.9, delayChildren: 0.04 },
+  },
+};
+
+const lineVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.05 },
   },
 };
 
@@ -22,7 +29,9 @@ const word = {
 
 /**
  * Révélation mot à mot au scroll (une fois), pour les titres courts qui
- * méritent plus qu'un simple fondu en bloc.
+ * méritent plus qu'un simple fondu en bloc. Les lignes se révèlent l'une
+ * après l'autre (pas un stagger continu) : la 2e ligne attend que la 1re
+ * ait fini son défilé de mots avant de démarrer le sien.
  */
 export default function RevealWords({
   lines,
@@ -57,7 +66,11 @@ export default function RevealWords({
       {lines.map((line, li) => {
         const words = line.split(" ");
         return (
-          <Fragment key={li}>
+          <motion.span
+            key={li}
+            variants={lineVariants}
+            style={{ display: "block" }}
+          >
             {words.map((w, wi) => (
               <Fragment key={wi}>
                 <motion.span
@@ -69,8 +82,7 @@ export default function RevealWords({
                 {wi < words.length - 1 ? " " : ""}
               </Fragment>
             ))}
-            {li < lines.length - 1 && <br />}
-          </Fragment>
+          </motion.span>
         );
       })}
     </motion.h2>

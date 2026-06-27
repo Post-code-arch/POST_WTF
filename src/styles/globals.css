@@ -371,63 +371,38 @@ video {
 }
 
 /* ---------- GALERIE (compositions multi-visuels) ----------
-   Duo côte à côte, mosaïque 1 grande + 2 empilées — chaque rangée
-   s'étire à une hauteur commune (alignement, zéro blanc) et chaque
-   cellule couvre la sienne avec le recadrage minimal nécessaire. */
+   Rangée justifiée : chaque cellule reçoit flex-basis 0 + grow/shrink =
+   son propre ratio naturel (posé en style inline depuis projects.ts),
+   et la rangée a aspect-ratio = somme des ratios. La largeur disponible
+   se répartit donc exactement selon le ratio de chaque visuel — jamais
+   de recadrage, jamais d'espace vide. */
 .gal {
-  display: grid;
+  display: flex;
   gap: clamp(12px, 2vw, 28px);
-  padding: 0 var(--gutter) clamp(20px, 3vw, 40px);
-  align-items: stretch;
-}
-.gal-duo {
-  grid-template-columns: 1fr 1fr;
-}
-.gal-mosaic {
-  grid-template-columns: 1fr 1fr;
-}
-.gal-mosaic .cell-big {
-  grid-column: 1;
-  grid-row: 1 / 3;
-}
-.gal-mosaic .cell-a {
-  grid-column: 2;
-  grid-row: 1;
-}
-.gal-mosaic .cell-b {
-  grid-column: 2;
-  grid-row: 2;
-}
-.gal-mosaic.flip .cell-big {
-  grid-column: 2;
-}
-.gal-mosaic.flip .cell-a,
-.gal-mosaic.flip .cell-b {
-  grid-column: 1;
+  margin: 0 var(--gutter) clamp(20px, 3vw, 40px);
 }
 .gal-cell {
   border-radius: 2px;
   background: var(--espresso);
   overflow: hidden;
+  min-width: 0;
 }
 .gal-cell img,
 .gal-cell video {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 @media (max-width: 760px) {
-  .gal-duo,
-  .gal-mosaic {
-    grid-template-columns: 1fr;
+  .gal {
+    flex-direction: column;
+    aspect-ratio: auto !important;
   }
-  .gal-mosaic .cell-big,
-  .gal-mosaic .cell-a,
-  .gal-mosaic .cell-b {
-    grid-column: 1;
-    grid-row: auto;
-    align-self: stretch;
+  .gal-cell {
+    flex: none !important;
+    width: 100%;
+    aspect-ratio: var(--ratio);
   }
 }
 
