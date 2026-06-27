@@ -1,7 +1,8 @@
-import { Fragment, type CSSProperties, type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import Link from "next/link";
 import Marquee from "./Marquee";
 import Reveal from "./Reveal";
+import JustifiedRow from "./JustifiedRow";
 import type { ProjectMeta, Visual } from "@/lib/projects";
 
 /* ---------- média ---------- */
@@ -119,33 +120,6 @@ export function Media({ v }: { v: Visual }) {
    est mise à l'échelle (aspect-ratio = somme des ratios) — aucun visuel
    n'est jamais recadré, et la rangée occupe toujours 100% de la largeur. */
 
-function Cell({ v }: { v: Visual }) {
-  return (
-    <div
-      className="gal-cell"
-      style={
-        {
-          flex: `${v.ratio} ${v.ratio} 0`,
-          "--ratio": v.ratio,
-        } as CSSProperties
-      }
-    >
-      <MediaInner v={v} />
-    </div>
-  );
-}
-
-function Row({ visuals }: { visuals: Visual[] }) {
-  const sumRatio = visuals.reduce((s, v) => s + v.ratio, 0);
-  return (
-    <Reveal className="gal" style={{ aspectRatio: sumRatio }}>
-      {visuals.map((v) => (
-        <Cell key={v.src} v={v} />
-      ))}
-    </Reveal>
-  );
-}
-
 /** dispose une liste de visuels en rangées justifiées (2 ou 3 par rangée,
  *  jamais 1 seul — qui reste en <Media> pleine largeur, non recadré). */
 export function Gallery({ visuals }: { visuals: Visual[] }) {
@@ -158,12 +132,12 @@ export function Gallery({ visuals }: { visuals: Visual[] }) {
       i += 1;
     } else if (left === 3 || left >= 5) {
       blocks.push(
-        <Row key={visuals[i].src} visuals={visuals.slice(i, i + 3)} />
+        <JustifiedRow key={visuals[i].src} visuals={visuals.slice(i, i + 3)} />
       );
       i += 3;
     } else {
       blocks.push(
-        <Row key={visuals[i].src} visuals={visuals.slice(i, i + 2)} />
+        <JustifiedRow key={visuals[i].src} visuals={visuals.slice(i, i + 2)} />
       );
       i += 2;
     }
