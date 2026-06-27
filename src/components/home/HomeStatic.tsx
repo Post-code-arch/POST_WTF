@@ -2,6 +2,7 @@ import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
 import RevealWords from "./RevealWords";
+import HeroHeadline from "./HeroHeadline";
 import HeroLogoTravel from "./HeroLogoTravel";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
@@ -39,11 +40,10 @@ export default function HomeStatic({ works }: { works: Work[] }) {
             <KinayaLogo className="klogo" />
           </div>
           <div className={styles.heroFoot}>
-            <h1 className={styles.heroHeadline}>
-              Les bonnes idées n&apos;ont pas
-              <br />
-              besoin de hausser le ton.
-            </h1>
+            <HeroHeadline
+              className={styles.heroHeadline}
+              lines={["Les bonnes idées n'ont pas", "besoin de hausser le ton."]}
+            />
             <div className={styles.heroMeta}>
               Agence créative
               <span className={styles.dot}>·</span>
