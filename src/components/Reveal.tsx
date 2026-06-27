@@ -23,9 +23,10 @@ export default function Reveal({
 }: {
   children: ReactNode;
   className?: string;
-  as?: "div" | "section";
+  as?: "div" | "section" | "h2";
 }) {
-  const MotionTag = as === "section" ? motion.section : motion.div;
+  const MotionTag =
+    as === "section" ? motion.section : as === "h2" ? motion.h2 : motion.div;
   return (
     <MotionTag
       className={className}

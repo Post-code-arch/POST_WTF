@@ -1,6 +1,7 @@
 import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
+import Reveal from "@/components/Reveal";
 import HeroLogoTravel from "./HeroLogoTravel";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
@@ -61,11 +62,11 @@ export default function HomeStatic({ works }: { works: Work[] }) {
 
       {/* WORK */}
       <section className={styles.work} data-theme="light">
-        <h2 className={styles.workTitle}>
+        <Reveal as="h2" className={styles.workTitle}>
           L&rsquo;art de dire une chose
           <br />
           pour en signifier une autre.
-        </h2>
+        </Reveal>
         <div className={styles.workGrid}>
           {featured.map((w) => (
             <div key={w.slug} className={styles.workItem}>

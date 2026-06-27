@@ -131,8 +131,8 @@
   color: var(--cream);
 }
 .heroHeadline {
-  font-family: var(--fh);
-  font-weight: 500;
+  font-family: var(--fd);
+  font-weight: 600;
   font-size: clamp(30px, 5vw, 78px);
   line-height: 1.03;
   letter-spacing: -0.015em;
@@ -203,6 +203,10 @@
 .workItem {
   cursor: pointer;
   transition: filter 0.5s ease, opacity 0.5s ease;
+}
+.workItem a {
+  text-decoration: none;
+  color: inherit;
 }
 /* survol d'un projet : les autres se floutent et leurs titres disparaissent */
 .workGrid:hover .workItem:not(:hover) {
@@ -275,7 +279,7 @@
 /* nom du projet — Cabinet Grotesk, calé à gauche */
 .workName {
   font-family: var(--fc);
-  font-weight: 500;
+  font-weight: 600;
   font-size: clamp(17px, 1.5vw, 24px);
   letter-spacing: -0.005em;
   color: var(--ink);
