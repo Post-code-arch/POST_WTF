@@ -68,59 +68,92 @@
 }
 
 /* ---------------- HERO ---------------- */
+/* cadre clair fin autour d'une image plein cadre ; KINAYA en bandeau haut,
+   accroche + méta en bas-gauche, comme la référence. */
 .hero {
-  background: var(--espresso);
+  background: var(--cream-2);
   color: var(--cream);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: clamp(8px, 1vw, 16px) clamp(10px, 1.2vw, 18px) clamp(30px, 4vw, 50px);
+  height: 100vh;
+  padding: clamp(8px, 0.9vw, 16px);
+  box-sizing: border-box;
 }
-.heroLogo {
+.heroFrame {
+  position: relative;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--espresso);
+}
+.heroBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* voiles de lisibilité : haut (logo) et bas (accroche) */
+.heroFrame::before,
+.heroFrame::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.heroFrame::before {
+  top: 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(18, 12, 8, 0.5), rgba(18, 12, 8, 0));
+}
+.heroFrame::after {
+  bottom: 0;
+  height: 58%;
+  background: linear-gradient(0deg, rgba(18, 12, 8, 0.78), rgba(18, 12, 8, 0));
+}
+/* KINAYA — bandeau supérieur, blanc (instance voyageuse calée ici à scroll 0) */
+.heroLogo {
+  position: absolute;
+  top: clamp(10px, 1.6vw, 26px);
+  left: clamp(16px, 1.8vw, 32px);
+  right: clamp(16px, 1.8vw, 32px);
+  width: auto;
   color: var(--cream);
-  visibility: hidden; /* cible de mesure */
+  z-index: 2;
 }
-.heroBlock {
-  width: min(300px, 34vw);
-  height: clamp(58px, 6vw, 88px);
-  background: var(--orange);
-  margin: clamp(70px, 12vw, 150px) 0 0;
+.heroFoot {
+  position: absolute;
+  left: clamp(18px, 2.4vw, 48px);
+  right: clamp(18px, 2.4vw, 48px);
+  bottom: clamp(22px, 3vw, 52px);
+  z-index: 2;
+  color: var(--cream);
 }
-.heroGrow {
-  flex: 1;
+.heroHeadline {
+  font-family: var(--fd);
+  font-weight: 600;
+  font-size: clamp(30px, 5vw, 78px);
+  line-height: 1.03;
+  letter-spacing: -0.015em;
+  max-width: 17ch;
+  margin: 0 0 clamp(14px, 1.6vw, 26px);
 }
-.heroTag {
-  font-family: var(--fh);
-  font-size: clamp(17px, 1.9vw, 24px);
-  font-weight: 500;
-  line-height: 1.4;
-  text-align: center;
-  margin-bottom: 18px;
-}
-.heroChips {
+.heroMeta {
   font-family: var(--fl);
-  font-size: clamp(11px, 1vw, 13px);
+  font-size: clamp(13px, 1.1vw, 17px);
   letter-spacing: 0.02em;
-  color: rgba(242, 239, 230, 0.72);
-  text-align: center;
-  margin-bottom: 8px;
+  opacity: 0.92;
 }
-.heroChips span {
-  margin: 0 0.35em;
-  white-space: nowrap;
-}
-.heroChips span::before {
-  content: "، ";
-  direction: ltr;
-  unicode-bidi: isolate;
+.heroMeta .dot {
   opacity: 0.55;
+  margin: 0 0.45em;
 }
 
 /* ---------------- INTRO ---------------- */
+/* couleurs inversées : fond sombre, texte clair */
 .intro {
-  background: var(--cream);
+  background: var(--espresso);
   padding: clamp(70px, 12vw, 150px) var(--pad);
 }
 .introInner {
@@ -148,7 +181,18 @@
 /* ---------------- WORK ---------------- */
 .work {
   background: var(--cream);
-  padding: 0 var(--pad) clamp(80px, 12vw, 160px);
+  padding: clamp(70px, 11vw, 150px) var(--pad) clamp(80px, 12vw, 160px);
+}
+.workTitle {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(32px, 5.2vw, 82px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--ink);
+  text-wrap: balance;
+  margin: 0 auto clamp(48px, 7vw, 110px);
 }
 .workGrid {
   display: grid;
@@ -158,17 +202,26 @@
 }
 .workItem {
   cursor: pointer;
+  transition: filter 0.5s ease, opacity 0.5s ease;
 }
-/* alternance hauteur pleine / demi */
+.workItem a {
+  text-decoration: none;
+  color: inherit;
+}
+/* survol d'un projet : les autres se floutent et leurs titres disparaissent */
+.workGrid:hover .workItem:not(:hover) {
+  filter: blur(6px);
+  opacity: 0.45;
+}
+.workGrid:hover .workItem:not(:hover) .workCap {
+  opacity: 0;
+}
+/* alternance hauteur pleine / demi — toutes calées en haut (pas de quinconce) */
 .workItem:nth-child(odd) .workThumb {
   height: clamp(280px, 34vw, 520px);
 }
 .workItem:nth-child(even) .workThumb {
   height: clamp(200px, 24vw, 370px);
-}
-/* décalage en quinconce : les vignettes paires descendent */
-.workItem:nth-child(even) {
-  margin-top: clamp(48px, 10vw, 150px);
 }
 .workThumb {
   width: 100%;
@@ -176,11 +229,23 @@
   overflow: hidden;
   position: relative;
   border-radius: 2px;
-  /* survol : léger scale, retenu */
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.workItem:hover .workThumb {
-  transform: scale(1.025);
+/* survol : l'image zoome dans le cadre, un voile chaud se lève */
+.workThumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    rgba(26, 15, 8, 0.45)
+  );
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  z-index: 1;
+}
+.workItem:hover .workThumb::after {
+  opacity: 1;
 }
 .workMedia {
   position: absolute;
@@ -191,6 +256,10 @@
   background-size: cover;
   background-position: center;
   will-change: transform;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.workItem:hover .workMedia {
+  transform: scale(1.06);
 }
 .workMedia img {
   position: absolute;
@@ -200,92 +269,53 @@
   object-fit: cover;
 }
 .workCap {
-  margin-top: 12px;
-  font-family: var(--fl);
-  font-size: 13px;
-  color: var(--ink);
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  transition: opacity 0.45s ease;
 }
-.workCap .d::before {
-  content: " · ";
+/* nom du projet — Cabinet Grotesk, calé à gauche */
+.workName {
+  font-family: var(--fc);
+  font-weight: 600;
+  font-size: clamp(17px, 1.5vw, 24px);
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.workItem:hover .workName {
+  transform: translateX(6px);
+}
+/* discipline — Space Grotesk, calée à droite, opacité réduite */
+.workDisc {
+  font-family: var(--fh);
+  font-size: clamp(13px, 1.1vw, 17px);
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  opacity: 0.5;
+  text-align: right;
+  white-space: nowrap;
 }
 
-/* ---------------- AVENTURES ---------------- */
-.adv {
-  background: var(--cream);
-  min-height: 100vh;
-  position: relative;
-  padding: clamp(40px, 6vw, 80px) var(--pad);
-  overflow: hidden;
-}
-.advStage {
-  position: absolute;
-  inset: 0;
-}
-.advPhoto {
-  position: absolute;
+/* ---------------- SHOWREEL (vidéo en boucle) ---------------- */
+.showreel {
+  width: 100%;
+  height: 100vh;
+  padding: 1vh 1vw; /* gutter ~1% autour de la vidéo */
   background: var(--espresso);
-  will-change: transform;
-  background-image: radial-gradient(
-      circle at 40% 35%,
-      #3a2418,
-      transparent 60%
-    ),
-    radial-gradient(circle at 70% 70%, #1a0f08, transparent 55%);
-  background-size: cover;
-  background-position: center;
+  box-sizing: border-box;
 }
-.advPhoto:nth-child(1) {
-  left: 30%;
-  top: 22%;
-  width: 19%;
-  aspect-ratio: 16/11;
-  z-index: 1;
+.showreelVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
 }
-.advPhoto:nth-child(2) {
-  left: 43%;
-  top: 18%;
-  width: 15%;
-  aspect-ratio: 3/4;
-  z-index: 3;
-}
-.advPhoto:nth-child(3) {
-  left: 55%;
-  top: 24%;
-  width: 20%;
-  aspect-ratio: 4/3;
-  z-index: 2;
-}
-.advPhoto:nth-child(4) {
-  left: 36%;
-  top: 44%;
-  width: 17%;
-  aspect-ratio: 1/1;
-  z-index: 4;
-}
-.advPhoto:nth-child(5) {
-  left: 49%;
-  top: 48%;
-  width: 22%;
-  aspect-ratio: 16/10;
-  z-index: 5;
-}
-.advLabel {
-  position: absolute;
-  left: var(--pad);
-  bottom: clamp(40px, 7vw, 110px);
-  font-family: var(--fl);
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  z-index: 2;
-}
-.advLabel .sq {
-  display: inline-block;
-  width: 11px;
-  height: 11px;
-  background: var(--ink);
-  margin-right: 11px;
-  vertical-align: middle;
-}
+
+/* Aventures : déplacé dans AventuresStage + Aventures.module.css */
 
 /* ---------------- FOOTER ---------------- */
 .footer {
@@ -377,10 +407,4 @@
 }
 .static .footLogo {
   visibility: visible;
-}
-.static .workThumb {
-  transition: none;
-}
-.static .workItem:hover .workThumb {
-  transform: none;
 }

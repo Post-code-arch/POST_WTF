@@ -4,34 +4,13 @@ import Marquee from "./Marquee";
 import Reveal from "./Reveal";
 import type { ProjectMeta, Visual } from "@/lib/projects";
 
-/* ---------- helpers visuels ---------- */
-
-function byN(visuals: Visual[], n: number): Visual | undefined {
-  return visuals.find((v) => v.n === n);
-}
-
-function variantClass(slot: Visual["slot"]): string {
-  if (slot === "vibe") return "vibe";
-  if (slot === "motion") return "motion";
-  if (slot === "asset") return "cream";
-  return "";
-}
+/* ---------- média ---------- */
 
 function MediaInner({ v }: { v: Visual }) {
-  if (!v.src) return null; // placeholder via .ph::before
-  if (v.slot === "motion") {
-    return (
-      <video
-        src={v.src}
-        autoPlay
-        loop
-        muted
-        playsInline
-        aria-label={v.alt || v.label}
-      />
-    );
+  if (v.isVideo) {
+    return <video src={v.src} autoPlay loop muted playsInline aria-hidden />;
   }
-  return <img src={v.src} alt={v.alt || ""} />;
+  return <img src={v.src} alt="" />;
 }
 
 /* ---------- HERO ---------- */
@@ -39,12 +18,19 @@ function MediaInner({ v }: { v: Visual }) {
 export function Hero({
   titre,
   sousTitre,
+  hero,
 }: {
   titre: string;
   sousTitre: string;
+  hero?: Visual;
 }) {
   return (
     <header className="hero">
+      {hero && (
+        <div className="hero-media" aria-hidden>
+          <MediaInner v={hero} />
+        </div>
+      )}
       <h1 className="hero-title">
         <Marquee items={titre} repeat={4} />
       </h1>
@@ -57,33 +43,17 @@ export function Hero({
   );
 }
 
-export function HeroImage({ visuals }: { visuals: Visual[] }) {
-  const v = byN(visuals, 1);
-  if (!v) return null;
-  return (
-    <div
-      className="hero-img ph"
-      data-label={v.label}
-      style={{ aspectRatio: "16 / 10" }}
-    >
-      <MediaInner v={v} />
-    </div>
-  );
-}
-
 /* ---------- SECTION numérotée ---------- */
 
 export function Section({
   num,
   kicker,
   heading,
-  level = 2,
   children,
 }: {
   num: string;
   kicker: string;
   heading: string;
-  level?: 2 | 3 | "2" | "3";
   children: ReactNode;
 }) {
   return (
@@ -95,26 +65,10 @@ export function Section({
         {kicker}
       </div>
       <div className="sec-body">
-        {Number(level) === 3 ? <h3>{heading}</h3> : <h2>{heading}</h2>}
+        <h2>{heading}</h2>
         {children}
       </div>
     </Reveal>
-  );
-}
-
-/* liste « ce qu'on a posé / fabriqué / livré » */
-export function Did({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="did">
-      <div className="did-label">{label}</div>
-      {children}
-    </div>
   );
 }
 
@@ -147,42 +101,90 @@ export function Details({ meta }: { meta: ProjectMeta }) {
   );
 }
 
-/* ---------- MEDIA ---------- */
+/* ---------- MEDIA (un visuel pleine largeur, jamais recadré) ---------- */
 
-export function Media({ n, visuals }: { n: number; visuals: Visual[] }) {
-  const v = byN(visuals, n);
-  if (!v) return null;
+export function Media({ v }: { v: Visual }) {
   return (
     <Reveal className="media-full">
-      <div className={["ph", variantClass(v.slot)].filter(Boolean).join(" ")} data-label={v.label}>
+      <div className={`ph${v.slot === "vibe" ? " vibe" : ""}`}>
         <MediaInner v={v} />
       </div>
     </Reveal>
   );
 }
 
-export function MediaDuo({
-  a,
-  b,
-  visuals,
-}: {
-  a: number;
-  b: number;
-  visuals: Visual[];
-}) {
-  const va = byN(visuals, a);
-  const vb = byN(visuals, b);
-  if (!va || !vb) return null;
+/* ---------- GALERIE (compositions multi-visuels) ----------
+   Cellules cadrées (cover) : duo côte à côte, mosaïque 1 grande + 2 empilées.
+   Les visuels seuls restent en <Media> pleine largeur (non recadrés). */
+
+function Cell({ v, className }: { v: Visual; className?: string }) {
   return (
-    <Reveal className="media-duo">
-      <div className={["ph", variantClass(va.slot)].filter(Boolean).join(" ")} data-label={va.label}>
-        <MediaInner v={va} />
-      </div>
-      <div className={["ph", variantClass(vb.slot)].filter(Boolean).join(" ")} data-label={vb.label}>
-        <MediaInner v={vb} />
-      </div>
+    <div className={`gal-cell${className ? ` ${className}` : ""}`}>
+      <MediaInner v={v} />
+    </div>
+  );
+}
+
+function Duo({ a, b }: { a: Visual; b: Visual }) {
+  return (
+    <Reveal className="gal gal-duo">
+      <Cell v={a} />
+      <Cell v={b} />
     </Reveal>
   );
+}
+
+function Mosaic({
+  big,
+  a,
+  b,
+  flip,
+}: {
+  big: Visual;
+  a: Visual;
+  b: Visual;
+  flip?: boolean;
+}) {
+  return (
+    <Reveal className={`gal gal-mosaic${flip ? " flip" : ""}`}>
+      <Cell v={big} className="cell-big" />
+      <Cell v={a} className="cell-a" />
+      <Cell v={b} className="cell-b" />
+    </Reveal>
+  );
+}
+
+/** dispose une liste de visuels en compositions : 1→pleine largeur,
+ *  2→duo, 3→mosaïque, 4→duo+duo, ≥5→mosaïque puis le reste. */
+export function Gallery({ visuals }: { visuals: Visual[] }) {
+  const blocks: ReactNode[] = [];
+  let i = 0;
+  let flip = false;
+  while (i < visuals.length) {
+    const left = visuals.length - i;
+    if (left === 1) {
+      blocks.push(<Media key={visuals[i].src} v={visuals[i]} />);
+      i += 1;
+    } else if (left === 3 || left >= 5) {
+      blocks.push(
+        <Mosaic
+          key={visuals[i].src}
+          big={visuals[i]}
+          a={visuals[i + 1]}
+          b={visuals[i + 2]}
+          flip={flip}
+        />
+      );
+      i += 3;
+      flip = !flip;
+    } else {
+      blocks.push(
+        <Duo key={visuals[i].src} a={visuals[i]} b={visuals[i + 1]} />
+      );
+      i += 2;
+    }
+  }
+  return <>{blocks}</>;
 }
 
 /* ---------- MANIFESTO (idée directrice) ---------- */
@@ -227,10 +229,23 @@ export function Testimonial({
 
 /* ---------- NEXT CASE ---------- */
 
-export function NextCase({ titre, slug }: { titre: string; slug: string }) {
+export function NextCase({
+  titre,
+  slug,
+  preview,
+}: {
+  titre: string;
+  slug: string;
+  preview?: Visual;
+}) {
   return (
     <div className="next">
       <div className="small">Projet suivant</div>
+      {preview && (
+        <div className="next-preview" aria-hidden>
+          <MediaInner v={preview} />
+        </div>
+      )}
       <Link href={`/travaux/${slug}`}>
         <Marquee items={titre} repeat={3} />
       </Link>

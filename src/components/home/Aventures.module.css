@@ -1,0 +1,170 @@
+/* Section Aventures — composition dispersée (référent fourni) + parallaxe
+   curseur légère. Cluster centré-droite, label AVENTURES en bas-gauche. */
+
+.adv {
+  --mx: 0;
+  --my: 0;
+  background: var(--espresso);
+  min-height: 128vh;
+  position: relative;
+  padding: clamp(40px, 6vw, 80px) var(--pad);
+  overflow: hidden;
+}
+.stage {
+  position: absolute;
+  inset: 0;
+}
+.photo {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--espresso);
+  box-shadow: 0 26px 60px -34px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(242, 239, 230, 0.08);
+  transform: translate3d(
+    calc(var(--mx) * var(--d) * 1px),
+    calc(var(--my) * var(--d) * 1px),
+    0
+  );
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* composition chevauchée sur fond sombre — clichés émergeant du noir, la
+   « meuf qui dort » en pièce maîtresse ; chat et portraits débordent à droite,
+   le clap chaud ancre le bas. z-index = profondeur, parallaxe = strates. */
+/* haut-gauche large */
+.p1 {
+  left: 0%;
+  top: 5%;
+  width: 35%;
+  aspect-ratio: 3 / 2;
+  z-index: 3;
+}
+/* portrait, haut-centre */
+.p2 {
+  left: 37%;
+  top: 7%;
+  width: 25%;
+  aspect-ratio: 2 / 3;
+  z-index: 4;
+}
+/* chat, déborde au bord droit */
+.p3 {
+  left: 69%;
+  top: 0%;
+  width: 33%;
+  aspect-ratio: 3 / 2;
+  z-index: 3;
+}
+/* PIÈCE MAÎTRESSE — la meuf qui dort, centre-gauche, dominante */
+.p4 {
+  left: 8%;
+  top: 31%;
+  width: 45%;
+  aspect-ratio: 3 / 2;
+  z-index: 6;
+}
+/* caméra, en retrait derrière la maîtresse */
+.p5 {
+  left: 50%;
+  top: 22%;
+  width: 25%;
+  aspect-ratio: 3 / 2;
+  z-index: 4;
+}
+/* portrait, déborde au bord droit */
+.p6 {
+  left: 75%;
+  top: 34%;
+  width: 25%;
+  aspect-ratio: 2 / 3;
+  z-index: 7;
+}
+/* storage, bas-centre */
+.p8 {
+  left: 40%;
+  top: 47%;
+  width: 31%;
+  aspect-ratio: 3 / 2;
+  z-index: 5;
+}
+/* clap (chaud / lueur orange) — poussé en bas-droite du cadre */
+.p7 {
+  left: 70%;
+  top: 62%;
+  width: 30%;
+  aspect-ratio: 3 / 2;
+  z-index: 8;
+}
+/* four, en retrait gauche derrière la maîtresse */
+.p9 {
+  left: 0%;
+  top: 38%;
+  width: 22%;
+  aspect-ratio: 3 / 2;
+  z-index: 2;
+}
+/* bas-gauche */
+.p10 {
+  left: 22%;
+  top: 67%;
+  width: 28%;
+  aspect-ratio: 3 / 2;
+  z-index: 4;
+}
+
+.label {
+  position: absolute;
+  left: var(--pad);
+  bottom: clamp(40px, 7vw, 110px);
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  z-index: 10;
+  color: var(--cream);
+}
+.sq {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  background: var(--cream);
+  margin-right: 11px;
+  vertical-align: middle;
+}
+
+@media (max-width: 760px) {
+  /* sur petit écran : on abandonne le collage absolu pour une grille 2 colonnes */
+  .adv {
+    min-height: auto;
+    padding-bottom: clamp(80px, 22vw, 140px);
+  }
+  .stage {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: clamp(40px, 12vw, 70px);
+  }
+  .photo {
+    position: static;
+    width: auto !important;
+    transform: none !important;
+  }
+  /* on alterne les hauteurs pour garder du rythme */
+  .photo:nth-child(odd) {
+    aspect-ratio: 3 / 2;
+  }
+  .photo:nth-child(even) {
+    aspect-ratio: 2 / 3;
+  }
+  .label {
+    bottom: clamp(30px, 9vw, 60px);
+  }
+}

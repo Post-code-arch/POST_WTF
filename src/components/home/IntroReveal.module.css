@@ -1,0 +1,41 @@
+/* Intro accueil — révélation accentuée mot à mot au scroll.
+   Même typage que .introInner p (Home.module.css). */
+
+.fill {
+  font-family: var(--fh);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: clamp(20px, 2.5vw, 33px);
+  line-height: 1.32;
+  letter-spacing: 0.005em;
+  color: var(--cream);
+}
+
+/* chaque mot : --w 0 → 1 pilote opacité, flou et glissement vertical.
+   À 0 : estompé, flou, légèrement abaissé. À 1 : net, plein, en place. */
+.word {
+  --w: 0;
+  display: inline-block;
+  opacity: calc(0.1 + var(--w) * 0.9);
+  filter: blur(calc((1 - var(--w)) * 6px));
+  transform: translateY(calc((1 - var(--w)) * 0.32em));
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+  will-change: opacity, filter, transform;
+}
+
+.sq {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.62em;
+  background: var(--cream);
+  margin-right: 0.5em;
+  vertical-align: baseline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}

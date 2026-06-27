@@ -1,7 +1,10 @@
 import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
+import Reveal from "@/components/Reveal";
 import HeroLogoTravel from "./HeroLogoTravel";
+import IntroReveal from "./IntroReveal";
+import AventuresStage from "./AventuresStage";
 import DepartementsSection from "./DepartementsSection";
 import type { Work } from "@/lib/works";
 import styles from "./Home.module.css";
@@ -23,46 +26,47 @@ export default function HomeStatic({ works }: { works: Work[] }) {
       <Nav />
       <HeroLogoTravel />
 
-      {/* HERO */}
+      {/* HERO — image plein cadre, KINAYA en bandeau, accroche en bas */}
       <section className={styles.hero} data-theme="dark" data-hero>
-        <div className={styles.heroLogo} data-hero-logo>
-          <KinayaLogo className="klogo" />
-        </div>
-        <div className={styles.heroBlock} />
-        <div className={styles.heroGrow} />
-        <div className={styles.heroTag}>
-          On est une agence créative.
-          <br />
-          On essaie de ne pas en avoir l&apos;air.
-        </div>
-        <div className={styles.heroChips}>
-          <span>Stratégie</span>
-          <span>Motion</span>
-          <span>Ai</span>
-          <span>Production</span>
-          <span>Branding</span>
-          <span>Rédaction</span>
-          <span>Digital</span>
-          <span>Web</span>
+        <div className={styles.heroFrame}>
+          <img
+            className={styles.heroBg}
+            src="/home/aventures/av-8.webp"
+            alt=""
+            aria-hidden
+          />
+          <div className={styles.heroLogo} data-hero-logo>
+            <KinayaLogo className="klogo" />
+          </div>
+          <div className={styles.heroFoot}>
+            <h1 className={styles.heroHeadline}>
+              Les bonnes idées n&apos;ont pas besoin de hausser le ton.
+            </h1>
+            <div className={styles.heroMeta}>
+              Agence créative
+              <span className={styles.dot}>·</span>
+              Alger
+              <span className={styles.dot}>·</span>
+              36.7°N
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* INTRO */}
-      <section className={styles.intro} data-theme="light">
+      {/* INTRO — révélation mot à mot au scroll, couleurs inversées (fond sombre) */}
+      <section className={styles.intro} data-theme="dark">
         <div className={styles.introInner}>
-          <p>
-            <span className={styles.sq} />
-            Une agence créative qui travaille la stratégie, l&apos;identité, le
-            web et la production avec la même attention. Une moitié du temps à
-            comprendre ce qui est déjà là. L&apos;autre à faire les choses
-            jusqu&apos;au bout, en laissant au client l&apos;autonomie pour la
-            suite.
-          </p>
+          <IntroReveal />
         </div>
       </section>
 
       {/* WORK */}
       <section className={styles.work} data-theme="light">
+        <Reveal as="h2" className={styles.workTitle}>
+          L&rsquo;art de dire une chose
+          <br />
+          pour en signifier une autre.
+        </Reveal>
         <div className={styles.workGrid}>
           {featured.map((w) => (
             <div key={w.slug} className={styles.workItem}>
@@ -78,9 +82,8 @@ export default function HomeStatic({ works }: { works: Work[] }) {
                   />
                 </div>
                 <div className={styles.workCap}>
-                  {w.title}
-                  <span className={styles.d} />
-                  {w.categories[0]}
+                  <span className={styles.workName}>{w.title}</span>
+                  <span className={styles.workDisc}>{w.categories[0]}</span>
                 </div>
               </Link>
             </div>
@@ -88,23 +91,23 @@ export default function HomeStatic({ works }: { works: Work[] }) {
         </div>
       </section>
 
-      {/* AVENTURES */}
-      <section className={styles.adv} data-theme="light">
-        <div className={styles.advStage}>
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-          <div className={styles.advPhoto} />
-        </div>
-        <div className={styles.advLabel}>
-          <span className={styles.sq} />
-          AVENTURES
-        </div>
+      {/* DÉPARTEMENTS — placé avant Aventures */}
+      <DepartementsSection />
+
+      {/* SHOWREEL — vidéo en boucle plein écran (100vh × 100vw, gutter 1%) */}
+      <section className={styles.showreel} data-theme="dark">
+        <video
+          className={styles.showreelVideo}
+          src="/home/showreel.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
       </section>
 
-      {/* DÉPARTEMENTS */}
-      <DepartementsSection />
+      {/* AVENTURES — composition + parallaxe curseur */}
+      <AventuresStage />
 
       {/* FOOTER */}
       <section className={styles.footer} data-theme="light">

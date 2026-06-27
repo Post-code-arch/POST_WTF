@@ -29,6 +29,13 @@
   display: flex;
   gap: clamp(22px, 3vw, 52px);
   margin-left: clamp(34px, 9vw, 150px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+/* accueil : masqués tant que le logo n'est pas calé dans la nav */
+.hidden {
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
 }
 .nav a {
   color: inherit;
