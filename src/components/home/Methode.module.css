@@ -1,0 +1,88 @@
+/* Section Méthode (accueil) — 4 phases empilées façon chapitrage : numéro
+   massif en ancrage, titre staccato + texte court. Sobre, pas d'effet
+   gratuit ; le contraste tient entre le poids du numéro et la légèreté
+   du texte. Composant autonome : --pad défini localement, pas de
+   dépendance au scope .home parent. */
+
+.methode {
+  --pad: clamp(20px, 3.5vw, 56px);
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.phase {
+  min-height: 30vh;
+  display: grid;
+  grid-template-columns: clamp(140px, 18vw, 260px) 1fr;
+  align-items: center;
+  gap: clamp(20px, 4vw, 64px);
+  padding: clamp(24px, 4vh, 48px) var(--pad);
+  border-top: 1px solid var(--line, rgba(14, 14, 14, 0.18));
+}
+.phase:first-child {
+  border-top: none;
+}
+
+.num {
+  font-family: var(--fd);
+  font-weight: 600;
+  font-size: clamp(64px, 9vw, 140px);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.body {
+  max-width: 640px;
+}
+
+.title {
+  font-family: var(--fh);
+  font-weight: 600;
+  font-size: clamp(28px, 3.2vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0 0 clamp(10px, 1.4vw, 18px);
+}
+
+.text {
+  font-family: var(--fb);
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.6;
+  color: rgba(14, 14, 14, 0.78);
+  max-width: 560px;
+}
+
+.cta {
+  display: flex;
+  justify-content: flex-end;
+  padding: clamp(28px, 4vw, 56px) var(--pad) clamp(50px, 7vw, 90px);
+}
+.cta a {
+  font-family: var(--fl);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line, rgba(14, 14, 14, 0.18));
+  padding-bottom: 4px;
+  transition: opacity 0.3s ease;
+}
+.cta a:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 760px) {
+  .phase {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 16px;
+    padding: clamp(36px, 9vw, 56px) var(--pad);
+  }
+  .num {
+    font-size: clamp(48px, 16vw, 72px);
+  }
+  .title {
+    font-size: clamp(26px, 7vw, 36px);
+  }
+}
