@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 /**
  * Révélation au scroll (porté de la classe .rv du canevas) via Framer Motion.
@@ -19,10 +19,12 @@ const variants = {
 export default function Reveal({
   children,
   className,
+  style,
   as = "div",
 }: {
   children: ReactNode;
   className?: string;
+  style?: CSSProperties;
   as?: "div" | "section" | "h2";
 }) {
   const MotionTag =
@@ -30,6 +32,7 @@ export default function Reveal({
   return (
     <MotionTag
       className={className}
+      style={style}
       variants={variants}
       initial="hidden"
       whileInView="visible"
