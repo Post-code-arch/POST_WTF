@@ -201,19 +201,27 @@
 }
 .workItem {
   cursor: pointer;
-  transition: filter 0.5s ease, opacity 0.5s ease;
+  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .workItem a {
   text-decoration: none;
   color: inherit;
 }
-/* survol d'un projet : les autres se floutent et leurs titres disparaissent */
+/* survol d'un projet : les autres se désaturent, leurs titres disparaissent */
 .workGrid:hover .workItem:not(:hover) {
-  filter: blur(6px);
-  opacity: 0.45;
+  filter: grayscale(1);
+  opacity: 0.55;
 }
 .workGrid:hover .workItem:not(:hover) .workCap {
   opacity: 0;
+}
+/* la carte survolée se soulève légèrement */
+.workItem:hover {
+  transform: translateY(-10px);
+}
+/* curseur custom actif (pointeur fin) : on masque le curseur natif sur la carte */
+.workGrid[data-cursor="on"] .workItem:hover {
+  cursor: none;
 }
 /* alternance hauteur pleine / demi — toutes calées en haut (pas de quinconce) */
 .workItem:nth-child(odd) .workThumb {
@@ -296,6 +304,39 @@
   opacity: 0.5;
   text-align: right;
   white-space: nowrap;
+}
+
+/* curseur custom "+" — suit la souris dans la grille, pivote à 90° au survol d'une carte */
+.cursorPlus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  pointer-events: none;
+  z-index: 70;
+  will-change: transform, opacity;
+}
+.cursorPlus::before,
+.cursorPlus::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+}
+.cursorPlus::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+.cursorPlus::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
 }
 
 /* ---------------- SHOWREEL (vidéo en boucle) ---------------- */

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
 import RevealWords from "./RevealWords";
@@ -7,6 +6,7 @@ import HeroLogoTravel from "./HeroLogoTravel";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
 import DepartementsSection from "./DepartementsSection";
+import WorkGrid from "./WorkGrid";
 import type { Work } from "@/lib/works";
 import styles from "./Home.module.css";
 
@@ -68,28 +68,7 @@ export default function HomeStatic({ works }: { works: Work[] }) {
           className={styles.workTitle}
           lines={["L’art de dire une chose", "pour en signifier une autre."]}
         />
-        <div className={styles.workGrid}>
-          {featured.map((w) => (
-            <div key={w.slug} className={styles.workItem}>
-              <Link href={`/travaux/${w.slug}`} style={{ display: "block" }}>
-                <div className={styles.workThumb}>
-                  <div
-                    className={styles.workMedia}
-                    style={
-                      w.image
-                        ? { backgroundImage: `url(${w.image})` }
-                        : undefined
-                    }
-                  />
-                </div>
-                <div className={styles.workCap}>
-                  <span className={styles.workName}>{w.title}</span>
-                  <span className={styles.workDisc}>{w.categories[0]}</span>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+        <WorkGrid items={featured} />
       </section>
 
       {/* DÉPARTEMENTS — placé avant Aventures */}
