@@ -1,58 +1,134 @@
-/* Section Méthode (accueil) — 4 phases empilées façon chapitrage : numéro
-   massif en ancrage, titre staccato + texte court. Sobre, pas d'effet
-   gratuit ; le contraste tient entre le poids du numéro et la légèreté
-   du texte. Composant autonome : --pad défini localement, pas de
-   dépendance au scope .home parent. */
+/* Section Méthode (accueil) — cadre pinné 2 colonnes : à gauche le
+   chapitrage (numéro / titre / texte) qui transitionne à chaque palier de
+   scroll, à droite le sloughi qui se précise au fil des 4 paliers. Sur
+   mobile / prefers-reduced-motion : pas de pin, paliers empilés
+   statiquement (sloughi au-dessus, texte dessous). Composant autonome :
+   --pad défini localement. */
 
 .methode {
   --pad: clamp(20px, 3.5vw, 56px);
+  --nav-clear: 72px; /* dégagement sous la nav globale fixe (~70px) */
   background: var(--cream);
   color: var(--ink);
 }
 
-.phase {
-  min-height: 30vh;
-  display: grid;
-  grid-template-columns: clamp(140px, 18vw, 260px) 1fr;
-  align-items: center;
-  gap: clamp(20px, 4vw, 64px);
-  padding: clamp(24px, 4vh, 48px) var(--pad);
-  border-top: 1px solid var(--line, rgba(14, 14, 14, 0.18));
+.frame {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  border: 1px solid var(--line, rgba(14, 14, 14, 0.18));
+  overflow: hidden;
 }
-.phase:first-child {
-  border-top: none;
+
+/* variante pinnée : laisse le dégagement de la nav visible en permanence
+   au-dessus du cadre pendant toute la durée du pin */
+.framePinned {
+  height: calc(100vh - var(--nav-clear));
+}
+
+/* ---------------- TOPBAR ---------------- */
+.topbar {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(16px, 2.2vw, 26px) var(--pad);
+  border-bottom: 1px solid var(--line, rgba(14, 14, 14, 0.18));
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------------- BODY (2 colonnes) ---------------- */
+.bodyGrid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ----- colonne gauche : 3 zones empilées ----- */
+.left {
+  display: grid;
+  grid-template-rows: 1fr 1.3fr 1fr;
+  border-right: 1px solid var(--line, rgba(14, 14, 14, 0.18));
+  min-height: 0;
+}
+
+.zone {
+  position: relative;
+  border-bottom: 1px solid var(--line, rgba(14, 14, 14, 0.18));
+  overflow: hidden;
+}
+.zone:last-child {
+  border-bottom: none;
+}
+
+.num,
+.title,
+.text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  padding: clamp(16px, 2.6vw, 32px) var(--pad);
+  box-sizing: border-box;
 }
 
 .num {
+  align-items: center;
+  justify-content: flex-start;
   font-family: var(--fd);
   font-weight: 600;
-  font-size: clamp(64px, 9vw, 140px);
+  font-size: clamp(56px, 8vw, 130px);
   line-height: 0.85;
   letter-spacing: -0.01em;
-  color: var(--ink);
-}
-
-.body {
-  max-width: 640px;
+  margin: 0;
 }
 
 .title {
+  align-items: center;
+  justify-content: flex-start;
   font-family: var(--fh);
   font-weight: 600;
-  font-size: clamp(28px, 3.2vw, 48px);
-  line-height: 1.05;
+  font-size: clamp(34px, 4.8vw, 68px);
+  line-height: 1.02;
   letter-spacing: -0.015em;
-  margin: 0 0 clamp(10px, 1.4vw, 18px);
+  text-transform: lowercase;
+  margin: 0;
 }
 
 .text {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   font-family: var(--fb);
-  font-size: clamp(15px, 1.15vw, 18px);
+  font-size: clamp(14px, 1.05vw, 17px);
   line-height: 1.6;
   color: rgba(14, 14, 14, 0.78);
-  max-width: 560px;
+  margin: 0 auto;
+  max-width: 460px;
 }
 
+/* ----- colonne droite : sloughi ----- */
+.right {
+  position: relative;
+  background: var(--espresso);
+  overflow: hidden;
+}
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------------- CTA (hors cadre pinné) ---------------- */
 .cta {
   display: flex;
   justify-content: flex-end;
@@ -72,17 +148,44 @@
   opacity: 0.6;
 }
 
+/* ---------------- MOBILE / STATIQUE ---------------- */
 @media (max-width: 760px) {
-  .phase {
+  .frame {
+    height: auto;
+    min-height: 100vh;
+    margin-bottom: clamp(0px, 2vw, 12px);
+  }
+  .bodyGrid {
     grid-template-columns: 1fr;
-    min-height: auto;
-    gap: 16px;
-    padding: clamp(36px, 9vw, 56px) var(--pad);
+    grid-template-rows: auto auto;
+  }
+  .right {
+    order: -1;
+    height: 46vh;
+  }
+  .left {
+    border-right: none;
+    grid-template-rows: auto auto auto;
+  }
+  .zone {
+    position: static;
+    padding: clamp(20px, 5vw, 32px) var(--pad);
+  }
+  .num,
+  .title,
+  .text {
+    position: static;
+    padding: 0;
   }
   .num {
-    font-size: clamp(48px, 16vw, 72px);
+    font-size: clamp(40px, 13vw, 60px);
   }
   .title {
-    font-size: clamp(26px, 7vw, 36px);
+    font-size: clamp(28px, 8vw, 40px);
+  }
+  .text {
+    max-width: none;
+    text-align: left;
+    justify-content: flex-start;
   }
 }
