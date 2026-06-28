@@ -48,28 +48,28 @@ const STAGES: Stage[] = [
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const numVariant: Variants = {
-  hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.55, ease: EASE } },
-  exit: { opacity: 0, y: -16, filter: "blur(6px)", transition: { duration: 0.35, ease: EASE } },
+  hidden: { opacity: 0, y: 10, filter: "blur(3px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.4, ease: EASE } },
+  exit: { opacity: 0, y: -6, filter: "blur(2px)", transition: { duration: 0.22, ease: EASE } },
 };
 const titleVariant: Variants = {
-  hidden: { opacity: 0, y: 22, filter: "blur(6px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.55, ease: EASE, delay: 0.08 } },
-  exit: { opacity: 0, y: -14, filter: "blur(4px)", transition: { duration: 0.3, ease: EASE } },
+  hidden: { opacity: 0, y: 10, filter: "blur(3px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.4, ease: EASE, delay: 0.14 } },
+  exit: { opacity: 0, y: -6, filter: "blur(2px)", transition: { duration: 0.22, ease: EASE } },
 };
 const textVariant: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE, delay: 0.16 } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.3, ease: EASE } },
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE, delay: 0.28 } },
+  exit: { opacity: 0, y: -6, transition: { duration: 0.2, ease: EASE } },
 };
 const imageVariant: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.5, ease: EASE } },
-  exit: { opacity: 0, transition: { duration: 0.4, ease: EASE } },
+  visible: { opacity: 1, transition: { duration: 0.35, ease: EASE } },
+  exit: { opacity: 0, transition: { duration: 0.25, ease: EASE } },
 };
 const grainVariant: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: [0, 0.5, 0], transition: { duration: 0.6, ease: EASE, times: [0, 0.45, 1] } },
+  visible: { opacity: [0, 0.5, 0], transition: { duration: 0.45, ease: EASE, times: [0, 0.45, 1] } },
   exit: { opacity: 0, transition: { duration: 0.1 } },
 };
 
