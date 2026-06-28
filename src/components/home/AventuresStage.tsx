@@ -17,7 +17,7 @@ const PHOTOS = [
   { src: "/home/aventures/av-7.webp", cls: "p5", depth: 16 }, // caméra, derrière
   { src: "/home/aventures/av-10.webp", cls: "p6", depth: 34 }, // portrait, déborde à droite
   { src: "/home/aventures/av-6.webp", cls: "p7", depth: 22 }, // clap, bas-centre (chaud)
-  { src: "/home/departements/studio.webp", cls: "p8", depth: 30 }, // moniteur de montage, bas-droite
+  { src: "/home/aventures/av-9.webp", cls: "p8", depth: 30 }, // bas-droite
   { src: "/home/aventures/av-8.webp", cls: "p9", depth: 8 }, // four, en retrait gauche
   { src: "/home/aventures/av-4.webp", cls: "p10", depth: 38 }, // bas-gauche
 ];

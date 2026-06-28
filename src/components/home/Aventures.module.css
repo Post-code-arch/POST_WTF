@@ -140,29 +140,64 @@
 }
 
 @media (max-width: 760px) {
-  /* sur petit écran : on abandonne le collage absolu pour une grille 2 colonnes */
+  /* le collage chevauché reste actif sur mobile, mais avec une
+     composition propre à l'écran étroit : clichés bien plus larges
+     (sinon ils deviennent des vignettes perdues dans le vide) et
+     resserrés en une seule colonne en cascade plutôt qu'éclatés sur
+     toute la largeur. */
   .adv {
-    min-height: auto;
-    padding-bottom: clamp(80px, 22vw, 140px);
+    min-height: 142vh;
+    padding-top: clamp(60px, 16vw, 90px);
   }
-  .stage {
-    position: static;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding-top: clamp(40px, 12vw, 70px);
+  .p1 {
+    left: 4%;
+    top: 0%;
+    width: 58%;
   }
-  .photo {
-    position: static;
-    width: auto !important;
-    transform: none !important;
+  .p2 {
+    left: 44%;
+    top: 9%;
+    width: 48%;
   }
-  /* on alterne les hauteurs pour garder du rythme */
-  .photo:nth-child(odd) {
-    aspect-ratio: 3 / 2;
+  .p3 {
+    left: 0%;
+    top: 19%;
+    width: 56%;
   }
-  .photo:nth-child(even) {
-    aspect-ratio: 2 / 3;
+  .p4 {
+    left: 28%;
+    top: 27%;
+    width: 68%;
+  }
+  .p5 {
+    left: 0%;
+    top: 44%;
+    width: 42%;
+  }
+  .p6 {
+    left: 50%;
+    top: 46%;
+    width: 46%;
+  }
+  .p8 {
+    left: 6%;
+    top: 60%;
+    width: 40%;
+  }
+  .p7 {
+    left: 38%;
+    top: 64%;
+    width: 58%;
+  }
+  .p9 {
+    left: 0%;
+    top: 78%;
+    width: 40%;
+  }
+  .p10 {
+    left: 36%;
+    top: 82%;
+    width: 54%;
   }
   .label {
     bottom: clamp(30px, 9vw, 60px);

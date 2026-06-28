@@ -9,6 +9,7 @@ import styles from "./Methode.module.css";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
 interface Stage {
@@ -91,11 +92,11 @@ function Cta() {
 
 /**
  * Section Méthode (accueil) — cadre pinné (GSAP ScrollTrigger) pendant ~4
- * écrans de scroll : le layout reste fixe, seul le contenu (numéro / titre
- * / texte + image du sloughi) se substitue à chaque palier (Framer
- * Motion). Sur mobile et sous prefers-reduced-motion : pas de pin, les 4
- * paliers s'affichent empilés normalement (sloughi net pour tous sous
- * reduced motion).
+ * écrans de scroll, sur mobile comme sur desktop : le layout reste fixe,
+ * seul le contenu (numéro / titre / texte + image du sloughi) se
+ * substitue à chaque palier (Framer Motion). Seul prefers-reduced-motion
+ * désactive le pin : les 4 paliers s'affichent alors empilés normalement,
+ * sloughi net pour tous.
  */
 export default function MethodeSection() {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -106,8 +107,7 @@ export default function MethodeSection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (reduced) return;
-    setPinEnabled(window.matchMedia("(min-width: 761px)").matches);
+    setPinEnabled(!reduced);
   }, [reduced]);
 
   useEffect(() => {
@@ -160,7 +160,7 @@ export default function MethodeSection() {
     return (
       <section className={styles.methode} data-theme="light">
         {STAGES.map((s, i) => (
-          <div className={styles.frame} key={s.num}>
+          <div className={`${styles.frame} ${styles.frameStatic}`} key={s.num}>
             <Topbar index={i} />
             <div className={styles.bodyGrid}>
               <div className={styles.left}>

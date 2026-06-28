@@ -167,35 +167,8 @@
   opacity: 0.6;
 }
 
-/* ---------------- MOBILE / STATIQUE ---------------- */
+/* ---------------- MOBILE ---------------- */
 @media (max-width: 760px) {
-  .frame {
-    height: auto;
-    min-height: 100vh;
-    margin-bottom: clamp(0px, 2vw, 12px);
-  }
-  .bodyGrid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-  }
-  .right {
-    order: -1;
-    height: 46vh;
-  }
-  .left {
-    border-right: none;
-    grid-template-rows: auto auto auto;
-  }
-  .zone {
-    position: static;
-    padding: clamp(20px, 5vw, 32px) var(--pad);
-  }
-  .num,
-  .title,
-  .text {
-    position: static;
-    padding: 0;
-  }
   .num {
     font-size: clamp(40px, 13vw, 60px);
   }
@@ -204,6 +177,53 @@
   }
   .text {
     max-width: none;
+  }
+
+  /* variante pinnée (par défaut sur mobile) : layout empilé — image au-
+     dessus, contenu scrubbé dessous — mais le pin GSAP et le crossfade
+     Framer Motion restent actifs comme sur desktop. */
+  .framePinned .bodyGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.85fr 1fr;
+  }
+  .framePinned .right {
+    order: -1;
+  }
+  .framePinned .left {
+    border-right: none;
+  }
+
+  /* variante statique (prefers-reduced-motion uniquement) : pas de pin,
+     les 4 paliers s'empilent dans le flux normal, sans positionnement
+     absolu. */
+  .frameStatic {
+    height: auto;
+    min-height: 100vh;
+    margin-bottom: clamp(0px, 2vw, 12px);
+  }
+  .frameStatic .bodyGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  .frameStatic .right {
+    order: -1;
+    height: 46vh;
+  }
+  .frameStatic .left {
+    border-right: none;
+    grid-template-rows: auto auto auto;
+  }
+  .frameStatic .zone {
+    position: static;
+    padding: clamp(20px, 5vw, 32px) var(--pad);
+  }
+  .frameStatic .num,
+  .frameStatic .title,
+  .frameStatic .text {
+    position: static;
+    padding: 0;
+  }
+  .frameStatic .text {
     text-align: left;
     justify-content: flex-start;
   }
