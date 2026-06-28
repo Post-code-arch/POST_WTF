@@ -306,7 +306,9 @@
   white-space: nowrap;
 }
 
-/* curseur custom "+" — suit la souris dans la grille, pivote à 90° au survol d'une carte */
+/* curseur custom "+" — suit la souris dans la grille, pivote à 90° au survol
+   d'une carte. Couleur inversée (mix-blend-mode: difference, comme la nav) :
+   reste lisible quel que soit le fond — image sombre ou carte claire. */
 .cursorPlus {
   position: fixed;
   top: 0;
@@ -316,13 +318,15 @@
   margin: -32px 0 0 -32px;
   pointer-events: none;
   z-index: 70;
+  mix-blend-mode: difference;
   will-change: transform, opacity;
 }
 .cursorPlus::before,
 .cursorPlus::after {
   content: "";
   position: absolute;
-  background: var(--ink);
+  background: #fff;
+  mix-blend-mode: difference;
 }
 .cursorPlus::before {
   top: 50%;
