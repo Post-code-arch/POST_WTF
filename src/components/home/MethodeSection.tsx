@@ -47,32 +47,25 @@ const STAGES: Stage[] = [
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+/* trois animations distinctes — num en "punch" d'échelle, titre en glissé
+   latéral flouté, texte en simple fondu vertical — pour que chaque zone
+   se lise comme un mouvement propre plutôt que la même translation
+   recopiée avec un délai. */
 const numVariant: Variants = {
-  hidden: { opacity: 0, y: 10, filter: "blur(3px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.4, ease: EASE } },
-  exit: { opacity: 0, y: -6, filter: "blur(2px)", transition: { duration: 0.22, ease: EASE } },
+  hidden: { opacity: 0, scale: 0.82 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.42, ease: EASE } },
+  exit: { opacity: 0, scale: 1.1, transition: { duration: 0.22, ease: EASE } },
 };
 const titleVariant: Variants = {
-  hidden: { opacity: 0, y: 10, filter: "blur(3px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.4, ease: EASE, delay: 0.14 } },
-  exit: { opacity: 0, y: -6, filter: "blur(2px)", transition: { duration: 0.22, ease: EASE } },
+  hidden: { opacity: 0, x: -28, filter: "blur(4px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.42, ease: EASE, delay: 0.15 } },
+  exit: { opacity: 0, x: 18, filter: "blur(3px)", transition: { duration: 0.22, ease: EASE } },
 };
 const textVariant: Variants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE, delay: 0.28 } },
-  exit: { opacity: 0, y: -6, transition: { duration: 0.2, ease: EASE } },
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE, delay: 0.32 } },
+  exit: { opacity: 0, y: -8, transition: { duration: 0.2, ease: EASE } },
 };
-const imageVariant: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.35, ease: EASE } },
-  exit: { opacity: 0, transition: { duration: 0.25, ease: EASE } },
-};
-const grainVariant: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: [0, 0.5, 0], transition: { duration: 0.45, ease: EASE, times: [0, 0.45, 1] } },
-  exit: { opacity: 0, transition: { duration: 0.1 } },
-};
-
 function pad2(n: number) {
   return n < 10 ? `0${n}` : `${n}`;
 }
@@ -106,6 +99,8 @@ function Cta() {
  */
 export default function MethodeSection() {
   const frameRef = useRef<HTMLDivElement>(null);
+  const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const grainRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const [pinEnabled, setPinEnabled] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -126,6 +121,25 @@ export default function MethodeSection() {
     if (!pinEnabled) return;
     const el = frameRef.current;
     if (!el) return;
+
+    // Le morph du sloughi est scrubbé en continu sur la position de scroll
+    // (opacité posée directement en DOM, hors React) : pas de cut figé sur
+    // un seuil, le chien se transforme image par image au même rythme que
+    // le défilement.
+    const applyProgress = (self: ScrollTrigger) => {
+      const raw = self.progress * STAGES.length;
+      const idx = Math.min(STAGES.length - 1, Math.floor(raw));
+      const frac = idx === STAGES.length - 1 ? 0 : raw - idx;
+      imageRefs.current.forEach((img, i) => {
+        if (!img) return;
+        img.style.opacity = i === idx ? "1" : i === idx + 1 ? String(frac) : "0";
+      });
+      if (grainRef.current) {
+        grainRef.current.style.opacity = String(Math.sin(frac * Math.PI) * 0.5);
+      }
+      return idx;
+    };
+
     const trigger = ScrollTrigger.create({
       trigger: el,
       start: "top 72px", // dégagement sous la nav globale fixe, voir --nav-clear
@@ -134,10 +148,11 @@ export default function MethodeSection() {
       pinSpacing: true,
       anticipatePin: 1,
       onUpdate: (self) => {
-        const idx = Math.min(STAGES.length - 1, Math.floor(self.progress * STAGES.length));
+        const idx = applyProgress(self);
         setActiveIndex((cur) => (cur === idx ? cur : idx));
       },
     });
+    applyProgress(trigger);
     return () => trigger.kill();
   }, [pinEnabled]);
 
@@ -226,28 +241,19 @@ export default function MethodeSection() {
             </div>
           </div>
           <div className={styles.right}>
-            <AnimatePresence initial={false}>
-              <motion.img
-                key={stage.image}
-                src={stage.image}
+            {STAGES.map((s, i) => (
+              <img
+                key={s.image}
+                ref={(el) => {
+                  imageRefs.current[i] = el;
+                }}
+                src={s.image}
                 alt="Sloughi au repos, à l'encre"
                 className={styles.image}
-                variants={imageVariant}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
+                style={{ opacity: i === 0 ? 1 : 0 }}
               />
-            </AnimatePresence>
-            <AnimatePresence initial={false}>
-              <motion.div
-                key={`grain-${stage.image}`}
-                className={styles.grain}
-                variants={grainVariant}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              />
-            </AnimatePresence>
+            ))}
+            <div ref={grainRef} className={styles.grain} style={{ opacity: 0 }} />
           </div>
         </div>
       </div>
