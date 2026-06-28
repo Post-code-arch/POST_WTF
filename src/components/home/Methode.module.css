@@ -116,7 +116,7 @@
 /* ----- colonne droite : sloughi ----- */
 .right {
   position: relative;
-  background: var(--espresso);
+  background: var(--cream);
   overflow: hidden;
 }
 .image {
@@ -124,7 +124,9 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: clamp(40px, 7vw, 100px);
+  box-sizing: border-box;
 }
 
 /* ---------------- CTA (hors cadre pinné) ---------------- */
