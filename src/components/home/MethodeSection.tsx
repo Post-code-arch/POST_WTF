@@ -1,5 +1,15 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Methode.module.css";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface Phase {
   num: string;
@@ -30,23 +40,98 @@ const PHASES: Phase[] = [
   },
 ];
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const phaseContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.16, delayChildren: 0.05 } },
+};
+const numVariant: Variants = {
+  hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.9, ease: EASE },
+  },
+};
+const titleVariant: Variants = {
+  hidden: { opacity: 0, y: 26, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: EASE },
+  },
+};
+const textVariant: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
+
 /**
- * Section Méthode (accueil) — squelette statique pour l'instant : 4 phases
- * empilées (30vh chacune), numéro typographique massif en ancrage de
- * chapitrage à gauche, titre + texte court à droite. Animations GSAP/Framer
- * Motion ajoutées dans une passe suivante.
+ * Section Méthode (accueil) — 4 phases empilées (30vh chacune). Chaque
+ * phase s'accroche en haut de l'écran à son arrivée (GSAP ScrollTrigger,
+ * pin court) le temps que son numéro/titre/texte se révèlent en cascade
+ * (Framer Motion), puis se relâche normalement vers la phase suivante —
+ * pas de scroll-jacking long, juste une tenue brève qui donne du poids.
  */
 export default function MethodeSection() {
+  const phaseRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const reduced = useReducedMotion();
+  const [revealed, setRevealed] = useState<boolean[]>(() => PHASES.map(() => false));
+
+  useEffect(() => {
+    if (reduced) {
+      setRevealed(PHASES.map(() => true));
+      return;
+    }
+
+    const triggers = phaseRefs.current.map((el, i) => {
+      if (!el) return null;
+      const reveal = () =>
+        setRevealed((prev) => (prev[i] ? prev : prev.map((v, k) => (k === i ? true : v))));
+      return ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "+=60%",
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        onEnter: reveal,
+        onEnterBack: reveal,
+      });
+    });
+
+    return () => triggers.forEach((t) => t?.kill());
+  }, [reduced]);
+
   return (
     <section className={styles.methode} data-theme="light">
-      {PHASES.map((p) => (
-        <div className={styles.phase} key={p.num} data-phase>
-          <span className={styles.num}>[{p.num}]</span>
+      {PHASES.map((p, i) => (
+        <motion.div
+          className={styles.phase}
+          key={p.num}
+          data-phase
+          ref={(el) => {
+            phaseRefs.current[i] = el;
+          }}
+          initial={reduced ? false : "hidden"}
+          animate={revealed[i] ? "visible" : "hidden"}
+          variants={phaseContainer}
+        >
+          <motion.span className={styles.num} variants={numVariant}>
+            [{p.num}]
+          </motion.span>
           <div className={styles.body}>
-            <h3 className={styles.title}>{p.title}</h3>
-            <p className={styles.text}>{p.text}</p>
+            <motion.h3 className={styles.title} variants={titleVariant}>
+              {p.title}
+            </motion.h3>
+            <motion.p className={styles.text} variants={textVariant}>
+              {p.text}
+            </motion.p>
           </div>
-        </div>
+        </motion.div>
       ))}
       <div className={styles.cta}>
         <Link href="/studio">→ La méthode en détail</Link>
