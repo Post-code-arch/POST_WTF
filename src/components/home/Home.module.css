@@ -131,7 +131,7 @@
   color: var(--cream);
 }
 .heroHeadline {
-  font-family: var(--fd);
+  font-family: var(--fh);
   font-weight: 600;
   font-size: clamp(40px, 7.4vw, 112px);
   line-height: 1.01;
