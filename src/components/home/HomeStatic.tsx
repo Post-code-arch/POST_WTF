@@ -6,6 +6,7 @@ import HeroLogoTravel from "./HeroLogoTravel";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
 import DepartementsSection from "./DepartementsSection";
+import MethodeSection from "./MethodeSection";
 import WorkGrid from "./WorkGrid";
 import type { Work } from "@/lib/works";
 import styles from "./Home.module.css";
@@ -70,6 +71,9 @@ export default function HomeStatic({ works }: { works: Work[] }) {
         />
         <WorkGrid items={featured} />
       </section>
+
+      {/* MÉTHODE — 4 phases, ancrage numéroté */}
+      <MethodeSection />
 
       {/* DÉPARTEMENTS — placé avant Aventures */}
       <DepartementsSection />
