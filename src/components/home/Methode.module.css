@@ -107,10 +107,10 @@
   text-align: center;
   font-family: var(--fb);
   font-size: clamp(16px, 1.25vw, 19px);
-  line-height: 1.55;
+  line-height: 1.5;
   color: rgba(14, 14, 14, 0.78);
   margin: 0 auto;
-  max-width: 460px;
+  max-width: 600px;
 }
 
 /* ----- colonne droite : sloughi ----- */
