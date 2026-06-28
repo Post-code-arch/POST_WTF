@@ -311,9 +311,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 36px;
-  height: 36px;
-  margin: -18px 0 0 -18px;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
   pointer-events: none;
   z-index: 70;
   will-change: transform, opacity;
@@ -328,14 +328,14 @@
   top: 50%;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 3px;
   transform: translateY(-50%);
 }
 .cursorPlus::after {
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 3px;
   transform: translateX(-50%);
 }
 
