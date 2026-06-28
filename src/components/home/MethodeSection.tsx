@@ -67,6 +67,11 @@ const imageVariant: Variants = {
   visible: { opacity: 1, transition: { duration: 0.5, ease: EASE } },
   exit: { opacity: 0, transition: { duration: 0.4, ease: EASE } },
 };
+const grainVariant: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: [0, 0.5, 0], transition: { duration: 0.6, ease: EASE, times: [0, 0.45, 1] } },
+  exit: { opacity: 0, transition: { duration: 0.1 } },
+};
 
 function pad2(n: number) {
   return n < 10 ? `0${n}` : `${n}`;
@@ -228,6 +233,16 @@ export default function MethodeSection() {
                 alt="Sloughi au repos, à l'encre"
                 className={styles.image}
                 variants={imageVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              />
+            </AnimatePresence>
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={`grain-${stage.image}`}
+                className={styles.grain}
+                variants={grainVariant}
                 initial="hidden"
                 animate="visible"
                 exit="exit"

@@ -129,6 +129,18 @@
   box-sizing: border-box;
 }
 
+/* trame de dithering qui pulse pendant le cross-dissolve entre deux
+   paliers — masque la coupe nette de l'opacity fade par un grain qui
+   évoque le même traitement que les images elles-mêmes */
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("/home/methode/grain.png");
+  background-size: 180px 180px;
+  background-repeat: repeat;
+  pointer-events: none;
+}
+
 /* ---------------- CTA (hors cadre pinné) ---------------- */
 .cta {
   display: flex;
