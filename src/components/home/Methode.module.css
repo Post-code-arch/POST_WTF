@@ -8,6 +8,7 @@
 .methode {
   --pad: clamp(20px, 3.5vw, 56px);
   --nav-clear: 72px; /* dégagement sous la nav globale fixe (~70px) */
+  --line-strong: rgba(14, 14, 14, 0.42); /* lignes de séparation assombries, propres à cette section */
   background: var(--cream);
   color: var(--ink);
 }
@@ -20,7 +21,7 @@
   display: flex;
   flex-direction: column;
   background: var(--cream);
-  border: 2px solid var(--line, rgba(14, 14, 14, 0.18));
+  border: 2px solid var(--line-strong);
   overflow: hidden;
 }
 
@@ -37,7 +38,7 @@
   justify-content: space-between;
   align-items: center;
   padding: clamp(16px, 2.2vw, 26px) var(--pad);
-  border-bottom: 2px solid var(--line, rgba(14, 14, 14, 0.18));
+  border-bottom: 2px solid var(--line-strong);
   font-family: var(--fh);
   font-size: clamp(15px, 1.3vw, 19px);
   letter-spacing: 0;
@@ -55,13 +56,13 @@
 .left {
   display: grid;
   grid-template-rows: 0.85fr 1.05fr 1.45fr;
-  border-right: 2px solid var(--line, rgba(14, 14, 14, 0.18));
+  border-right: 2px solid var(--line-strong);
   min-height: 0;
 }
 
 .zone {
   position: relative;
-  border-bottom: 2px solid var(--line, rgba(14, 14, 14, 0.18));
+  border-bottom: 2px solid var(--line-strong);
   overflow: hidden;
 }
 .zone:last-child {
@@ -125,8 +126,12 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: clamp(30px, 5vw, 75px);
+  padding: clamp(14px, 2.4vw, 36px);
   box-sizing: border-box;
+  opacity: 0;
+}
+.image:first-of-type {
+  opacity: 1;
 }
 
 /* trame de dithering qui pulse pendant le cross-dissolve entre deux
@@ -139,6 +144,7 @@
   background-size: 180px 180px;
   background-repeat: repeat;
   pointer-events: none;
+  opacity: 0;
 }
 
 /* ---------------- CTA (hors cadre pinné) ---------------- */

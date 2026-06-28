@@ -250,10 +250,9 @@ export default function MethodeSection() {
                 src={s.image}
                 alt="Sloughi au repos, à l'encre"
                 className={styles.image}
-                style={{ opacity: i === 0 ? 1 : 0 }}
               />
             ))}
-            <div ref={grainRef} className={styles.grain} style={{ opacity: 0 }} />
+            <div ref={grainRef} className={styles.grain} />
           </div>
         </div>
       </div>
