@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -105,14 +104,6 @@ function Topbar({ index }: { index: number }) {
       <span>
         {pad2(index + 1)}/{pad2(STAGES.length)}
       </span>
-    </div>
-  );
-}
-
-function Cta() {
-  return (
-    <div className={styles.cta}>
-      <Link href="/studio">→ La méthode en détail</Link>
     </div>
   );
 }
@@ -273,7 +264,6 @@ export default function MethodeSection() {
             </div>
           </div>
         ))}
-        <Cta />
       </section>
     );
   }
@@ -339,7 +329,6 @@ export default function MethodeSection() {
           </div>
         </div>
       </div>
-      <Cta />
     </section>
   );
 }

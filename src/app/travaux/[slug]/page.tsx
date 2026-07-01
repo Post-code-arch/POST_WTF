@@ -79,7 +79,9 @@ export default async function ProjectPage({
       ? { re: /(11-application-badge|12-application-programme)\.webp$/, pos: "after" }
       : slug === "astarte-conseils"
         ? { re: /02-application-billboard\.webp$/, pos: "before" }
-        : null;
+        : slug === "imlead"
+          ? { re: /05-fabrication-social-stories\.webp$/, pos: "after" }
+          : null;
   const isFull = (v: Visual) => !!fullWidthCfg && fullWidthCfg.re.test(v.src);
   const nextProject = meta.suivant ? getProject(meta.suivant.slug) : null;
   const nextHero = nextProject
