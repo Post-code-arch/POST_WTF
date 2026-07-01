@@ -70,13 +70,17 @@ export default async function ProjectPage({
   const assets = visuals.filter((v) => v.slot === "asset");
   // Marpharmal : visuels agrandis, rangées de 2 max (pas de rangée de 3).
   const galleryPerRow = slug === "marpharmal" ? 2 : 3;
-  // Marpharmal : le badge et les couvertures (programme) passent en pleine
-  // largeur, sortis du flux en rangées et posés en fin de section.
-  const fullWidthRe =
+  // Certains visuels sortent du flux en rangées pour passer en pleine
+  // largeur. `pos` place ces visuels avant ou après la grille de leur
+  // section. Marpharmal : badge + couvertures en fin ; Astarté : le banner
+  // (billboard) en tête.
+  const fullWidthCfg: { re: RegExp; pos: "before" | "after" } | null =
     slug === "marpharmal"
-      ? /(11-application-badge|12-application-programme)\.webp$/
-      : null;
-  const isFull = (v: Visual) => !!fullWidthRe && fullWidthRe.test(v.src);
+      ? { re: /(11-application-badge|12-application-programme)\.webp$/, pos: "after" }
+      : slug === "astarte-conseils"
+        ? { re: /02-application-billboard\.webp$/, pos: "before" }
+        : null;
+  const isFull = (v: Visual) => !!fullWidthCfg && fullWidthCfg.re.test(v.src);
   const nextProject = meta.suivant ? getProject(meta.suivant.slug) : null;
   const nextHero = nextProject
     ? nextProject.visuals.find((v) => v.slot === "hero") ??
@@ -95,6 +99,7 @@ export default async function ProjectPage({
           );
           const rowed = sectionVisuals.filter((v) => !isFull(v));
           const fulls = sectionVisuals.filter((v) => isFull(v));
+          const fullEls = fulls.map((v) => <Media key={v.src} v={v} />);
           return (
             <Fragment key={s.bloc}>
               <Section
@@ -107,14 +112,13 @@ export default async function ProjectPage({
                 ))}
                 {s.bloc === "lecture" && <Details meta={meta} />}
               </Section>
+              {fullWidthCfg?.pos === "before" && fullEls}
               {rowed.length === 1 ? (
                 <Media v={rowed[0]} />
               ) : rowed.length > 1 ? (
                 <Gallery visuals={rowed} maxPerRow={galleryPerRow} />
               ) : null}
-              {fulls.map((v) => (
-                <Media key={v.src} v={v} />
-              ))}
+              {fullWidthCfg?.pos !== "before" && fullEls}
             </Fragment>
           );
         })}
