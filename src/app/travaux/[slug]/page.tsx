@@ -67,6 +67,8 @@ export default async function ProjectPage({
   const { meta, sections, visuals } = project;
   const hero = visuals.find((v) => v.slot === "hero") ?? visuals[0];
   const assets = visuals.filter((v) => v.slot === "asset");
+  // Marpharmal : visuels agrandis, rangées de 2 max (pas de rangée de 3).
+  const galleryPerRow = slug === "marpharmal" ? 2 : 3;
   const nextProject = meta.suivant ? getProject(meta.suivant.slug) : null;
   const nextHero = nextProject
     ? nextProject.visuals.find((v) => v.slot === "hero") ??
@@ -98,7 +100,7 @@ export default async function ProjectPage({
               {sectionVisuals.length === 1 ? (
                 <Media v={sectionVisuals[0]} />
               ) : sectionVisuals.length > 1 ? (
-                <Gallery visuals={sectionVisuals} />
+                <Gallery visuals={sectionVisuals} maxPerRow={galleryPerRow} />
               ) : null}
             </Fragment>
           );
@@ -107,7 +109,7 @@ export default async function ProjectPage({
         {assets.length === 1 ? (
           <Media v={assets[0]} />
         ) : assets.length > 1 ? (
-          <Gallery visuals={assets} />
+          <Gallery visuals={assets} maxPerRow={galleryPerRow} />
         ) : null}
 
         {meta.ideeDirectrice && <Manifesto>{meta.ideeDirectrice}</Manifesto>}

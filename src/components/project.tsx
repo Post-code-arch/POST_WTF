@@ -120,9 +120,16 @@ export function Media({ v }: { v: Visual }) {
    est mise à l'échelle (aspect-ratio = somme des ratios) — aucun visuel
    n'est jamais recadré, et la rangée occupe toujours 100% de la largeur. */
 
-/** dispose une liste de visuels en rangées justifiées (2 ou 3 par rangée,
- *  jamais 1 seul — qui reste en <Media> pleine largeur, non recadré). */
-export function Gallery({ visuals }: { visuals: Visual[] }) {
+/** dispose une liste de visuels en rangées justifiées (jusqu'à `maxPerRow`
+ *  par rangée, jamais 1 seul — qui reste en <Media> pleine largeur, non
+ *  recadré). `maxPerRow={2}` agrandit les visuels (pas de rangée de 3). */
+export function Gallery({
+  visuals,
+  maxPerRow = 3,
+}: {
+  visuals: Visual[];
+  maxPerRow?: number;
+}) {
   const blocks: ReactNode[] = [];
   let i = 0;
   while (i < visuals.length) {
@@ -130,7 +137,7 @@ export function Gallery({ visuals }: { visuals: Visual[] }) {
     if (left === 1) {
       blocks.push(<Media key={visuals[i].src} v={visuals[i]} />);
       i += 1;
-    } else if (left === 3 || left >= 5) {
+    } else if (maxPerRow >= 3 && (left === 3 || left >= 5)) {
       blocks.push(
         <JustifiedRow key={visuals[i].src} visuals={visuals.slice(i, i + 3)} />
       );
