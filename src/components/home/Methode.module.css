@@ -120,7 +120,8 @@
   background: var(--cream);
   overflow: hidden;
 }
-.image {
+.image,
+.canvas {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -128,23 +129,6 @@
   object-fit: contain;
   padding: clamp(14px, 2.4vw, 36px);
   box-sizing: border-box;
-  opacity: 0;
-}
-.image:first-of-type {
-  opacity: 1;
-}
-
-/* trame de dithering qui pulse pendant le cross-dissolve entre deux
-   paliers — masque la coupe nette de l'opacity fade par un grain qui
-   évoque le même traitement que les images elles-mêmes */
-.grain {
-  position: absolute;
-  inset: 0;
-  background-image: url("/home/methode/grain.png");
-  background-size: 180px 180px;
-  background-repeat: repeat;
-  pointer-events: none;
-  opacity: 0;
 }
 
 /* ---------------- CTA (hors cadre pinné) ---------------- */
