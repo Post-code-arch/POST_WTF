@@ -16,6 +16,7 @@ import {
   getProject,
   getProjectSlugs,
   SECTION_VISUAL_SLOT,
+  type Visual,
 } from "@/lib/projects";
 
 export const dynamicParams = false;
@@ -69,6 +70,13 @@ export default async function ProjectPage({
   const assets = visuals.filter((v) => v.slot === "asset");
   // Marpharmal : visuels agrandis, rangées de 2 max (pas de rangée de 3).
   const galleryPerRow = slug === "marpharmal" ? 2 : 3;
+  // Marpharmal : le badge et les couvertures (programme) passent en pleine
+  // largeur, sortis du flux en rangées et posés en fin de section.
+  const fullWidthRe =
+    slug === "marpharmal"
+      ? /(11-application-badge|12-application-programme)\.webp$/
+      : null;
+  const isFull = (v: Visual) => !!fullWidthRe && fullWidthRe.test(v.src);
   const nextProject = meta.suivant ? getProject(meta.suivant.slug) : null;
   const nextHero = nextProject
     ? nextProject.visuals.find((v) => v.slot === "hero") ??
@@ -85,6 +93,8 @@ export default async function ProjectPage({
           const sectionVisuals = visuals.filter(
             (v) => v.slot === SECTION_VISUAL_SLOT[s.bloc]
           );
+          const rowed = sectionVisuals.filter((v) => !isFull(v));
+          const fulls = sectionVisuals.filter((v) => isFull(v));
           return (
             <Fragment key={s.bloc}>
               <Section
@@ -97,11 +107,14 @@ export default async function ProjectPage({
                 ))}
                 {s.bloc === "lecture" && <Details meta={meta} />}
               </Section>
-              {sectionVisuals.length === 1 ? (
-                <Media v={sectionVisuals[0]} />
-              ) : sectionVisuals.length > 1 ? (
-                <Gallery visuals={sectionVisuals} maxPerRow={galleryPerRow} />
+              {rowed.length === 1 ? (
+                <Media v={rowed[0]} />
+              ) : rowed.length > 1 ? (
+                <Gallery visuals={rowed} maxPerRow={galleryPerRow} />
               ) : null}
+              {fulls.map((v) => (
+                <Media key={v.src} v={v} />
+              ))}
             </Fragment>
           );
         })}
