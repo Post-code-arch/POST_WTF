@@ -20,16 +20,27 @@ export function Hero({
   titre,
   sousTitre,
   hero,
+  heroMobile,
 }: {
   titre: string;
   sousTitre: string;
   hero?: Visual;
+  /** variante portrait servie en dessous de 760px (si fournie) */
+  heroMobile?: Visual;
 }) {
+  const canSwap = hero && heroMobile && !hero.isVideo && !heroMobile.isVideo;
   return (
     <header className="hero">
       {hero && (
         <div className="hero-media" aria-hidden>
-          <MediaInner v={hero} />
+          {canSwap ? (
+            <picture>
+              <source media="(max-width: 760px)" srcSet={heroMobile!.src} />
+              <img src={hero.src} alt="" />
+            </picture>
+          ) : (
+            <MediaInner v={hero} />
+          )}
         </div>
       )}
       <h1 className="hero-title">

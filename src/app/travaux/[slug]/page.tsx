@@ -66,7 +66,11 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   const { meta, sections, visuals } = project;
-  const hero = visuals.find((v) => v.slot === "hero") ?? visuals[0];
+  // variante portrait optionnelle du hero : fichier « NN-hero-mobile.ext »
+  const isMobileHero = (v: Visual) => /-hero-mobile\.[a-z0-9]+$/i.test(v.src);
+  const heroMobile = visuals.find(isMobileHero);
+  const hero =
+    visuals.find((v) => v.slot === "hero" && !isMobileHero(v)) ?? visuals[0];
   const assets = visuals.filter((v) => v.slot === "asset");
   // Marpharmal : visuels agrandis, rangées de 2 max (pas de rangée de 3).
   const galleryPerRow = slug === "marpharmal" ? 2 : 3;
@@ -85,7 +89,7 @@ export default async function ProjectPage({
   const isFull = (v: Visual) => !!fullWidthCfg && fullWidthCfg.re.test(v.src);
   const nextProject = meta.suivant ? getProject(meta.suivant.slug) : null;
   const nextHero = nextProject
-    ? nextProject.visuals.find((v) => v.slot === "hero") ??
+    ? nextProject.visuals.find((v) => v.slot === "hero" && !isMobileHero(v)) ??
       nextProject.visuals[0]
     : undefined;
 
@@ -93,7 +97,12 @@ export default async function ProjectPage({
     <>
       <Nav />
       <main>
-        <Hero titre={meta.titre} sousTitre={meta.sousTitre} hero={hero} />
+        <Hero
+          titre={meta.titre}
+          sousTitre={meta.sousTitre}
+          hero={hero}
+          heroMobile={heroMobile}
+        />
 
         {sections.map((s, i) => {
           const sectionVisuals = visuals.filter(
