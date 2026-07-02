@@ -17,20 +17,20 @@ const DEPARTEMENTS: Dept[] = [
     name: "Studio",
     desc: "Le pôle marque. On accompagne une entreprise de la réflexion stratégique jusqu’aux supports finaux : on étudie son marché et son positionnement, on définit son identité, on conçoit son site et ses outils de communication.",
     tags: ["Stratégie", "Identité", "Web", "Production"],
-    color: "#2a2620",
+    color: "#262626",
     image: "/home/departements/studio.webp",
   },
   {
     name: "Atelier",
     desc: "Le pôle production. On fabrique les contenus visuels : images et vidéos générées par IA, motion design, 3D. On travaille pour nos propres projets comme en sous-traitance pour d’autres studios et agences.",
     tags: ["Production AI", "Motion", "3D", "Marque blanche"],
-    color: "#1f2a24",
+    color: "#242424",
   },
   {
     name: "Label",
     desc: "Le pôle édition. Nos projets à nous : publications, objets, éditions culturelles. Pas encore lancé, mais ça vient.",
     tags: ["Bientôt"],
-    color: "#2a1f18",
+    color: "#202020",
   },
 ];
 

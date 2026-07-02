@@ -2,7 +2,7 @@
    palette/polices/logo du projet. */
 
 .home {
-  --espresso-soft: #241712;
+  --espresso-soft: #202020;
   --dark: #1a1a1a;
   --pad: clamp(20px, 3.5vw, 56px);
 }
@@ -105,12 +105,12 @@
 .heroFrame::before {
   top: 0;
   height: 40%;
-  background: linear-gradient(180deg, rgba(18, 12, 8, 0.5), rgba(18, 12, 8, 0));
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.5), rgba(18, 18, 18, 0));
 }
 .heroFrame::after {
   bottom: 0;
   height: 58%;
-  background: linear-gradient(0deg, rgba(18, 12, 8, 0.78), rgba(18, 12, 8, 0));
+  background: linear-gradient(0deg, rgba(18, 18, 18, 0.78), rgba(18, 18, 18, 0));
 }
 /* KINAYA — bandeau supérieur, blanc (instance voyageuse calée ici à scroll 0) */
 .heroLogo {
@@ -245,7 +245,7 @@
   background: linear-gradient(
     180deg,
     transparent 55%,
-    rgba(26, 15, 8, 0.45)
+    rgba(18, 18, 18, 0.45)
   );
   opacity: 0;
   transition: opacity 0.55s ease;
@@ -257,13 +257,15 @@
 .workMedia {
   position: absolute;
   inset: -12% 0;
-  background: radial-gradient(circle at 40% 30%, #3a2418, transparent 60%),
-    radial-gradient(circle at 65% 70%, #2a160d, transparent 55%),
+  background: radial-gradient(circle at 40% 30%, #2b2b2b, transparent 60%),
+    radial-gradient(circle at 65% 70%, #1f1f1f, transparent 55%),
     var(--espresso);
   background-size: cover;
   background-position: center;
   will-change: transform;
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  /* vignette désaturée + plage tonale bornée (site monochrome) */
+  filter: grayscale(1) contrast(0.9);
 }
 .workItem:hover .workMedia {
   transform: scale(1.06);
@@ -325,7 +327,7 @@
 .cursorPlus::after {
   content: "";
   position: absolute;
-  background: #fff;
+  background: #f2f2f2;
   mix-blend-mode: difference;
 }
 .cursorPlus::before {
@@ -364,7 +366,7 @@
 /* ---------------- FOOTER ---------------- */
 .footer {
   background: var(--orange);
-  color: #1c0f08;
+  color: #191919;
 }
 .footTop {
   display: grid;
@@ -385,7 +387,7 @@
 .footTop .l .sq {
   width: 9px;
   height: 9px;
-  background: #1c0f08;
+  background: #191919;
   display: inline-block;
 }
 .footTop .c {
@@ -395,7 +397,7 @@
   text-align: right;
 }
 .footLogo {
-  color: #7a2e15;
+  color: #4d4d4d;
   padding: 0 var(--pad) clamp(10px, 1.5vw, 24px);
   visibility: hidden; /* cible de mesure */
 }
@@ -410,7 +412,7 @@
   font-family: var(--fl);
   font-size: 10px;
   letter-spacing: 0.25em;
-  color: rgba(242, 239, 230, 0.5);
+  color: rgba(242, 242, 242, 0.5);
   transition: opacity 0.4s;
 }
 
@@ -444,7 +446,7 @@
   mix-blend-mode: difference;
 }
 .static .nlinks {
-  color: #fff;
+  color: #f2f2f2;
 }
 .static .heroLogo {
   visibility: visible;

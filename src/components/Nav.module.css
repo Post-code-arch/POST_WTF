@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   padding: clamp(16px, 1.8vw, 26px) clamp(20px, 4vw, 56px);
-  color: #fff;
+  color: #f2f2f2;
   mix-blend-mode: difference;
   pointer-events: none; /* les liens réactivent */
 }
@@ -17,7 +17,7 @@
   width: clamp(116px, 11vw, 150px);
   flex-shrink: 0;
   display: block;
-  color: #fff;
+  color: #f2f2f2;
   pointer-events: auto;
 }
 .logo svg {
@@ -72,7 +72,7 @@
   display: block;
   width: 26px;
   height: 2px;
-  background: #fff;
+  background: #f2f2f2;
 }
 
 /* ---------- overlay menu (mobile) ---------- */
@@ -80,8 +80,8 @@
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: var(--espresso, #1c0f08);
-  color: var(--cream, #f2efe6);
+  background: var(--espresso, #191919);
+  color: var(--cream, #f2f2f2);
   display: flex;
   align-items: center;
   justify-content: center;

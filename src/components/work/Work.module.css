@@ -33,7 +33,7 @@
   grid-column: 2;
   width: 104px;
   justify-self: center;
-  color: #fff;
+  color: #f2f2f2;
 }
 .nlogo svg {
   display: block;
@@ -47,7 +47,7 @@
   font-size: 13px;
   display: flex;
   gap: 6px;
-  color: #fff;
+  color: #f2f2f2;
 }
 .nlinks a::before {
   content: "· ";
@@ -66,8 +66,8 @@
 }
 .vtBtn {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #fff;
+  border: 1px solid rgba(244, 244, 244, 0.4);
+  color: #f2f2f2;
   font-family: var(--fl);
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -78,8 +78,8 @@
   transition: background 0.25s, color 0.25s;
 }
 .vtBtn.active {
-  background: #fff;
-  color: #000;
+  background: #f2f2f2;
+  color: #151515;
 }
 
 /* ---------- FILTRE PAR TYPE ---------- */
@@ -96,8 +96,8 @@
 }
 .fBtn {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #fff;
+  border: 1px solid rgba(244, 244, 244, 0.4);
+  color: #f2f2f2;
   font-family: var(--fl);
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -108,12 +108,12 @@
   transition: background 0.25s, color 0.25s, border-color 0.25s;
 }
 .fBtn:hover {
-  border-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(244, 244, 244, 0.9);
 }
 .fBtn.active {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
+  background: #f2f2f2;
+  color: #151515;
+  border-color: #f2f2f2;
 }
 
 /* ---------- LIST — marquee vertical infini ---------- */
@@ -202,7 +202,7 @@
   font-family: var(--fl);
   font-size: 11px;
   letter-spacing: 0.25em;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(244, 244, 244, 0.5);
 }
 .floatImg img {
   width: 100%;
@@ -235,6 +235,8 @@
   background-size: cover;
   background-position: center;
   transition: opacity 0.55s ease;
+  /* aperçu plein écran désaturé + plage tonale bornée (site monochrome) */
+  filter: grayscale(1) contrast(0.9);
 }
 .gridBg.on {
   opacity: 1;
@@ -289,6 +291,8 @@
   border-radius: 3px;
   overflow: hidden;
   position: relative;
+  /* désature aussi la couleur-placeholder de marque (site monochrome) */
+  filter: grayscale(1);
 }
 .hcard:hover {
   transform: translateY(-22px);
@@ -301,7 +305,7 @@
   font-family: var(--fl);
   font-size: 11px;
   letter-spacing: 0.25em;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(244, 244, 244, 0.5);
 }
 .hcard .thumb img {
   position: absolute;

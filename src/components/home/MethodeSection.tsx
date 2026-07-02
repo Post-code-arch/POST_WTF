@@ -49,8 +49,8 @@ const STAGES: Stage[] = [
 const SLOUGHI_SRC = "/home/methode/sloughi.webp";
 const DITHER_CELL = 5; // taille du bloc de trame (plus grand = trame plus grosse)
 const CANVAS_W = 520; // résolution interne du canvas
-const INK = [14, 14, 14] as const;
-const CREAM = [242, 239, 230] as const;
+const INK = [23, 23, 23] as const; // noir doux (jamais #000)
+const CREAM = [242, 242, 242] as const; // blanc cassé neutre (jamais #fff)
 
 /** matrice de Bayer 8×8, seuils normalisés 0..1 */
 const BAYER8: number[][] = (() => {

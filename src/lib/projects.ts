@@ -288,7 +288,7 @@ export function getProjectsForGrid(): GridWork[] {
       title: p.meta.titre,
       categories: p.meta.champs,
       disciplines: disciplinesFor(p.meta.champs),
-      color: p.meta.couleur ?? "#2a2620",
+      color: p.meta.couleur ?? "#262626",
       image: hero?.src,
     };
   });

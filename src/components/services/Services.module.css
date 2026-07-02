@@ -2,9 +2,9 @@
    Deux couches indépendantes : fonds (slide up) + textes (contre-mouvement). */
 
 .page {
-  --bg: #14110d;
-  --cream: #f6f5f0;
-  --orange: #d94e1f;
+  --bg: #171717;
+  --cream: #f4f4f4;
+  --orange: #8c8c8c;
   --pad: clamp(14px, 1.8vw, 30px);
   background: var(--bg);
   color: var(--cream);
@@ -28,7 +28,7 @@
   grid-column: 2;
   width: 104px;
   justify-self: center;
-  color: #fff;
+  color: #f2f2f2;
 }
 .nlogo svg {
   display: block;
@@ -42,7 +42,7 @@
   font-size: 13px;
   display: flex;
   gap: 6px;
-  color: #fff;
+  color: #f2f2f2;
 }
 .nlinks a {
   color: inherit;
@@ -80,7 +80,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(10, 8, 6, 0.34); /* voile lisibilité */
+  background: rgba(10, 10, 10, 0.34); /* voile lisibilité */
 }
 .grain {
   position: absolute;
@@ -88,6 +88,8 @@
   background-size: cover;
   background-position: center;
   will-change: transform;
+  /* image de fond désaturée + plage tonale bornée (site monochrome) */
+  filter: grayscale(1) contrast(0.9);
 }
 
 /* ===== COUCHE B — TEXTES (au-dessus, transition propre) ===== */
@@ -174,7 +176,7 @@
 /* ---------- FOOTER ---------- */
 .footer {
   background: var(--orange);
-  color: #1c0f08;
+  color: #191919;
   position: relative;
   z-index: 50;
 }
@@ -197,14 +199,14 @@
 .footTop .l .sq {
   width: 9px;
   height: 9px;
-  background: #1c0f08;
+  background: #191919;
   display: inline-block;
 }
 .footTop .r {
   text-align: right;
 }
 .footLogo {
-  color: #7a2e15;
+  color: #4d4d4d;
   padding: 0 var(--pad) clamp(10px, 1.5vw, 24px);
 }
 .footLogo svg {

@@ -22,7 +22,7 @@ export const services: Service[] = [
       "recherche · benchmark culturel",
       "cadrage stratégique.",
     ],
-    bg: "linear-gradient(135deg,#6b8cae,#3a5573)",
+    bg: "linear-gradient(135deg,#868686,#505050)",
     image: "/home/aventures/av-1.webp",
   },
   {
@@ -36,7 +36,7 @@ export const services: Service[] = [
       "Recherche · benchmark culturel",
       "Cadrage stratégique.",
     ],
-    bg: "linear-gradient(135deg,#2f5fc4,#1a3a8a)",
+    bg: "linear-gradient(135deg,#5c5c5c,#3a3a3a)",
     image: "/travaux/astarte-conseils/07-fabrication-logo.webp",
   },
   {
@@ -50,7 +50,7 @@ export const services: Service[] = [
       "Design system digital",
       "Animation web",
     ],
-    bg: "linear-gradient(135deg,#caa07a,#7a5a3a)",
+    bg: "linear-gradient(135deg,#a8a8a8,#606060)",
     image: "/travaux/astarte-conseils/03-application-site.webp",
   },
   {
@@ -59,7 +59,7 @@ export const services: Service[] = [
     line: "La fabrication technique, sans renier le regard.",
     tagsLeft: ["Film documentaire", "Motion Design", "Compositing", "Pipeline AI"],
     tagsRight: ["Marque blanche", "Direction technique"],
-    bg: "linear-gradient(135deg,#3a3228,#1a1510)",
+    bg: "linear-gradient(135deg,#333333,#161616)",
     image: "/home/aventures/av-7.webp",
   },
 ];
