@@ -365,8 +365,8 @@
 
 /* ---------------- FOOTER ---------------- */
 .footer {
-  background: var(--orange);
-  color: #191919;
+  background: var(--espresso); /* noir doux (jamais #000) */
+  color: var(--cream); /* blanc cassé (jamais #fff) */
 }
 .footTop {
   display: grid;
@@ -387,7 +387,7 @@
 .footTop .l .sq {
   width: 9px;
   height: 9px;
-  background: #191919;
+  background: var(--cream);
   display: inline-block;
 }
 .footTop .c {
