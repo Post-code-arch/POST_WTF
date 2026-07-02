@@ -88,8 +88,8 @@
   background-size: cover;
   background-position: center;
   will-change: transform;
-  /* image de fond désaturée + plage tonale bornée (site monochrome) */
-  filter: grayscale(1) contrast(0.9);
+  /* image de fond : couleurs conservées, plage tonale resserrée */
+  filter: contrast(0.9);
 }
 
 /* ===== COUCHE B — TEXTES (au-dessus, transition propre) ===== */

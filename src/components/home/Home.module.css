@@ -264,8 +264,8 @@
   background-position: center;
   will-change: transform;
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  /* vignette désaturée + plage tonale bornée (site monochrome) */
-  filter: grayscale(1) contrast(0.9);
+  /* vignette : couleurs conservées, plage tonale resserrée */
+  filter: contrast(0.9);
 }
 .workItem:hover .workMedia {
   transform: scale(1.06);

@@ -235,8 +235,8 @@
   background-size: cover;
   background-position: center;
   transition: opacity 0.55s ease;
-  /* aperçu plein écran désaturé + plage tonale bornée (site monochrome) */
-  filter: grayscale(1) contrast(0.9);
+  /* aperçu plein écran : couleurs conservées, plage tonale resserrée */
+  filter: contrast(0.9);
 }
 .gridBg.on {
   opacity: 1;
@@ -291,8 +291,6 @@
   border-radius: 3px;
   overflow: hidden;
   position: relative;
-  /* désature aussi la couleur-placeholder de marque (site monochrome) */
-  filter: grayscale(1);
 }
 .hcard:hover {
   transform: translateY(-22px);

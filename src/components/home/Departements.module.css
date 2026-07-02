@@ -129,8 +129,8 @@
   justify-content: center;
   transform: scale(0.94);
   will-change: opacity, transform;
-  /* aperçu désaturé + plage tonale bornée (site monochrome) */
-  filter: grayscale(1) contrast(0.9);
+  /* aperçu : couleurs conservées, plage tonale resserrée */
+  filter: contrast(0.9);
 }
 .pv.on {
   opacity: 1;

@@ -44,15 +44,13 @@ video {
   height: auto;
 }
 
-/* Site monochrome : tous les visuels sont désaturés, et un léger retrait de
-   contraste borne leur plage tonale (~[13, 242]) — jamais de noir ni de
-   blanc absolu, même dans les photos. */
+/* Les visuels gardent leurs couleurs ; seul un léger retrait de contraste
+   resserre leur plage tonale (~[13, 242]) — jamais de noir ni de blanc
+   absolu. L'interface (palette, footer…) reste, elle, en niveaux de gris. */
 img,
 video,
-canvas,
-.hero-media,
-.next-preview {
-  filter: grayscale(1) contrast(0.9);
+canvas {
+  filter: contrast(0.9);
 }
 
 /* placeholder media (en attendant les visuels réels) */
