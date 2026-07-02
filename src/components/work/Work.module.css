@@ -82,6 +82,40 @@
   color: #000;
 }
 
+/* ---------- FILTRE PAR TYPE ---------- */
+.filters {
+  position: fixed;
+  top: clamp(58px, 8vh, 74px);
+  left: var(--pad);
+  right: var(--pad);
+  z-index: 61;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  mix-blend-mode: difference;
+}
+.fBtn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-family: var(--fl);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 13px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.fBtn:hover {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+.fBtn.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
 /* ---------- LIST — marquee vertical infini ---------- */
 .viewport {
   height: 100vh;
@@ -335,6 +369,15 @@
   }
   .hcard {
     width: clamp(230px, 74vw, 360px);
+  }
+  .filters {
+    top: clamp(52px, 9vh, 66px);
+    gap: 5px;
+  }
+  .fBtn {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 6px 10px;
   }
   .htrack {
     gap: clamp(6px, 2vw, 14px);

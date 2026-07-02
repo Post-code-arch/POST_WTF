@@ -252,8 +252,32 @@ export interface GridWork {
   slug: string;
   title: string;
   categories: string[];
+  /** disciplines normalisées pour le filtre (Branding, Web, …) */
+  disciplines: string[];
   color: string;
   image?: string;
+}
+
+/** Taxonomie de filtrage : replie les « champs » fins de chaque projet
+ *  (Identité, Site, Packaging…) sur quelques disciplines lisibles. L'ordre
+ *  ici est l'ordre d'affichage des filtres. */
+const DISCIPLINES: { label: string; test: RegExp }[] = [
+  { label: "Branding", test: /identit|charte|direction artistique|syst[èe]me visuel/i },
+  { label: "Web", test: /site|web/i },
+  { label: "Packaging", test: /packaging/i },
+  { label: "Éditorial", test: /[ée]ditorial|[ée]dition/i },
+  { label: "Illustration", test: /illustration/i },
+  { label: "Signalétique", test: /signal[ée]tique/i },
+  { label: "Contenu", test: /content|contenu/i },
+  { label: "Photo", test: /photo/i },
+  { label: "3D", test: /3d|visualisation/i },
+];
+
+/** disciplines d'un projet, dérivées de ses champs (dédupliquées, ordonnées) */
+function disciplinesFor(champs: string[]): string[] {
+  return DISCIPLINES.filter((d) => champs.some((c) => d.test.test(c))).map(
+    (d) => d.label
+  );
 }
 
 export function getProjectsForGrid(): GridWork[] {
@@ -263,6 +287,7 @@ export function getProjectsForGrid(): GridWork[] {
       slug: p.meta.slug,
       title: p.meta.titre,
       categories: p.meta.champs,
+      disciplines: disciplinesFor(p.meta.champs),
       color: p.meta.couleur ?? "#2a2620",
       image: hero?.src,
     };

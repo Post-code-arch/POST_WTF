@@ -21,6 +21,21 @@ function cVar(color: string): CSSProperties {
 export default function WorkPage({ works }: { works: Work[] }) {
   const [gridHover, setGridHover] = useState<GridHover>(null);
   const [bg, setBg] = useState<Work | null>(null);
+  const [filter, setFilter] = useState<string | null>(null);
+
+  // liste ordonnée des disciplines présentes dans les projets — sert de
+  // barre de filtres (« Tous » + chaque discipline rencontrée, dans l'ordre
+  // de première apparition dérivé de la taxonomie de projects.ts).
+  const filters = (() => {
+    const seen: string[] = [];
+    for (const w of works)
+      for (const d of w.disciplines) if (!seen.includes(d)) seen.push(d);
+    return seen;
+  })();
+
+  const visible = filter
+    ? works.filter((w) => w.disciplines.includes(filter))
+    : works;
 
   const hgridRef = useRef<HTMLDivElement>(null);
   const htrackRef = useRef<HTMLDivElement>(null);
@@ -29,6 +44,14 @@ export default function WorkPage({ works }: { works: Work[] }) {
   const measure = () => {
     if (htrackRef.current) grid.current.unit = htrackRef.current.scrollWidth / 3;
   };
+
+  // le jeu de cartes change avec le filtre : on remet la piste à zéro et on
+  // recalcule l'unité de boucle.
+  useEffect(() => {
+    grid.current.pos = 0;
+    grid.current.vel = 0;
+    measure();
+  }, [filter]);
 
   useEffect(() => {
     const hg = hgridRef.current;
@@ -77,7 +100,7 @@ export default function WorkPage({ works }: { works: Work[] }) {
 
   const enterCard = (key: string, projIdx: number) => {
     grid.current.pause = true;
-    setBg(works[projIdx]);
+    setBg(visible[projIdx]);
     setGridHover({ key, proj: projIdx });
   };
   const leaveCard = () => {
@@ -104,6 +127,27 @@ export default function WorkPage({ works }: { works: Work[] }) {
     <div className={styles.work}>
       <Nav />
 
+      {/* filtre par type de projet */}
+      <div className={styles.filters}>
+        <button
+          type="button"
+          className={`${styles.fBtn} ${filter === null ? styles.active : ""}`}
+          onClick={() => setFilter(null)}
+        >
+          Tous
+        </button>
+        {filters.map((f) => (
+          <button
+            key={f}
+            type="button"
+            className={`${styles.fBtn} ${filter === f ? styles.active : ""}`}
+            onClick={() => setFilter((cur) => (cur === f ? null : f))}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
       {/* aperçu plein écran au survol */}
       <div
         className={`${styles.gridBg} ${gridHover ? styles.on : ""}`}
@@ -119,7 +163,7 @@ export default function WorkPage({ works }: { works: Work[] }) {
       >
         <div ref={htrackRef} className={styles.htrack}>
           {sets.map((s) =>
-            works.map((w, i) => {
+            visible.map((w, i) => {
               const key = `${s}-${i}`;
               const dim = gridHover != null && gridHover.key !== key;
               return (

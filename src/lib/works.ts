@@ -4,6 +4,8 @@ export interface Work {
   slug: string;
   title: string;
   categories: string[];
+  /** disciplines normalisées pour le filtre par type (Branding, Web, …) */
+  disciplines: string[];
   /** couleur de placeholder (en attendant le vrai visuel) */
   color: string;
   /** chemin du visuel (survol en liste / vignette en grille) — placeholder si absent */
