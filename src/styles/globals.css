@@ -53,6 +53,32 @@ canvas {
   filter: contrast(0.9);
 }
 
+/* image 4:5 à ondulation (RippleImage) — canvas WebGL par-dessus l'<img>
+   qui sert de poster / repli sans WebGL */
+.ripple {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--cream-2);
+}
+.ripple img,
+.ripple canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ripple canvas {
+  z-index: 1;
+}
+.ripple img {
+  transition: opacity 0.25s ease;
+}
+
 /* placeholder media (en attendant les visuels réels) */
 .ph {
   position: relative;

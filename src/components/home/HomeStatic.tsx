@@ -35,7 +35,7 @@ export default function HomeStatic({ works }: { works: Work[] }) {
             {/* mobile : plan portrait chaud (bokeh) ; desktop : atelier */}
             <source
               media="(max-width: 760px)"
-              srcSet="/home/hero-mobile.webp"
+              srcSet="/home/aventures/av-5.webp"
             />
             <img
               className={styles.heroBg}

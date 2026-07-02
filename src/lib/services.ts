@@ -23,7 +23,7 @@ export const services: Service[] = [
       "cadrage stratégique.",
     ],
     bg: "linear-gradient(135deg,#868686,#505050)",
-    image: "/home/aventures/av-1.webp",
+    image: "/travaux/astarte-conseils/04-application-carte.webp",
   },
   {
     name: "Branding",
@@ -37,7 +37,7 @@ export const services: Service[] = [
       "Cadrage stratégique.",
     ],
     bg: "linear-gradient(135deg,#5c5c5c,#3a3a3a)",
-    image: "/travaux/astarte-conseils/07-fabrication-logo.webp",
+    image: "/travaux/marpharmal/11-application-badge.webp",
   },
   {
     name: "Digital",
@@ -51,7 +51,7 @@ export const services: Service[] = [
       "Animation web",
     ],
     bg: "linear-gradient(135deg,#a8a8a8,#606060)",
-    image: "/travaux/astarte-conseils/03-application-site.webp",
+    image: "/travaux/imlead/07-application-site-ecran.webp",
   },
   {
     name: "Production",
