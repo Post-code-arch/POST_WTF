@@ -31,12 +31,19 @@ export default function HomeStatic({ works }: { works: Work[] }) {
       {/* HERO — image plein cadre, KINAYA en bandeau, accroche en bas */}
       <section className={styles.hero} data-theme="dark" data-hero>
         <div className={styles.heroFrame}>
-          <img
-            className={styles.heroBg}
-            src="/home/aventures/av-8.webp"
-            alt=""
-            aria-hidden
-          />
+          <picture>
+            {/* mobile : plan portrait chaud (bokeh) ; desktop : atelier */}
+            <source
+              media="(max-width: 760px)"
+              srcSet="/home/hero-mobile.webp"
+            />
+            <img
+              className={styles.heroBg}
+              src="/home/aventures/av-8.webp"
+              alt=""
+              aria-hidden
+            />
+          </picture>
           <div className={styles.heroLogo} data-hero-logo>
             <KinayaLogo className="klogo" />
           </div>
