@@ -33,14 +33,10 @@ export default function About() {
             petite équipe depuis un atelier.
           </p>
           <p>
-            On travaille la stratégie, l’identité, le web et la production avec
-            la même attention. On préfère montrer que raconter — alors on fait
-            court.
-          </p>
-          <p>
-            On commence toujours par comprendre ce qui est déjà là. On écoute ce
-            que la marque essaie de dire, souvent maladroitement parce qu’elle
-            n’a pas encore trouvé sa voix. Et on cherche cette voix avec elle.
+            On travaille quatre champs : la stratégie, pour poser les fondations
+            avant de construire. L’identité, pour donner à une marque un visage
+            qui tient. Le web, pour que tout ça vive en ligne proprement. La
+            production — film, photo, contenu — pour le montrer au monde.
           </p>
           <p>
             On expérimente, et on applique. Puis on recommence. Ce qui marche,

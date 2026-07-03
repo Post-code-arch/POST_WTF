@@ -97,11 +97,13 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1200px;
-  padding: clamp(10px, 3vh, 48px) var(--pad) clamp(30px, 6vh, 80px);
+  /* padding-bottom > top : le bloc centré remonte un peu (sans toucher le
+     bandeau du haut) */
+  padding: clamp(6px, 2vh, 24px) var(--pad) clamp(50px, 9vh, 108px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: clamp(28px, 5vw, 72px);
+  gap: clamp(18px, 3.2vw, 46px);
 }
 
 /* ---------- LISTE DES SERVICES (repli statique) ---------- */
@@ -136,15 +138,15 @@
 .num {
   font-family: var(--fd);
   font-weight: 500;
-  font-size: clamp(22px, 2.4vw, 34px);
+  font-size: clamp(28px, 3.4vw, 48px);
   line-height: 1;
   opacity: 0.4;
 }
 .title {
   font-family: var(--fd);
   font-weight: 500;
-  font-size: clamp(44px, 7vw, 104px);
-  line-height: 0.92;
+  font-size: clamp(54px, 8.6vw, 130px);
+  line-height: 0.9;
   letter-spacing: -0.02em;
 }
 .line {

@@ -51,7 +51,7 @@ export const services: Service[] = [
       "Animation web",
     ],
     bg: "linear-gradient(135deg,#a8a8a8,#606060)",
-    image: "/travaux/imlead/07-application-site-ecran.webp",
+    image: "/travaux/imlead/06-application-configurateur.webp",
   },
   {
     name: "Production",
