@@ -175,7 +175,7 @@ canvas {
 
 /* ---------- HERO ---------- */
 .hero {
-  height: 150vh;
+  height: 100vh;
   overflow: hidden;
   background: var(--espresso);
   color: var(--cream);

@@ -85,34 +85,39 @@
 /* ---------- FILTRE PAR TYPE (liste éditoriale) ---------- */
 .filters {
   position: fixed;
-  top: clamp(72px, 9vh, 90px);
+  top: clamp(72px, 9vh, 92px);
   left: var(--pad);
+  right: var(--pad);
   z-index: 61;
   mix-blend-mode: difference; /* s'adapte au fond (clair / aperçu sombre) */
+  display: flex;
+  align-items: baseline;
+  gap: clamp(16px, 2vw, 32px);
+  flex-wrap: wrap;
 }
 .filterHead {
-  display: block;
+  flex-shrink: 0;
   font-family: var(--fl);
   font-size: 12px;
   letter-spacing: 0.02em;
   color: #f2f2f2;
   opacity: 0.5;
-  margin-bottom: 8px;
 }
 .filterList {
   list-style: none;
   display: flex;
-  flex-direction: column;
-  gap: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: clamp(12px, 1.5vw, 28px);
 }
 .opt {
   background: none;
   border: 0;
-  padding: 2px 0;
+  padding: 0;
   cursor: pointer;
   font-family: var(--fh);
-  font-size: clamp(15px, 1.35vw, 19px);
-  line-height: 1.16;
+  font-size: clamp(15px, 1.35vw, 20px);
+  line-height: 1.2;
   letter-spacing: -0.005em;
   color: #f2f2f2;
   text-align: left;
