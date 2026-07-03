@@ -97,12 +97,11 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1200px;
-  /* padding-bottom > top : le bloc centré remonte un peu (sans toucher le
-     bandeau du haut) */
-  padding: clamp(6px, 2vh, 24px) var(--pad) clamp(50px, 9vh, 108px);
+  padding: clamp(6px, 2vh, 24px) var(--pad) clamp(70px, 11vh, 130px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* chapitrage poussé vers le bas (l'image reste calée en haut à droite) */
+  justify-content: flex-end;
   gap: clamp(18px, 3.2vw, 46px);
 }
 
