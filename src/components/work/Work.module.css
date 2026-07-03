@@ -84,12 +84,9 @@
 
 /* ---------- FILTRE PAR TYPE (liste éditoriale) ---------- */
 .filters {
-  position: fixed;
-  top: clamp(72px, 9vh, 92px);
-  left: var(--pad);
-  right: var(--pad);
-  z-index: 61;
-  mix-blend-mode: difference; /* s'adapte au fond (clair / aperçu sombre) */
+  /* dans le flux, juste au-dessus de la rangée de travaux (voir .hgrid) */
+  margin: 0 0 clamp(18px, 2.6vh, 40px);
+  padding: 0 var(--pad);
   display: flex;
   align-items: baseline;
   gap: clamp(16px, 2vw, 32px);
@@ -100,8 +97,14 @@
   font-family: var(--fl);
   font-size: 12px;
   letter-spacing: 0.02em;
-  color: #f2f2f2;
+  color: var(--ink);
   opacity: 0.5;
+  transition: color 0.4s ease;
+}
+/* sur fond clair : encre ; quand l'aperçu sombre est révélé : crème */
+.hgrid.hovering .filterHead,
+.hgrid.hovering .opt {
+  color: var(--cream);
 }
 .filterList {
   list-style: none;
@@ -119,9 +122,9 @@
   font-size: clamp(15px, 1.35vw, 20px);
   line-height: 1.2;
   letter-spacing: -0.005em;
-  color: #f2f2f2;
+  color: var(--ink);
   text-align: left;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease, color 0.4s ease;
 }
 .opt:hover {
   opacity: 0.55;
@@ -227,11 +230,14 @@
 }
 
 /* ---------- GRID — rangée horizontale infinie ---------- */
+/* colonne : le filtre se pose juste au-dessus de la piste, l'ensemble calé
+   en bas du viewport */
 .hgrid {
   position: fixed;
   inset: 0;
   display: none;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
   overflow: hidden;
   background: transparent;
   z-index: 2;
@@ -389,7 +395,7 @@
     width: clamp(230px, 74vw, 360px);
   }
   .filters {
-    top: clamp(72px, 11vh, 100px);
+    margin-bottom: clamp(14px, 2vh, 24px);
   }
   .opt {
     font-size: 16px;

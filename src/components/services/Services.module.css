@@ -126,6 +126,13 @@
   width: clamp(140px, 18vw, 224px);
   margin-left: auto;
 }
+/* en mode épinglé : l'image remonte en haut à droite, le texte reste centré */
+.slide .media {
+  position: absolute;
+  top: 0;
+  right: var(--pad);
+  margin: 0;
+}
 
 .meta {
   min-width: 0;

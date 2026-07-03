@@ -127,33 +127,6 @@ export default function WorkPage({ works }: { works: Work[] }) {
     <div className={styles.work}>
       <Nav />
 
-      {/* filtre par type de projet — liste éditoriale (l'actif est estompé) */}
-      <div className={styles.filters}>
-        <span className={styles.filterHead}>Type</span>
-        <ul className={styles.filterList}>
-          <li>
-            <button
-              type="button"
-              className={`${styles.opt} ${filter === null ? styles.optActive : ""}`}
-              onClick={() => setFilter(null)}
-            >
-              Tous
-            </button>
-          </li>
-          {filters.map((f) => (
-            <li key={f}>
-              <button
-                type="button"
-                className={`${styles.opt} ${filter === f ? styles.optActive : ""}`}
-                onClick={() => setFilter((cur) => (cur === f ? null : f))}
-              >
-                {f}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
       {/* aperçu plein écran au survol */}
       <div
         className={`${styles.gridBg} ${gridHover ? styles.on : ""}`}
@@ -167,6 +140,33 @@ export default function WorkPage({ works }: { works: Work[] }) {
           gridHover ? styles.hovering : ""
         }`}
       >
+        {/* filtre par type — juste au-dessus de la rangée de travaux */}
+        <div className={styles.filters}>
+          <span className={styles.filterHead}>Type</span>
+          <ul className={styles.filterList}>
+            <li>
+              <button
+                type="button"
+                className={`${styles.opt} ${filter === null ? styles.optActive : ""}`}
+                onClick={() => setFilter(null)}
+              >
+                Tous
+              </button>
+            </li>
+            {filters.map((f) => (
+              <li key={f}>
+                <button
+                  type="button"
+                  className={`${styles.opt} ${filter === f ? styles.optActive : ""}`}
+                  onClick={() => setFilter((cur) => (cur === f ? null : f))}
+                >
+                  {f}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div ref={htrackRef} className={styles.htrack}>
           {sets.map((s) =>
             visible.map((w, i) => {

@@ -44,6 +44,15 @@ export default function Contact() {
           <ContactForm />
         </div>
       </div>
+
+      {/* sloughi bas-gauche (encre sur transparent) */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className={styles.sloughi}
+        src="/about/sloughi/sloughi-08.webp"
+        alt=""
+        aria-hidden
+      />
     </main>
   );
 }

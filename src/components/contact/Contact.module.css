@@ -13,11 +13,37 @@
 }
 
 .grid {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: clamp(36px, 6vw, 110px);
   align-items: start;
   max-width: 1300px;
+}
+
+/* sloughi décoratif — bas gauche, à l'encre, derrière le contenu */
+.sloughi {
+  position: absolute;
+  left: clamp(-40px, -1vw, 0px);
+  bottom: clamp(-16px, 1vw, 28px);
+  width: clamp(300px, 38vw, 640px);
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.9;
+}
+@media (max-width: 860px) {
+  .sloughi {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: min(88%, 460px);
+    margin: clamp(48px, 10vw, 80px) auto 0;
+    display: block;
+    opacity: 0.85;
+  }
 }
 
 /* ---------- INTRO (gauche) ---------- */
