@@ -82,23 +82,21 @@
   padding: 0 var(--pad);
 }
 .service {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: "meta media";
-  gap: clamp(20px, 4vw, 64px);
-  align-items: start;
-  padding: clamp(50px, 8vh, 110px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 6vw, 80px);
+  padding: clamp(60px, 11vh, 150px) 0;
   border-top: 1px solid var(--line);
 }
 
-/* média 4:5 — petit, calé en haut à droite ; l'ondulation vit dans .ripple */
+/* média 4:5 — petit, seul en haut à droite (dans le vide, la section respire) ;
+   l'ondulation vit dans .ripple */
 .media {
-  grid-area: media;
   width: clamp(140px, 18vw, 224px);
+  margin-left: auto;
 }
 
 .meta {
-  grid-area: meta;
   min-width: 0;
 }
 .head {
