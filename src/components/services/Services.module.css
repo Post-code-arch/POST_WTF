@@ -83,19 +83,22 @@
 }
 .service {
   display: grid;
-  grid-template-columns: minmax(0, 460px) 1fr;
-  gap: clamp(28px, 5vw, 90px);
-  align-items: center;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "meta media";
+  gap: clamp(20px, 4vw, 64px);
+  align-items: start;
   padding: clamp(50px, 8vh, 110px) 0;
   border-top: 1px solid var(--line);
 }
 
-/* média 4:5 — l'ondulation vit dans RippleImage (.ripple) */
+/* média 4:5 — petit, calé en haut à droite ; l'ondulation vit dans .ripple */
 .media {
-  width: 100%;
+  grid-area: media;
+  width: clamp(140px, 18vw, 224px);
 }
 
 .meta {
+  grid-area: meta;
   min-width: 0;
 }
 .head {
@@ -193,16 +196,11 @@
   height: auto;
 }
 
-@media (max-width: 860px) {
-  .service {
-    grid-template-columns: 1fr;
-    gap: clamp(22px, 5vw, 36px);
-  }
-  .media {
-    max-width: 460px;
-  }
-}
 @media (max-width: 760px) {
+  /* image toujours en haut à droite, plus compacte */
+  .media {
+    width: clamp(104px, 30vw, 150px);
+  }
   .tags {
     grid-template-columns: 1fr;
   }
