@@ -1,0 +1,201 @@
+/* Page Contact — layout éditorial (réf. À propos), palette Kinaya. Formulaire
+   sobre : champs à filet bas, erreurs en ton discret (pas de rouge criard). */
+
+.contact {
+  --err: #9c5b3d; /* terracotta atténué, lisible mais sobre */
+  position: relative;
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--fb);
+  padding: clamp(96px, 13vh, 150px) clamp(20px, 4vw, 56px) clamp(48px, 7vw, 90px);
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(36px, 6vw, 110px);
+  align-items: start;
+  max-width: 1300px;
+}
+
+/* ---------- INTRO (gauche) ---------- */
+.kicker {
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  opacity: 0.5;
+}
+.title {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  margin: clamp(12px, 1.6vw, 20px) 0 clamp(18px, 2vw, 28px);
+}
+.lead {
+  font-family: var(--fh);
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.45;
+  max-width: 42ch;
+  color: rgba(23, 23, 23, 0.78);
+}
+.meta {
+  margin-top: clamp(32px, 5vw, 60px);
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+.row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+.row:first-child {
+  border-top: none;
+}
+.row .k {
+  opacity: 0.5;
+}
+.row a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.2);
+}
+.row a:hover {
+  opacity: 0.6;
+}
+
+/* ---------- FORMULAIRE (droite) ---------- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(22px, 2.6vw, 34px);
+  max-width: 640px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lab {
+  font-family: var(--fl);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.req {
+  opacity: 0.5;
+}
+.opt {
+  opacity: 0.4;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.28);
+  padding: 10px 2px;
+  font-family: var(--fb);
+  font-size: clamp(16px, 1.15vw, 18px);
+  color: var(--ink);
+  border-radius: 0; /* iOS reset */
+  transition: border-color 0.25s ease;
+}
+.input::placeholder {
+  color: rgba(23, 23, 23, 0.38);
+}
+.input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(23, 23, 23, 0.5) 50%),
+    linear-gradient(135deg, rgba(23, 23, 23, 0.5) 50%, transparent 50%);
+  background-position: right 4px center, right 0px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 24px;
+}
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+}
+.invalid {
+  border-bottom-color: var(--err);
+}
+.err {
+  font-family: var(--fl);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--err);
+}
+
+/* honeypot — hors écran, invisible et hors tabulation */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.serverErr {
+  font-family: var(--fl);
+  font-size: 13px;
+  color: var(--err);
+  margin: -6px 0 0;
+}
+
+.submit {
+  align-self: flex-start;
+  margin-top: 6px;
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 15px 34px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.submit:hover:not(:disabled) {
+  opacity: 0.82;
+}
+.submit:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---------- SUCCÈS ---------- */
+.success {
+  max-width: 640px;
+  padding: clamp(28px, 4vw, 48px) 0;
+  font-family: var(--fh);
+  font-size: clamp(20px, 2vw, 30px);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 8vw, 60px);
+  }
+}

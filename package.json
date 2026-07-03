@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@notionhq/client": "^5.22.0",
     "framer-motion": "^11.18.2",
     "gray-matter": "^4.0.3",
     "gsap": "^3.13.0",
@@ -16,7 +17,8 @@
     "next": "^15.5.0",
     "next-mdx-remote": "^6.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "resend": "^6.16.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
