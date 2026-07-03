@@ -71,6 +71,11 @@
   flex-direction: column;
   overflow: hidden;
 }
+/* ombre portée sur le bord haut : chaque panneau se détache de celui qu'il
+   recouvre en montant */
+.panel:not(:first-child) {
+  box-shadow: 0 -22px 50px -16px rgba(23, 23, 23, 0.22);
+}
 /* en-tête : nom à gauche, numéro à droite */
 .pHead {
   display: flex;
@@ -215,6 +220,10 @@
     position: static;
     height: auto;
     min-height: 100vh;
+  }
+  /* pas d'empilement sur mobile : pas d'ombre entre sections */
+  .panel:not(:first-child) {
+    box-shadow: none;
   }
   .pMain {
     grid-template-columns: 1fr;
