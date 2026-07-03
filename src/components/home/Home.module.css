@@ -417,6 +417,11 @@
 }
 
 @media (max-width: 760px) {
+  /* réserve le coin haut-droite pour le burger : le bandeau KINAYA (logo
+     voyageur mesuré sur ce slot) s'arrête avant lui, plus de chevauchement */
+  .heroLogo {
+    right: clamp(74px, 19vw, 104px);
+  }
   .workGrid {
     grid-template-columns: 1fr 1fr;
   }
