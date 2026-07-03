@@ -59,6 +59,39 @@ ${p.message}`;
   if (error) throw new Error(`Resend: ${error.message}`);
 }
 
+/** Accusé de réception envoyé au prospect (best-effort). */
+async function sendAck(p: ContactPayload) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const html = `
+    <div style="font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#171717">
+      <p>Bonjour ${esc(p.nom)},</p>
+      <p>Merci de nous avoir écrit. On a bien reçu votre message — on le lit,
+      puis on revient vers vous. Comptez deux jours ouvrés.</p>
+      <p style="color:#8a8a8a;margin-top:20px">Ce que vous nous avez adressé :</p>
+      <p style="white-space:pre-wrap;border-left:2px solid #e7e7e7;padding-left:14px;margin:6px 0 24px">${esc(p.message)}</p>
+      <p>— L’équipe Kinaya<br><span style="color:#8a8a8a">Agence créative · Alger</span></p>
+    </div>`;
+  const text = `Bonjour ${p.nom},
+
+Merci de nous avoir écrit. On a bien reçu votre message — on le lit, puis on revient vers vous. Comptez deux jours ouvrés.
+
+Ce que vous nous avez adressé :
+${p.message}
+
+— L'équipe Kinaya
+Agence créative · Alger`;
+
+  const { error } = await resend.emails.send({
+    from: CONTACT_FROM,
+    to: p.email,
+    replyTo: CONTACT_TO,
+    subject: "On a bien reçu votre message — Kinaya",
+    html,
+    text,
+  });
+  if (error) throw new Error(`Resend (accusé) : ${error.message}`);
+}
+
 async function createNotionPage(p: ContactPayload) {
   const notion = new NotionClient({ auth: process.env.NOTION_API_KEY });
   const database_id = process.env.NOTION_DATABASE_ID;
@@ -102,13 +135,17 @@ export async function POST(req: Request) {
     message: body.message!.trim(),
   };
 
-  // Les deux actions partent en parallèle. Notion ne doit jamais bloquer
-  // l'utilisateur : on logue son échec, mais seul l'email conditionne le succès.
-  const [emailRes, notionRes] = await Promise.allSettled([
+  // Tout part en parallèle. Seul l'email interne conditionne le succès :
+  // l'accusé au prospect et Notion sont best-effort (échec loggé, non bloquant).
+  const [emailRes, ackRes, notionRes] = await Promise.allSettled([
     sendEmail(payload),
+    sendAck(payload),
     createNotionPage(payload),
   ]);
 
+  if (ackRes.status === "rejected") {
+    console.error("[contact] Accusé prospect échec :", ackRes.reason);
+  }
   if (notionRes.status === "rejected") {
     console.error("[contact] Notion échec :", notionRes.reason);
   }
