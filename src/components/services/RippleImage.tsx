@@ -198,6 +198,8 @@ export default function RippleImage({
       canvas.removeEventListener("pointermove", addRipple);
       canvas.removeEventListener("pointerdown", addRipple);
       window.removeEventListener("resize", onResize);
+      // libère le contexte WebGL (les slots se remontent au scroll)
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
   }, [src]);
 

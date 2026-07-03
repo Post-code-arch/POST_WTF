@@ -53,29 +53,58 @@
   opacity: 0.5;
 }
 
-/* ---------- INTRO ---------- */
-.intro {
-  padding: clamp(120px, 20vh, 220px) var(--pad) clamp(20px, 5vh, 60px);
+/* ---------- SECTION ÉPINGLÉE ---------- */
+.stage {
+  position: relative; /* hauteur = N×100vh (inline) */
+}
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.frameTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-}
-.kicker {
+  padding: clamp(90px, 14vh, 150px) var(--pad) 0;
   font-family: var(--fl);
   font-size: 13px;
   letter-spacing: 0.04em;
+}
+.kicker {
   opacity: 0.5;
 }
-.introTitle {
-  font-family: var(--fh);
-  font-weight: 600;
-  font-size: clamp(30px, 4.6vw, 66px);
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  max-width: 900px;
-  margin-top: clamp(14px, 2vw, 24px);
+.counter {
+  opacity: 0.5;
+  font-variant-numeric: tabular-nums;
+}
+.inner {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  padding: clamp(10px, 3vh, 48px) var(--pad) clamp(30px, 6vh, 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(28px, 5vw, 72px);
 }
 
-/* ---------- LISTE DES SERVICES ---------- */
+/* ---------- LISTE DES SERVICES (repli statique) ---------- */
 .list {
   max-width: 1200px;
   margin: 0 auto;
