@@ -126,9 +126,65 @@
   position: absolute;
   left: clamp(18px, 2.4vw, 48px);
   right: clamp(18px, 2.4vw, 48px);
-  bottom: clamp(22px, 3vw, 52px);
+  /* dégagement au-dessus du bandeau défilant */
+  bottom: clamp(66px, 8vh, 108px);
   z-index: 2;
   color: var(--cream);
+}
+
+/* ---------- BANDEAU DÉFILANT (bas du hero) ---------- */
+.heroTicker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  overflow: hidden;
+  padding: clamp(11px, 1.5vh, 16px) 0;
+  border-top: 1px solid rgba(242, 242, 242, 0.18);
+  color: var(--cream);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.tickerTrack {
+  display: flex;
+  width: max-content;
+  animation: heroTickerScroll 26s linear infinite;
+}
+.tickerGroup {
+  display: flex;
+  flex-shrink: 0;
+}
+.tickerWord {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--fl);
+  font-size: clamp(12px, 1vw, 14px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.88;
+}
+.tickerDot {
+  font-style: normal;
+  margin: 0 clamp(18px, 2.2vw, 38px);
+  opacity: 0.5;
+}
+@keyframes heroTickerScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tickerTrack {
+    animation: none;
+  }
 }
 .heroHeadline {
   font-family: var(--fh);

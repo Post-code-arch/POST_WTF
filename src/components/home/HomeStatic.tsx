@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import RevealWords from "./RevealWords";
 import HeroHeadline from "./HeroHeadline";
 import HeroLogoTravel from "./HeroLogoTravel";
+import HeroTicker from "./HeroTicker";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
 import DepartementsSection from "./DepartementsSection";
@@ -60,6 +61,7 @@ export default function HomeStatic({ works }: { works: Work[] }) {
               36.7°N
             </div>
           </div>
+          <HeroTicker />
         </div>
       </section>
 

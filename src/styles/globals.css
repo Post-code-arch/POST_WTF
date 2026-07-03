@@ -651,3 +651,52 @@ canvas {
     gap: 18px;
   }
 }
+
+/* ═══════════════ COUCHE DE MICRO-ANIMATIONS ═══════════════
+   Transitions et retours discrets, désactivés si l'utilisateur préfère
+   moins de mouvement. N'altère aucune chorégraphie de scroll existante. */
+@media (prefers-reduced-motion: no-preference) {
+  a {
+    transition: opacity 0.25s ease, color 0.25s ease;
+  }
+  button {
+    transition: opacity 0.25s ease, transform 0.18s ease,
+      background-color 0.25s ease, border-color 0.25s ease;
+  }
+  /* retour tactile au clic */
+  button:not(:disabled):active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  /* zoom discret des visuels pleine largeur au survol (jamais recadrés :
+     .ph masque le débord) */
+  .media-full .ph img,
+  .media-full .ph video {
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .media-full:hover .ph img,
+  .media-full:hover .ph video {
+    transform: scale(1.03);
+  }
+
+  /* liens « → » : la flèche avance légèrement au survol */
+  .hero-foot a,
+  .testi-top a {
+    display: inline-block;
+    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hero-foot a:hover,
+  .testi-top a:hover {
+    transform: translateX(3px);
+  }
+}
+
+/* accessibilité : anneau de focus clavier sobre */
+:focus-visible {
+  outline: 2px solid rgba(23, 23, 23, 0.55);
+  outline-offset: 3px;
+}
+[data-theme="dark"] :focus-visible,
+.hero :focus-visible {
+  outline-color: rgba(242, 242, 242, 0.7);
+}

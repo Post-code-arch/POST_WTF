@@ -53,6 +53,35 @@
   margin-left: auto;
 }
 
+/* micro-interaction : soulignement qui se déploie au survol des liens texte */
+@media (prefers-reduced-motion: no-preference) {
+  .links a,
+  .contact {
+    position: relative;
+  }
+  .links a::after,
+  .contact::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .links a:hover,
+  .contact:hover {
+    opacity: 1;
+  }
+  .links a:hover::after,
+  .contact:hover::after {
+    transform: scaleX(1);
+  }
+}
+
 /* ---------- burger (mobile) ---------- */
 .burger {
   display: none;
