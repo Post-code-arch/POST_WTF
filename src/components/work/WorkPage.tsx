@@ -127,25 +127,31 @@ export default function WorkPage({ works }: { works: Work[] }) {
     <div className={styles.work}>
       <Nav />
 
-      {/* filtre par type de projet */}
+      {/* filtre par type de projet — liste éditoriale (l'actif est estompé) */}
       <div className={styles.filters}>
-        <button
-          type="button"
-          className={`${styles.fBtn} ${filter === null ? styles.active : ""}`}
-          onClick={() => setFilter(null)}
-        >
-          Tous
-        </button>
-        {filters.map((f) => (
-          <button
-            key={f}
-            type="button"
-            className={`${styles.fBtn} ${filter === f ? styles.active : ""}`}
-            onClick={() => setFilter((cur) => (cur === f ? null : f))}
-          >
-            {f}
-          </button>
-        ))}
+        <span className={styles.filterHead}>Type</span>
+        <ul className={styles.filterList}>
+          <li>
+            <button
+              type="button"
+              className={`${styles.opt} ${filter === null ? styles.optActive : ""}`}
+              onClick={() => setFilter(null)}
+            >
+              Tous
+            </button>
+          </li>
+          {filters.map((f) => (
+            <li key={f}>
+              <button
+                type="button"
+                className={`${styles.opt} ${filter === f ? styles.optActive : ""}`}
+                onClick={() => setFilter((cur) => (cur === f ? null : f))}
+              >
+                {f}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* aperçu plein écran au survol */}

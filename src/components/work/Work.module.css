@@ -82,38 +82,49 @@
   color: #151515;
 }
 
-/* ---------- FILTRE PAR TYPE ---------- */
+/* ---------- FILTRE PAR TYPE (liste éditoriale) ---------- */
 .filters {
   position: fixed;
-  top: clamp(58px, 8vh, 74px);
+  top: clamp(72px, 9vh, 90px);
   left: var(--pad);
-  right: var(--pad);
   z-index: 61;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  mix-blend-mode: difference;
+  mix-blend-mode: difference; /* s'adapte au fond (clair / aperçu sombre) */
 }
-.fBtn {
-  background: none;
-  border: 1px solid rgba(244, 244, 244, 0.4);
-  color: #f2f2f2;
+.filterHead {
+  display: block;
   font-family: var(--fl);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 7px 13px;
-  border-radius: 30px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #f2f2f2;
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+.filterList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.opt {
+  background: none;
+  border: 0;
+  padding: 2px 0;
   cursor: pointer;
-  transition: background 0.25s, color 0.25s, border-color 0.25s;
+  font-family: var(--fh);
+  font-size: clamp(15px, 1.35vw, 19px);
+  line-height: 1.16;
+  letter-spacing: -0.005em;
+  color: #f2f2f2;
+  text-align: left;
+  transition: opacity 0.25s ease;
 }
-.fBtn:hover {
-  border-color: rgba(244, 244, 244, 0.9);
+.opt:hover {
+  opacity: 0.55;
 }
-.fBtn.active {
-  background: #f2f2f2;
-  color: #151515;
-  border-color: #f2f2f2;
+/* l'option active est estompée (on est « ici »), comme la référence */
+.optActive,
+.optActive:hover {
+  opacity: 0.4;
 }
 
 /* ---------- LIST — marquee vertical infini ---------- */
@@ -373,13 +384,10 @@
     width: clamp(230px, 74vw, 360px);
   }
   .filters {
-    top: clamp(52px, 9vh, 66px);
-    gap: 5px;
+    top: clamp(72px, 11vh, 100px);
   }
-  .fBtn {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    padding: 6px 10px;
+  .opt {
+    font-size: 16px;
   }
   .htrack {
     gap: clamp(6px, 2vw, 14px);
