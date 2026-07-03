@@ -57,6 +57,7 @@ Tant que les clés sont absentes, la soumission affiche l'erreur sobre
    |---|---|---|
    | `Nom` | Title | — |
    | `Email` | Email | — |
+   | `Profil` | Select | Une marque · Une agence |
    | `Type` | Select | Identité · Web · Film & contenu · Édition · Autre |
    | `Budget` | Select | Moins de 300k DZD · 300k–800k · 800k–2M · Plus de 2M · Je ne sais pas encore |
    | `Message` | Text | — |

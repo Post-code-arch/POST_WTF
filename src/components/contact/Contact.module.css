@@ -22,16 +22,18 @@
   max-width: 1300px;
 }
 
-/* sloughi décoratif — bas gauche, à l'encre, derrière le contenu */
+/* sloughi décoratif — bas gauche, à l'encre, derrière le contenu ; retourné
+   pour courir vers l'intérieur de la page */
 .sloughi {
   position: absolute;
-  left: clamp(-40px, -1vw, 0px);
-  bottom: clamp(-16px, 1vw, 28px);
-  width: clamp(300px, 38vw, 640px);
+  left: clamp(0px, 1.5vw, 36px);
+  bottom: clamp(20px, 3.5vh, 56px);
+  width: clamp(230px, 27vw, 440px);
   height: auto;
   z-index: 1;
   pointer-events: none;
   user-select: none;
+  transform: scaleX(-1);
   opacity: 0.9;
 }
 @media (max-width: 860px) {
@@ -39,7 +41,7 @@
     position: relative;
     left: auto;
     bottom: auto;
-    width: min(88%, 460px);
+    width: min(80%, 400px);
     margin: clamp(48px, 10vw, 80px) auto 0;
     display: block;
     opacity: 0.85;
@@ -125,6 +127,31 @@
   text-transform: none;
   letter-spacing: 0;
 }
+/* choix binaire marque / agence (création vs. outsourcing) */
+.segmented {
+  display: flex;
+  gap: clamp(22px, 3vw, 46px);
+}
+.seg {
+  background: none;
+  border: 0;
+  padding: 8px 0 6px;
+  cursor: pointer;
+  font-family: var(--fb);
+  font-size: clamp(16px, 1.15vw, 18px);
+  color: var(--ink);
+  opacity: 0.4;
+  border-bottom: 1px solid transparent;
+  transition: opacity 0.25s ease, border-color 0.25s ease;
+}
+.seg:hover {
+  opacity: 0.7;
+}
+.segOn {
+  opacity: 1;
+  border-bottom-color: var(--ink);
+}
+
 .input {
   width: 100%;
   background: transparent;

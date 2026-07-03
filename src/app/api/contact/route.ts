@@ -20,6 +20,7 @@ function esc(s: string) {
 async function sendEmail(p: ContactPayload) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const rows: [string, string][] = [
+    ["Profil", p.profil],
     ["Nom", p.nom],
     ["Email", p.email],
     ["Type de projet", p.type],
@@ -40,6 +41,7 @@ async function sendEmail(p: ContactPayload) {
       <p style="white-space:pre-wrap;margin:0">${esc(p.message)}</p>
     </div>`;
   const text = `Nouveau contact — ${p.type}
+Profil : ${p.profil}
 Nom : ${p.nom}
 Email : ${p.email}
 Type de projet : ${p.type}
@@ -101,6 +103,7 @@ async function createNotionPage(p: ContactPayload) {
     properties: {
       Nom: { title: [{ text: { content: p.nom } }] },
       Email: { email: p.email },
+      Profil: { select: { name: p.profil } },
       Type: { select: { name: p.type } },
       ...(p.budget ? { Budget: { select: { name: p.budget } } } : {}),
       Message: { rich_text: [{ text: { content: p.message.slice(0, 2000) } }] },
@@ -128,6 +131,7 @@ export async function POST(req: Request) {
   }
 
   const payload: ContactPayload = {
+    profil: body.profil!,
     nom: body.nom!.trim(),
     email: body.email!.trim(),
     type: body.type!,

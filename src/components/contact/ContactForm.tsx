@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   PROJECT_TYPES,
   BUDGETS,
+  PROFILS,
   validateContact,
   type ContactErrors,
   type ContactPayload,
@@ -13,6 +14,7 @@ import styles from "./Contact.module.css";
 type Status = "idle" | "loading" | "success" | "error";
 
 const EMPTY: ContactPayload = {
+  profil: "",
   nom: "",
   email: "",
   type: "",
@@ -76,6 +78,34 @@ export default function ContactForm() {
 
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
+      <div className={styles.field}>
+        <span className={styles.lab}>
+          Vous êtes <span className={styles.req}>*</span>
+        </span>
+        <div
+          className={styles.segmented}
+          role="radiogroup"
+          aria-label="Vous êtes"
+        >
+          {PROFILS.map((pf) => (
+            <button
+              key={pf}
+              type="button"
+              role="radio"
+              aria-checked={v.profil === pf}
+              className={`${styles.seg} ${v.profil === pf ? styles.segOn : ""}`}
+              onClick={() => {
+                setV((prev) => ({ ...prev, profil: pf }));
+                if (errors.profil) setErrors((p) => ({ ...p, profil: undefined }));
+              }}
+            >
+              {pf}
+            </button>
+          ))}
+        </div>
+        {errors.profil && <span className={styles.err}>{errors.profil}</span>}
+      </div>
+
       <div className={styles.field}>
         <label htmlFor="nom" className={styles.lab}>
           Nom <span className={styles.req}>*</span>
