@@ -53,122 +53,86 @@
   opacity: 0.5;
 }
 
-/* ---------- SECTION ÉPINGLÉE ---------- */
-.stage {
-  position: relative; /* hauteur = N×100vh (inline) */
+/* ---------- EMPILEMENT AU SCROLL (sticky stacking) ---------- */
+.stack {
+  position: relative;
 }
-.sticky {
+/* chaque service : panneau plein écran, opaque, qui glisse par-dessus le
+   précédent (sticky) */
+.panel {
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.frameTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: clamp(90px, 14vh, 150px) var(--pad) 0;
-  font-family: var(--fl);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-}
-.kicker {
-  opacity: 0.5;
-}
-.counter {
-  opacity: 0.5;
-  font-variant-numeric: tabular-nums;
-}
-.inner {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-}
-.slide {
-  position: absolute;
-  inset: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1200px;
-  padding: clamp(6px, 2vh, 24px) var(--pad) clamp(70px, 11vh, 130px);
-  display: flex;
-  flex-direction: column;
-  /* chapitrage poussé vers le bas (l'image reste calée en haut à droite) */
-  justify-content: flex-end;
-  gap: clamp(18px, 3.2vw, 46px);
-}
-
-/* ---------- LISTE DES SERVICES (repli statique) ---------- */
-.list {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--pad);
-}
-.service {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(36px, 6vw, 80px);
-  padding: clamp(60px, 11vh, 150px) 0;
+  box-sizing: border-box;
+  background: var(--cream);
   border-top: 1px solid var(--line);
+  padding: clamp(84px, 12vh, 130px) var(--pad) clamp(30px, 5vh, 56px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
-
-/* média 4:5 — petit, seul en haut à droite (dans le vide, la section respire) ;
-   l'ondulation vit dans .ripple */
-.media {
-  width: clamp(140px, 18vw, 224px);
-  margin-left: auto;
-}
-/* en mode épinglé : l'image remonte en haut à droite, le texte reste centré */
-.slide .media {
-  position: absolute;
-  top: 0;
-  right: var(--pad);
-  margin: 0;
-}
-
-.meta {
-  min-width: 0;
-}
-.head {
+/* en-tête : nom à gauche, numéro à droite */
+.pHead {
   display: flex;
   align-items: baseline;
-  gap: clamp(14px, 1.6vw, 24px);
+  justify-content: space-between;
+  gap: 24px;
+}
+.name {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(40px, 6.4vw, 104px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
 }
 .num {
   font-family: var(--fd);
   font-weight: 500;
-  font-size: clamp(28px, 3.4vw, 48px);
-  line-height: 1;
-  opacity: 0.4;
-}
-.title {
-  font-family: var(--fd);
-  font-weight: 500;
-  font-size: clamp(54px, 8.6vw, 130px);
+  font-size: clamp(40px, 6.4vw, 104px);
   line-height: 0.9;
   letter-spacing: -0.02em;
+  opacity: 0.32;
+}
+.rule {
+  height: 1px;
+  background: var(--line);
+  margin: clamp(14px, 2.2vh, 28px) 0 clamp(22px, 3.6vh, 48px);
+}
+/* corps : colonne texte (gauche) + image (droite, en haut) */
+.pMain {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(240px, 26vw, 380px);
+  gap: clamp(32px, 5vw, 90px);
+  align-items: stretch;
+}
+.pCol {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 .line {
   font-family: var(--fh);
   font-weight: 500;
-  font-size: clamp(18px, 1.7vw, 26px);
-  line-height: 1.3;
-  margin-top: clamp(18px, 2.4vw, 32px);
-  max-width: 620px;
-  color: rgba(23, 23, 23, 0.8);
+  font-size: clamp(22px, 2.4vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  max-width: 22ch;
+}
+.body {
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.5;
+  color: rgba(23, 23, 23, 0.78);
+  margin-top: clamp(16px, 2.4vh, 32px);
+  max-width: 62ch;
 }
 .tags {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(20px, 3vw, 56px);
-  margin-top: clamp(26px, 3.4vw, 48px);
+  gap: clamp(20px, 3vw, 60px);
+  margin-top: auto; /* champs poussés vers le bas de la colonne */
+  padding-top: clamp(22px, 3.4vh, 44px);
   max-width: 620px;
 }
 .tags ul {
@@ -177,15 +141,29 @@
 .tags li {
   font-family: var(--fl);
   font-size: clamp(12px, 1vw, 15px);
-  line-height: 1.8;
-  opacity: 0.72;
+  line-height: 1.9;
+  opacity: 0.75;
 }
 .tags li::before {
-  content: "، ";
-  direction: ltr;
-  unicode-bidi: isolate;
+  content: "•";
   opacity: 0.5;
-  margin-right: 3px;
+  margin-right: 8px;
+}
+.inquire {
+  align-self: flex-start;
+  margin-top: clamp(18px, 2.6vh, 32px);
+  font-family: var(--fl);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 3px;
+}
+/* image 4:5 (ondulation) calée en haut à droite du corps */
+.media {
+  width: 100%;
+  align-self: start;
 }
 
 /* ---------- FOOTER (blanc cassé sur noir doux) ---------- */
@@ -231,11 +209,22 @@
   height: auto;
 }
 
-@media (max-width: 760px) {
-  /* image toujours en haut à droite, plus compacte */
-  .media {
-    width: clamp(104px, 30vw, 150px);
+@media (max-width: 860px) {
+  /* mobile : plus d'empilement sticky (évite le rognage) — sections normales */
+  .panel {
+    position: static;
+    height: auto;
+    min-height: 100vh;
   }
+  .pMain {
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 7vw, 44px);
+  }
+  .media {
+    max-width: 380px;
+  }
+}
+@media (max-width: 760px) {
   .tags {
     grid-template-columns: 1fr;
   }
