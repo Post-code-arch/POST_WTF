@@ -1,8 +1,6 @@
-import KinayaLogo from "@/components/KinayaLogo";
 import Nav from "@/components/Nav";
 import RevealWords from "./RevealWords";
 import HeroHeadline from "./HeroHeadline";
-import HeroLogoTravel from "./HeroLogoTravel";
 import HeroTicker from "./HeroTicker";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
@@ -25,11 +23,9 @@ export default function HomeStatic({ works }: { works: Work[] }) {
 
   return (
     <div className={`${styles.home} ${styles.static}`}>
-      {/* nav partagée + logo voyageur (hero → nav) */}
       <Nav />
-      <HeroLogoTravel />
 
-      {/* HERO — image plein cadre, KINAYA en bandeau, accroche en bas */}
+      {/* HERO — image plein cadre, accroche en bas */}
       <section className={styles.hero} data-theme="dark" data-hero>
         <div className={styles.heroFrame}>
           <picture>
@@ -45,9 +41,6 @@ export default function HomeStatic({ works }: { works: Work[] }) {
               aria-hidden
             />
           </picture>
-          <div className={styles.heroLogo} data-hero-logo>
-            <KinayaLogo className="klogo" />
-          </div>
           <div className={styles.heroFoot}>
             <HeroHeadline
               className={styles.heroHeadline}
@@ -113,9 +106,6 @@ export default function HomeStatic({ works }: { works: Work[] }) {
             <br />
             El Biar, Alger
           </div>
-        </div>
-        <div className={styles.footLogo}>
-          <KinayaLogo className="klogo" />
         </div>
       </section>
     </div>

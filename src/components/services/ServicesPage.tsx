@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
-import KinayaLogo from "@/components/KinayaLogo";
 import type { Service } from "@/lib/services";
 import RippleImage from "./RippleImage";
 import styles from "./Services.module.css";
@@ -76,9 +75,6 @@ export default function ServicesPage({ services }: { services: Service[] }) {
             <br />
             El Biar, Alger
           </div>
-        </div>
-        <div className={styles.footLogo}>
-          <KinayaLogo />
         </div>
       </footer>
     </div>
