@@ -87,18 +87,6 @@ export default function HomeStatic({ works }: { works: Work[] }) {
       {/* DÉPARTEMENTS — placé avant Aventures */}
       <DepartementsSection />
 
-      {/* SHOWREEL — vidéo en boucle plein écran (100vh × 100vw, gutter 1%) */}
-      <section className={styles.showreel} data-theme="dark">
-        <video
-          className={styles.showreelVideo}
-          src="/home/showreel.webm"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-      </section>
-
       {/* AVENTURES — composition + parallaxe curseur */}
       <AventuresStage />
 
