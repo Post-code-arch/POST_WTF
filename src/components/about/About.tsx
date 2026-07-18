@@ -29,7 +29,7 @@ export default function About() {
         {/* colonne texte */}
         <div className={styles.text}>
           <p>
-            <b>Kinaya</b> est une agence créative basée à Alger, menée par une
+            <b>POST</b> est une agence créative basée à Alger, menée par une
             petite équipe depuis un atelier.
           </p>
           <p>
@@ -90,7 +90,7 @@ export default function About() {
             <span className={styles.k}>@</span>
             <span>
               <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                kinaya
+                post
               </a>
             </span>
           </div>

@@ -74,7 +74,7 @@ async function sendAck(p: ContactPayload) {
       puis on revient vers vous. Comptez deux jours ouvrés.</p>
       <p style="color:#8a8a8a;margin-top:20px">Ce que vous nous avez adressé :</p>
       <p style="white-space:pre-wrap;border-left:2px solid #e7e7e7;padding-left:14px;margin:6px 0 24px">${esc(p.message)}</p>
-      <p>— L’équipe Kinaya<br><span style="color:#8a8a8a">Agence créative · Alger</span></p>
+      <p>— L’équipe POST<br><span style="color:#8a8a8a">Agence créative · Alger</span></p>
     </div>`;
   const text = `Bonjour ${p.nom},
 
@@ -83,14 +83,14 @@ Merci de nous avoir écrit. On a bien reçu votre message — on le lit, puis on
 Ce que vous nous avez adressé :
 ${p.message}
 
-— L'équipe Kinaya
+— L'équipe POST
 Agence créative · Alger`;
 
   const { error } = await resend.emails.send({
     from: CONTACT_FROM,
     to: p.email,
     replyTo: CONTACT_TO,
-    subject: "On a bien reçu votre message — Kinaya",
+    subject: "On a bien reçu votre message — POST",
     html,
     text,
   });
