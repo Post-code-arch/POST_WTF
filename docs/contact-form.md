@@ -1,6 +1,6 @@
 # Formulaire de contact (`/contact`)
 
-Formulaire du site Kinaya. À chaque soumission valide, la route API
+Formulaire du site POST. À chaque soumission valide, la route API
 `POST /api/contact` déclenche **trois actions en parallèle** :
 
 1. **Email interne** (Resend) → `wearepostagency@gmail.com`, sujet `Nouveau contact — [Type]`,
@@ -51,7 +51,7 @@ Tant que les clés sont absentes, la soumission affiche l'erreur sobre
 ## Configurer Notion
 
 1. **Créer l'intégration** : <https://www.notion.so/my-integrations> →
-   *New integration* (« Kinaya Contact », interne). Copier le
+   *New integration* (« POST Contact », interne). Copier le
    *Internal Integration Secret* → `NOTION_API_KEY`.
 2. **Créer la base** (database) avec **exactement** ces propriétés :
 
@@ -68,7 +68,7 @@ Tant que les clés sont absentes, la soumission affiche l'erreur sobre
 
    À la création d'une page, `Statut` est mis à **Nouveau**.
 3. **Partager la base avec l'intégration** : ouvrir la base → `•••` →
-   *Connections* → « Kinaya Contact ». **Indispensable**, sinon l'API Notion
+   *Connections* → « POST Contact ». **Indispensable**, sinon l'API Notion
    renvoie une erreur de permission.
 4. **Récupérer l'ID** : dans l'URL `notion.so/<ID>?v=…`, l'`<ID>` de 32
    caractères (avant le `?`) → `NOTION_DATABASE_ID`.

@@ -1,4 +1,4 @@
-# Kinaya — travaux · conventions
+# POST — travaux · conventions
 
 Pages-objets du portfolio. Un dossier par projet, le texte et les visuels
 co-localisés. On enrichit projet par projet.
