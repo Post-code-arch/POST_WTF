@@ -3,7 +3,7 @@
 Formulaire du site Kinaya. À chaque soumission valide, la route API
 `POST /api/contact` déclenche **trois actions en parallèle** :
 
-1. **Email interne** (Resend) → `contact@kinaya.wtf`, sujet `Nouveau contact — [Type]`,
+1. **Email interne** (Resend) → `wearepostagency@gmail.com`, sujet `Nouveau contact — [Type]`,
    `replyTo` = l'email du prospect.
 2. **Accusé de réception** (Resend) → le prospect (« On a bien reçu votre message… »).
 3. **Page Notion** créée dans la base de suivi.
@@ -33,7 +33,7 @@ soumission reste un succès (l'utilisateur n'est jamais bloqué).
 | `RESEND_API_KEY` | oui | Envoi des emails |
 | `NOTION_API_KEY` | oui | Secret de l'intégration Notion |
 | `NOTION_DATABASE_ID` | oui | ID (32 car.) de la base de suivi |
-| `CONTACT_FROM` | non | Expéditeur (défaut `Kinaya <contact@kinaya.wtf>`) |
+| `CONTACT_FROM` | non | Expéditeur (défaut `POST <onboarding@resend.dev>`) |
 
 Tant que les clés sont absentes, la soumission affiche l'erreur sobre
 « L'envoi a échoué… » — c'est le comportement attendu.
@@ -41,10 +41,12 @@ Tant que les clés sont absentes, la soumission affiche l'erreur sobre
 ## Configurer Resend
 
 1. Créer une clé sur <https://resend.com/api-keys> → `RESEND_API_KEY`.
-2. **Vérifier le domaine `kinaya.wtf`** (*Domains* → enregistrements DNS
-   SPF/DKIM). Sans domaine vérifié, l'envoi depuis `contact@kinaya.wtf` est
-   refusé — vérifier le domaine, ou poser `CONTACT_FROM` sur un expéditeur
-   d'un domaine déjà vérifié.
+2. **Expéditeur** : Gmail ne peut PAS servir d'adresse d'envoi. Par défaut on
+   utilise `onboarding@resend.dev`, qui livre vers l'adresse du compte Resend
+   (donc vers `wearepostagency@gmail.com` si le compte est créé avec cette
+   adresse) — l'email interne fonctionne alors sans rien configurer. Pour
+   envoyer aussi l'accusé au prospect et depuis un expéditeur propre, vérifier
+   un domaine dans Resend puis poser `CONTACT_FROM` (ex. `POST <hello@ton-domaine>`).
 
 ## Configurer Notion
 

@@ -68,7 +68,7 @@ export default function ServicesPage({ services }: { services: Service[] }) {
           <div className={styles.c}>
             +213 540 87 73 98
             <br />
-            contact@kinaya.wtf
+            wearepostagency@gmail.com
           </div>
           <div className={styles.r}>
             25 Rabah Bourbia,

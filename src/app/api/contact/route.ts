@@ -9,9 +9,12 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const CONTACT_TO = "contact@kinaya.wtf";
-// Expéditeur : doit appartenir à un domaine vérifié dans Resend.
-const CONTACT_FROM = process.env.CONTACT_FROM || "Kinaya <contact@kinaya.wtf>";
+const CONTACT_TO = "wearepostagency@gmail.com";
+// Expéditeur : Gmail est INTERDIT comme adresse d'envoi Resend. Par défaut on
+// utilise onboarding@resend.dev (livre vers l'email du compte Resend, donc vers
+// wearepostagency@gmail.com si c'est ce compte). Poser CONTACT_FROM sur un
+// domaine vérifié dès qu'il y en a un.
+const CONTACT_FROM = process.env.CONTACT_FROM || "POST <onboarding@resend.dev>";
 
 function esc(s: string) {
   return s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]!));
@@ -156,7 +159,7 @@ export async function POST(req: Request) {
   if (emailRes.status === "rejected") {
     console.error("[contact] Email échec :", emailRes.reason);
     return NextResponse.json(
-      { error: "L’envoi a échoué. Réessayez ou écrivez à contact@kinaya.wtf." },
+      { error: "L’envoi a échoué. Réessayez ou écrivez à wearepostagency@gmail.com." },
       { status: 502 }
     );
   }

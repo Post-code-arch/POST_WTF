@@ -79,12 +79,12 @@ export default function About() {
           <div className={styles.row}>
             <span className={styles.k}>Mail</span>
             <span>
-              <a href="mailto:contact@kinaya.wtf">contact@kinaya.wtf</a>
+              <a href="mailto:wearepostagency@gmail.com">wearepostagency@gmail.com</a>
             </span>
           </div>
           <div className={styles.row}>
             <span className={styles.k}>Web</span>
-            <span>kinaya.wtf</span>
+            <span>post.vercel.app</span>
           </div>
           <div className={styles.row}>
             <span className={styles.k}>@</span>
