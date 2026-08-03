@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import KinayaLogo from "@/components/KinayaLogo";
 import type { Service } from "@/lib/services";
 import RippleImage from "./RippleImage";
 import styles from "./Services.module.css";
@@ -68,13 +69,16 @@ export default function ServicesPage({ services }: { services: Service[] }) {
           <div className={styles.c}>
             +213 540 87 73 98
             <br />
-            wearepostagency@gmail.com
+            contact@kinaya.wtf
           </div>
           <div className={styles.r}>
             25 Rabah Bourbia,
             <br />
             El Biar, Alger
           </div>
+        </div>
+        <div className={styles.footLogo}>
+          <KinayaLogo />
         </div>
       </footer>
     </div>

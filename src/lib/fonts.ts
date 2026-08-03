@@ -2,7 +2,7 @@ import localFont from "next/font/local";
 import { Space_Grotesk, Instrument_Sans } from "next/font/google";
 
 /**
- * Typographic roles (cf. brief POST) :
+ * Typographic roles (cf. brief Kinaya) :
  *   --fd  Clash Display          → H1 / display / gros marquees
  *   --fh  Space Grotesk          → H2 / sous-titres
  *   --fb  Instrument Sans        → corps de texte

@@ -1,5 +1,5 @@
 :root {
-  /* Palette POST — monochrome : uniquement des niveaux de gris, jamais de
+  /* Palette Kinaya — monochrome : uniquement des niveaux de gris, jamais de
      noir ni de blanc absolus. Extrêmes bornés à ~[23, 242]. */
   --espresso: #191919;     /* fond sombre (noir doux) */
   --espresso-2: #202020;   /* sombre doux */

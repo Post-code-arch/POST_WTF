@@ -13,20 +13,22 @@
   mix-blend-mode: difference;
   pointer-events: none; /* les liens réactivent */
 }
-.home {
+.logo {
+  width: clamp(116px, 11vw, 150px);
   flex-shrink: 0;
+  display: block;
   color: #f2f2f2;
   pointer-events: auto;
-  font-family: var(--fl);
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
+}
+.logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 .links {
   display: flex;
   gap: clamp(22px, 3vw, 52px);
-  margin-left: clamp(28px, 5vw, 80px);
+  margin-left: clamp(34px, 9vw, 150px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 /* accueil : masqués tant que le logo n'est pas calé dans la nav */
@@ -54,13 +56,11 @@
 /* micro-interaction : soulignement qui se déploie au survol des liens texte */
 @media (prefers-reduced-motion: no-preference) {
   .links a,
-  .contact,
-  .home {
+  .contact {
     position: relative;
   }
   .links a::after,
-  .contact::after,
-  .home::after {
+  .contact::after {
     content: "";
     position: absolute;
     left: 0;
@@ -73,13 +73,11 @@
     transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .links a:hover,
-  .contact:hover,
-  .home:hover {
+  .contact:hover {
     opacity: 1;
   }
   .links a:hover::after,
-  .contact:hover::after,
-  .home:hover::after {
+  .contact:hover::after {
     transform: scaleX(1);
   }
 }

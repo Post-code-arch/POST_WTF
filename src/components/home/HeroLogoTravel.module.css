@@ -1,0 +1,17 @@
+.travel {
+  position: fixed;
+  z-index: 95;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  line-height: 0;
+  color: #f2f2f2;
+  mix-blend-mode: normal; /* hero : blanc plein ; passe en « difference » une fois calé (JS) */
+  pointer-events: none;
+  will-change: left, top, width, opacity;
+}
+.travel svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}

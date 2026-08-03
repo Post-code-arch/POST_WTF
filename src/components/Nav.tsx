@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import KinayaLogo from "./KinayaLogo";
 import styles from "./Nav.module.css";
 
 const LINKS: [string, string][] = [
@@ -12,11 +14,32 @@ const LINKS: [string, string][] = [
 ];
 
 /**
- * Nav partagée (Travaux · Champs · À propos … Contact), fixe + mix-blend.
- * Sur mobile : burger → overlay plein écran. (Plus de logo.)
+ * Nav desktop partagée (logo · Travaux · Champs · À propos … Contact),
+ * fixe + mix-blend. Sur mobile : burger → overlay plein écran.
  */
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  // sur l'accueil, les liens n'apparaissent qu'une fois le logo « calé » dans
+  // la nav (événement émis par HeroLogoTravel). Ailleurs : visibles d'emblée.
+  const [docked, setDocked] = useState(!isHome);
+
+  useEffect(() => {
+    if (!isHome) {
+      setDocked(true);
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDocked(true);
+      return;
+    }
+    setDocked(false);
+    const onDock = (e: Event) =>
+      setDocked((e as CustomEvent<boolean>).detail === true);
+    window.addEventListener("kinaya:dock", onDock);
+    return () => window.removeEventListener("kinaya:dock", onDock);
+  }, [isHome]);
 
   useEffect(() => {
     if (!open) return;
@@ -33,10 +56,15 @@ export default function Nav() {
   return (
     <>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.home}>
-          Accueil
+        <Link
+          href="/"
+          className={styles.logo}
+          aria-label="KINAYA — accueil"
+          data-nav-logo
+        >
+          <KinayaLogo />
         </Link>
-        <div className={styles.links}>
+        <div className={`${styles.links} ${docked ? "" : styles.hidden}`}>
           <Link href="/travaux">Travaux</Link>
           <Link href="/services">Champs</Link>
           <Link href="/about">À propos</Link>

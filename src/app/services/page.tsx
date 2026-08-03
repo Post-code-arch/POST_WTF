@@ -5,7 +5,7 @@ import { services } from "@/lib/services";
 export const metadata: Metadata = {
   title: "Champs",
   description:
-    "Stratégie, branding, digital, production. Les quatre champs de POST.",
+    "Stratégie, branding, digital, production. Les quatre champs de Kinaya.",
 };
 
 export default function Page() {

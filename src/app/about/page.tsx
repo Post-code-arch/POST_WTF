@@ -4,7 +4,7 @@ import About from "@/components/about/About";
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "POST est une agence créative basée à Alger. On préfère montrer que raconter.",
+    "Kinaya est une agence créative basée à Alger. On préfère montrer que raconter.",
 };
 
 export default function AboutPage() {

@@ -9,12 +9,9 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const CONTACT_TO = "wearepostagency@gmail.com";
-// Expéditeur : Gmail est INTERDIT comme adresse d'envoi Resend. Par défaut on
-// utilise onboarding@resend.dev (livre vers l'email du compte Resend, donc vers
-// wearepostagency@gmail.com si c'est ce compte). Poser CONTACT_FROM sur un
-// domaine vérifié dès qu'il y en a un.
-const CONTACT_FROM = process.env.CONTACT_FROM || "POST <onboarding@resend.dev>";
+const CONTACT_TO = "contact@kinaya.wtf";
+// Expéditeur : doit appartenir à un domaine vérifié dans Resend.
+const CONTACT_FROM = process.env.CONTACT_FROM || "Kinaya <contact@kinaya.wtf>";
 
 function esc(s: string) {
   return s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]!));
@@ -74,7 +71,7 @@ async function sendAck(p: ContactPayload) {
       puis on revient vers vous. Comptez deux jours ouvrés.</p>
       <p style="color:#8a8a8a;margin-top:20px">Ce que vous nous avez adressé :</p>
       <p style="white-space:pre-wrap;border-left:2px solid #e7e7e7;padding-left:14px;margin:6px 0 24px">${esc(p.message)}</p>
-      <p>— L’équipe POST<br><span style="color:#8a8a8a">Agence créative · Alger</span></p>
+      <p>— L’équipe Kinaya<br><span style="color:#8a8a8a">Agence créative · Alger</span></p>
     </div>`;
   const text = `Bonjour ${p.nom},
 
@@ -83,14 +80,14 @@ Merci de nous avoir écrit. On a bien reçu votre message — on le lit, puis on
 Ce que vous nous avez adressé :
 ${p.message}
 
-— L'équipe POST
+— L'équipe Kinaya
 Agence créative · Alger`;
 
   const { error } = await resend.emails.send({
     from: CONTACT_FROM,
     to: p.email,
     replyTo: CONTACT_TO,
-    subject: "On a bien reçu votre message — POST",
+    subject: "On a bien reçu votre message — Kinaya",
     html,
     text,
   });
@@ -159,7 +156,7 @@ export async function POST(req: Request) {
   if (emailRes.status === "rejected") {
     console.error("[contact] Email échec :", emailRes.reason);
     return NextResponse.json(
-      { error: "L’envoi a échoué. Réessayez ou écrivez à wearepostagency@gmail.com." },
+      { error: "L’envoi a échoué. Réessayez ou écrivez à contact@kinaya.wtf." },
       { status: 502 }
     );
   }

@@ -29,7 +29,7 @@ export default function Contact() {
             <div className={styles.row}>
               <span className={styles.k}>Mail</span>
               <span>
-                <a href="mailto:wearepostagency@gmail.com">wearepostagency@gmail.com</a>
+                <a href="mailto:contact@kinaya.wtf">contact@kinaya.wtf</a>
               </span>
             </div>
             <div className={styles.row}>

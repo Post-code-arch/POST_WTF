@@ -4,8 +4,8 @@ import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "POST",
-    template: "%s — POST",
+    default: "Kinaya",
+    template: "%s — Kinaya",
   },
   description:
     "On est une agence créative. On essaie de ne pas en avoir l'air. Studio à Alger — stratégie, identité, web, production.",

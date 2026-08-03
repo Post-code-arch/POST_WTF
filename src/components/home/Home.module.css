@@ -68,7 +68,7 @@
 }
 
 /* ---------------- HERO ---------------- */
-/* cadre clair fin autour d'une image plein cadre ; POST en bandeau haut,
+/* cadre clair fin autour d'une image plein cadre ; KINAYA en bandeau haut,
    accroche + méta en bas-gauche, comme la référence. */
 .hero {
   background: var(--cream-2);
@@ -112,7 +112,7 @@
   height: 58%;
   background: linear-gradient(0deg, rgba(18, 18, 18, 0.78), rgba(18, 18, 18, 0));
 }
-/* POST — bandeau supérieur, blanc (instance voyageuse calée ici à scroll 0) */
+/* KINAYA — bandeau supérieur, blanc (instance voyageuse calée ici à scroll 0) */
 .heroLogo {
   position: absolute;
   top: clamp(10px, 1.6vw, 26px);
@@ -459,7 +459,7 @@
 }
 
 @media (max-width: 760px) {
-  /* réserve le coin haut-droite pour le burger : le bandeau POST (logo
+  /* réserve le coin haut-droite pour le burger : le bandeau KINAYA (logo
      voyageur mesuré sur ce slot) s'arrête avant lui, plus de chevauchement */
   .heroLogo {
     right: clamp(74px, 19vw, 104px);
