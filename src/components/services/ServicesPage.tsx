@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
-import KinayaLogo from "@/components/KinayaLogo";
+import POSTLogo from "@/components/POSTLogo";
 import type { Service } from "@/lib/services";
 import RippleImage from "./RippleImage";
 import styles from "./Services.module.css";
@@ -69,7 +69,7 @@ export default function ServicesPage({ services }: { services: Service[] }) {
           <div className={styles.c}>
             +213 540 87 73 98
             <br />
-            contact@kinaya.wtf
+            wearepostagency@gmail.com
           </div>
           <div className={styles.r}>
             25 Rabah Bourbia,
@@ -78,7 +78,7 @@ export default function ServicesPage({ services }: { services: Service[] }) {
           </div>
         </div>
         <div className={styles.footLogo}>
-          <KinayaLogo />
+          <POSTLogo />
         </div>
       </footer>
     </div>

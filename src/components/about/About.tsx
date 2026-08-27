@@ -29,7 +29,7 @@ export default function About() {
         {/* colonne texte */}
         <div className={styles.text}>
           <p>
-            <b>Kinaya</b> est une agence créative basée à Alger, menée par une
+            <b>POST</b> est une agence créative basée à Alger, menée par une
             petite équipe depuis un atelier.
           </p>
           <p>
@@ -79,18 +79,18 @@ export default function About() {
           <div className={styles.row}>
             <span className={styles.k}>Mail</span>
             <span>
-              <a href="mailto:contact@kinaya.wtf">contact@kinaya.wtf</a>
+              <a href="mailto:wearepostagency@gmail.com">wearepostagency@gmail.com</a>
             </span>
           </div>
           <div className={styles.row}>
             <span className={styles.k}>Web</span>
-            <span>kinaya-nine.vercel.app</span>
+            <span>postwtf.vercel.app</span>
           </div>
           <div className={styles.row}>
             <span className={styles.k}>@</span>
             <span>
               <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                kinaya
+                post
               </a>
             </span>
           </div>

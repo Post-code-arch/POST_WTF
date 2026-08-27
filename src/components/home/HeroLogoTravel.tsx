@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
-import KinayaLogo from "@/components/KinayaLogo";
+import POSTLogo from "@/components/POSTLogo";
 import styles from "./HeroLogoTravel.module.css";
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -11,7 +11,7 @@ const ease = (t: number) =>
 const useIso = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * Logo voyageur de l'accueil : le grand KINAYA du hero rétrécit et se cale
+ * Logo voyageur de l'accueil : le grand POST du hero rétrécit et se cale
  * dans la nav au scroll. Instance fixe unique qui interpole entre le slot
  * hero (data-hero-logo) et le slot nav (data-nav-logo), puis passe le relais
  * au logo de la nav (qui gère l'adaptation de couleur via mix-blend).
@@ -60,7 +60,7 @@ export default function HeroLogoTravel() {
       travel.style.mixBlendMode = docked ? "difference" : "normal";
       if (docked !== lastDocked) {
         lastDocked = docked;
-        window.dispatchEvent(new CustomEvent("kinaya:dock", { detail: docked }));
+        window.dispatchEvent(new CustomEvent("post:dock", { detail: docked }));
       }
     };
 
@@ -89,7 +89,7 @@ export default function HeroLogoTravel() {
 
   return (
     <div ref={ref} className={styles.travel} aria-hidden>
-      <KinayaLogo />
+      <POSTLogo />
     </div>
   );
 }

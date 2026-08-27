@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import KinayaLogo from "./KinayaLogo";
+import POSTLogo from "./POSTLogo";
 import styles from "./Nav.module.css";
 
 const LINKS: [string, string][] = [
@@ -37,8 +37,8 @@ export default function Nav() {
     setDocked(false);
     const onDock = (e: Event) =>
       setDocked((e as CustomEvent<boolean>).detail === true);
-    window.addEventListener("kinaya:dock", onDock);
-    return () => window.removeEventListener("kinaya:dock", onDock);
+    window.addEventListener("post:dock", onDock);
+    return () => window.removeEventListener("post:dock", onDock);
   }, [isHome]);
 
   useEffect(() => {
@@ -59,10 +59,10 @@ export default function Nav() {
         <Link
           href="/"
           className={styles.logo}
-          aria-label="KINAYA — accueil"
+          aria-label="POST — accueil"
           data-nav-logo
         >
-          <KinayaLogo />
+          <POSTLogo />
         </Link>
         <div className={`${styles.links} ${docked ? "" : styles.hidden}`}>
           <Link href="/travaux">Travaux</Link>

@@ -1,4 +1,4 @@
-import KinayaLogo from "@/components/KinayaLogo";
+import POSTLogo from "@/components/POSTLogo";
 import Nav from "@/components/Nav";
 import RevealWords from "./RevealWords";
 import HeroHeadline from "./HeroHeadline";
@@ -29,7 +29,7 @@ export default function HomeStatic({ works }: { works: Work[] }) {
       <Nav />
       <HeroLogoTravel />
 
-      {/* HERO — image plein cadre, KINAYA en bandeau, accroche en bas */}
+      {/* HERO — image plein cadre, POST en bandeau, accroche en bas */}
       <section className={styles.hero} data-theme="dark" data-hero>
         <div className={styles.heroFrame}>
           <picture>
@@ -46,7 +46,7 @@ export default function HomeStatic({ works }: { works: Work[] }) {
             />
           </picture>
           <div className={styles.heroLogo} data-hero-logo>
-            <KinayaLogo className="klogo" />
+            <POSTLogo className="klogo" />
           </div>
           <div className={styles.heroFoot}>
             <HeroHeadline
@@ -106,7 +106,7 @@ export default function HomeStatic({ works }: { works: Work[] }) {
           <div className={styles.c}>
             +213 540 87 73 98
             <br />
-            contact@kinaya.wtf
+            wearepostagency@gmail.com
           </div>
           <div className={styles.r}>
             25 Rabah Bourbia,
@@ -115,7 +115,7 @@ export default function HomeStatic({ works }: { works: Work[] }) {
           </div>
         </div>
         <div className={styles.footLogo}>
-          <KinayaLogo className="klogo" />
+          <POSTLogo className="klogo" />
         </div>
       </section>
     </div>
