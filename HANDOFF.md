@@ -4,17 +4,13 @@ Site vitrine Next.js 15 (App Router, SSG + une route API), déployé sur Vercel.
 Repo : `Post-code-arch/POST_WTF`. Branche de travail : `main` (les changements
 sont mergés là et poussés).
 
-## Déploiement / URLs — ⚠️ À RÉGLER
-- **En ligne et à jour : https://kinaya-nine.vercel.app** (HTTP 200, `<title>POST</title>`).
-  C'est le projet Vercel connecté à ce repo ; chaque push sur `main` le redéploie. Le nom du
-  projet Vercel (et donc l'URL) reste à renommer pour ne plus porter l'ancien nom — pas
-  faisable depuis Claude Code (dashboard Vercel requis).
-- **postwtf.vercel.app → 404** : le projet/domaine Vercel derrière a été supprimé/détaché.
-  Pour le réactiver (dashboard Vercel) : soit renommer le projet Vercel en `postwtf`
-  (Settings → General → Project Name), soit ajouter le domaine (Settings → Domains →
-  Add `postwtf.vercel.app`).
-- La ligne « Web » de la page À propos affiche `postwtf.vercel.app` (à corriger si l'URL de
-  prod actuelle reste celle-ci, ou à laisser si postwtf est réparé).
+## Déploiement / URLs
+- **URL de prod : https://post-wtf.vercel.app** (HTTP 200). Projet Vercel `post-wtf`, équipe
+  `wearepostagency-2217`, connecté à ce repo (`Post-code-arch/POST_WTF`) ; chaque push sur
+  `main` le redéploie. Aucune trace de l'ancien nom "kinaya" dans cette URL.
+- `postwtf.vercel.app` (sans tiret) → 404, projet/domaine inexistant : ne pas confondre avec
+  `post-wtf.vercel.app` (avec tiret), qui est la bonne URL.
+- La ligne « Web » de la page À propos affiche `post-wtf.vercel.app`.
 
 ## Marque
 - Identité **POST** partout (metadata/titre d'onglet, À propos, descriptions de pages,
@@ -69,7 +65,4 @@ sont mergés là et poussés).
 - Vérifs visuelles via Playwright/Chromium (`executablePath: /opt/pw-browsers/chromium`).
 
 ## En attente / décisions ouvertes
-1. Renommer le projet Vercel (et/ou réparer `postwtf.vercel.app`) pour que l'URL de prod ne
-   porte plus l'ancien nom.
-2. Confirmer l'email public (`wearepostagency@gmail.com`) + configurer les clés Resend/Notion.
-3. Une fois l'URL de prod stabilisée, aligner la ligne « Web » de la page À propos dessus.
+1. Confirmer l'email public (`wearepostagency@gmail.com`) + configurer les clés Resend/Notion.

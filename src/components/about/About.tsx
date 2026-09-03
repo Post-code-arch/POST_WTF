@@ -84,7 +84,7 @@ export default function About() {
           </div>
           <div className={styles.row}>
             <span className={styles.k}>Web</span>
-            <span>postwtf.vercel.app</span>
+            <span>post-wtf.vercel.app</span>
           </div>
           <div className={styles.row}>
             <span className={styles.k}>@</span>
