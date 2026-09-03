@@ -1,22 +1,22 @@
 "use client";
 
-import { useRef, useState, type CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
 import Nav from "@/components/Nav";
-import type { LabPiece } from "@/lib/lab";
+import type { LabPiece, LabVideo } from "@/lib/lab";
 import styles from "./Lab.module.css";
 
 function ratioStyle(ratio: number): CSSProperties {
   return { aspectRatio: String(ratio) };
 }
 
-function LabItem({ piece }: { piece: LabPiece }) {
+function LabVideoBlock({ video, label }: { video: LabVideo; label: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const seekTo = (index: number) => {
     const v = videoRef.current;
     if (!v || !Number.isFinite(v.duration)) return;
     v.pause();
-    v.currentTime = (v.duration * (index + 0.5)) / piece.frames.length;
+    v.currentTime = (v.duration * (index + 0.5)) / video.frames.length;
   };
 
   const resume = () => {
@@ -24,13 +24,13 @@ function LabItem({ piece }: { piece: LabPiece }) {
   };
 
   return (
-    <article className={styles.piece}>
-      <div className={styles.stage} style={ratioStyle(piece.ratio)}>
+    <div className={styles.videoBlock}>
+      <div className={styles.stage} style={ratioStyle(video.ratio)}>
         <video
           ref={videoRef}
           className={styles.video}
-          src={piece.video}
-          poster={piece.frames[0]?.src}
+          src={video.src}
+          poster={video.frames[0]?.src}
           autoPlay
           muted
           loop
@@ -39,13 +39,10 @@ function LabItem({ piece }: { piece: LabPiece }) {
         />
       </div>
 
-      <div className={styles.meta}>
-        <h2>{piece.title}</h2>
-        {piece.note && <p>{piece.note}</p>}
-      </div>
+      <div className={styles.videoLabel}>{video.label}</div>
 
       <div className={styles.filmstrip} onMouseLeave={resume}>
-        {piece.frames.map((frame, i) => (
+        {video.frames.map((frame, i) => (
           <button
             key={frame.src}
             type="button"
@@ -54,11 +51,27 @@ function LabItem({ piece }: { piece: LabPiece }) {
             onMouseEnter={() => seekTo(i)}
             onFocus={() => seekTo(i)}
             onBlur={resume}
-            aria-label={`${piece.title} — frame ${i + 1}`}
+            aria-label={`${label} — ${video.label} — frame ${i + 1}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={frame.src} alt="" loading="lazy" />
           </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LabProject({ piece }: { piece: LabPiece }) {
+  return (
+    <article className={styles.project}>
+      <header className={styles.projectHeader}>
+        <h2>{piece.title}</h2>
+        {piece.note && <p>{piece.note}</p>}
+      </header>
+      <div className={styles.videos}>
+        {piece.videos.map((video) => (
+          <LabVideoBlock key={video.src} video={video} label={piece.title} />
         ))}
       </div>
     </article>
@@ -66,8 +79,6 @@ function LabItem({ piece }: { piece: LabPiece }) {
 }
 
 export default function LabPage({ pieces }: { pieces: LabPiece[] }) {
-  const [count] = useState(pieces.length);
-
   return (
     <main className={styles.lab}>
       <Nav />
@@ -77,12 +88,12 @@ export default function LabPage({ pieces }: { pieces: LabPiece[] }) {
         <h1>Taff IA</h1>
       </header>
 
-      {count === 0 ? (
+      {pieces.length === 0 ? (
         <p className={styles.empty}>Rien pour l’instant.</p>
       ) : (
-        <div className={styles.grid}>
+        <div className={styles.projects}>
           {pieces.map((piece) => (
-            <LabItem key={piece.slug} piece={piece} />
+            <LabProject key={piece.slug} piece={piece} />
           ))}
         </div>
       )}

@@ -35,18 +35,54 @@
   color: var(--orange);
 }
 
-.grid {
+/* ---------- Projets ---------- */
+.projects {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(72px, 10vw, 140px);
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+}
+
+.projectHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+.projectHeader h2 {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(24px, 3vw, 34px);
+}
+.projectHeader p {
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-align: right;
+}
+
+/* ---------- Vidéos (au sein d'un projet) ---------- */
+.videos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(40px, 5vw, 80px) clamp(30px, 4vw, 60px);
 }
 @media (max-width: 860px) {
-  .grid {
+  .videos {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
-.piece {
+.videoBlock {
   display: flex;
   flex-direction: column;
 }
@@ -63,30 +99,19 @@
   object-fit: cover;
 }
 
-.meta {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 16px;
-}
-.meta h2 {
-  font-family: var(--fh);
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 0.01em;
-}
-.meta p {
+.videoLabel {
   font-family: var(--fl);
-  font-size: 13px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--orange);
-  text-align: right;
+  margin-top: 14px;
 }
 
 .filmstrip {
   display: flex;
   gap: 6px;
-  margin-top: 10px;
+  margin-top: 8px;
   overflow-x: auto;
   scrollbar-width: none;
 }

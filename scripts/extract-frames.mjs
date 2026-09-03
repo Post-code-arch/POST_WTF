@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Extrait un jeu de frames (filmstrip) pour chaque vidéo de public/lab/<slug>/source.*
- * Sortie : public/lab/<slug>/frames/frame-01.jpg … frame-NN.jpg
+ * Extrait un filmstrip pour chaque vidéo de public/lab/<slug>/videos/*.
+ * Un projet peut contenir plusieurs vidéos (ex : plusieurs plans/packshots).
+ * Sortie : public/lab/<slug>/frames/<nom-vidéo>/frame-01.jpg … frame-NN.jpg
  *
  * Usage : npm run lab:frames
  * Nombre de frames par vidéo : 8 par défaut, surchargeable par
@@ -14,7 +15,7 @@ import ffmpegPath from "ffmpeg-static";
 
 const LAB_DIR = path.join(process.cwd(), "public", "lab");
 const DEFAULT_FRAME_COUNT = 8;
-const SOURCE_EXTENSIONS = [".mp4", ".webm", ".mov", ".m4v"];
+const VIDEO_EXTENSIONS = [".mp4", ".webm", ".mov", ".m4v"];
 
 function getDurationSeconds(sourcePath) {
   // `-f null -` décode tout sans écrire de fichier ; qu'il réussisse ou
@@ -45,19 +46,40 @@ function extractFrame(sourcePath, timestamp, outPath) {
   );
 }
 
-function findSourceFile(dir) {
-  const entries = fs.readdirSync(dir);
-  const name = entries.find(
-    (f) => path.parse(f).name === "source" && SOURCE_EXTENSIONS.includes(path.extname(f).toLowerCase()),
-  );
-  return name ? path.join(dir, name) : null;
+function listVideoFiles(dir) {
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((f) => VIDEO_EXTENSIONS.includes(path.extname(f).toLowerCase()))
+    .sort();
 }
 
-function processPiece(slug) {
+function processVideo(videoPath, framesDir, frameCount, label) {
+  const duration = getDurationSeconds(videoPath);
+  if (!duration || duration <= 0) {
+    console.warn(`[lab]   ${label} : durée illisible — ignorée`);
+    return;
+  }
+
+  fs.mkdirSync(framesDir, { recursive: true });
+  for (let i = 0; i < frameCount; i++) {
+    const timestamp = (duration * (i + 0.5)) / frameCount;
+    const outPath = path.join(
+      framesDir,
+      `frame-${String(i + 1).padStart(2, "0")}.jpg`,
+    );
+    extractFrame(videoPath, timestamp, outPath);
+  }
+  console.log(`[lab]   ${label} : ${frameCount} frames (${duration.toFixed(1)}s)`);
+}
+
+function processProject(slug) {
   const dir = path.join(LAB_DIR, slug);
-  const sourcePath = findSourceFile(dir);
-  if (!sourcePath) {
-    console.warn(`[lab] ${slug} : pas de fichier source.<ext> — ignoré`);
+  const videosDir = path.join(dir, "videos");
+  const videoFiles = listVideoFiles(videosDir);
+
+  if (videoFiles.length === 0) {
+    console.warn(`[lab] ${slug} : pas de vidéo dans videos/ — ignoré`);
     return;
   }
 
@@ -67,26 +89,19 @@ function processPiece(slug) {
     : {};
   const frameCount = meta.frames ?? DEFAULT_FRAME_COUNT;
 
-  const duration = getDurationSeconds(sourcePath);
-  if (!duration || duration <= 0) {
-    console.warn(`[lab] ${slug} : durée illisible — ignoré`);
-    return;
-  }
+  const framesRoot = path.join(dir, "frames");
+  fs.rmSync(framesRoot, { recursive: true, force: true });
 
-  const framesDir = path.join(dir, "frames");
-  fs.rmSync(framesDir, { recursive: true, force: true });
-  fs.mkdirSync(framesDir, { recursive: true });
-
-  for (let i = 0; i < frameCount; i++) {
-    const timestamp = (duration * (i + 0.5)) / frameCount;
-    const outPath = path.join(
-      framesDir,
-      `frame-${String(i + 1).padStart(2, "0")}.jpg`,
+  console.log(`[lab] ${slug} : ${videoFiles.length} vidéo(s)`);
+  for (const file of videoFiles) {
+    const stem = path.parse(file).name;
+    processVideo(
+      path.join(videosDir, file),
+      path.join(framesRoot, stem),
+      frameCount,
+      file,
     );
-    extractFrame(sourcePath, timestamp, outPath);
   }
-
-  console.log(`[lab] ${slug} : ${frameCount} frames extraites (${duration.toFixed(1)}s)`);
 }
 
 function main() {
@@ -94,17 +109,17 @@ function main() {
     console.log("[lab] public/lab introuvable — rien à faire");
     return;
   }
-  const pieces = fs
+  const slugs = fs
     .readdirSync(LAB_DIR, { withFileTypes: true })
     .filter((e) => e.isDirectory())
     .map((e) => e.name);
 
-  if (pieces.length === 0) {
-    console.log("[lab] aucune vidéo dans public/lab/<slug>/source.<ext>");
+  if (slugs.length === 0) {
+    console.log("[lab] aucun projet dans public/lab/<slug>/videos/");
     return;
   }
 
-  for (const slug of pieces) processPiece(slug);
+  for (const slug of slugs) processProject(slug);
 }
 
 main();
