@@ -1,27 +1,28 @@
-# Handoff — état du projet (site POST, ex-Kinaya)
+# Handoff — état du projet (site POST)
 
 Site vitrine Next.js 15 (App Router, SSG + une route API), déployé sur Vercel.
-Repo : `kinayahouse-cyber/kinaya`. Branche de travail : `main` (les changements
+Repo : `Post-code-arch/POST_WTF`. Branche de travail : `main` (les changements
 sont mergés là et poussés).
 
 ## Déploiement / URLs — ⚠️ À RÉGLER
 - **En ligne et à jour : https://kinaya-nine.vercel.app** (HTTP 200, `<title>POST</title>`).
-  C'est le projet Vercel connecté à ce repo ; chaque push sur `main` le redéploie.
+  C'est le projet Vercel connecté à ce repo ; chaque push sur `main` le redéploie. Le nom du
+  projet Vercel (et donc l'URL) reste à renommer pour ne plus porter l'ancien nom — pas
+  faisable depuis Claude Code (dashboard Vercel requis).
 - **postwtf.vercel.app → 404** : le projet/domaine Vercel derrière a été supprimé/détaché.
-  Pour le réactiver (dashboard Vercel, pas faisable depuis Claude Code) : soit renommer le
-  projet en `postwtf` (Settings → General → Project Name), soit ajouter le domaine
-  (Settings → Domains → Add `postwtf.vercel.app`).
-- La ligne « Web » de la page À propos affiche `postwtf.vercel.app` (à corriger si on garde
-  kinaya-nine, ou à laisser si postwtf est réparé).
+  Pour le réactiver (dashboard Vercel) : soit renommer le projet Vercel en `postwtf`
+  (Settings → General → Project Name), soit ajouter le domaine (Settings → Domains →
+  Add `postwtf.vercel.app`).
+- La ligne « Web » de la page À propos affiche `postwtf.vercel.app` (à corriger si l'URL de
+  prod actuelle reste celle-ci, ou à laisser si postwtf est réparé).
 
 ## Marque
-- Rebrand **Kinaya → POST** effectué partout (metadata/titre d'onglet, À propos, descriptions
-  de pages, signatures d'emails, event interne `post:dock`, commentaires, `package.json`).
+- Identité **POST** partout (metadata/titre d'onglet, À propos, descriptions de pages,
+  signatures d'emails, event interne `post:dock`, commentaires, `package.json`).
 - Logotype : `src/components/POSTLogo.tsx` (wordmark « POST_ », `fill="currentColor"`,
   s'adapte au fond via `mix-blend`). Utilisé dans nav, hero d'accueil, footers.
 - Favicon : `src/app/icon.svg` + `icon.png` (POST_ blanc sur tuile sombre).
-- Le composant s'appelle encore `POSTLogo` mais est importé un peu partout ; le **hero voyageur**
-  (`HeroLogoTravel`) l'anime de l'accueil vers la nav au scroll.
+- Le **hero voyageur** (`HeroLogoTravel`) anime le logo de l'accueil vers la nav au scroll.
 
 ## Contact (formulaire `/contact`)
 - Route `src/app/api/contact/route.ts` : Resend (email interne + accusé prospect) + Notion, en
@@ -46,6 +47,16 @@ sont mergés là et poussés).
   `NN-slot-suffix.webp` sous `public/travaux/<slug>/`. Hero mobile optionnel `NN-hero-mobile`.
   Fennec : hero = **peinture orientaliste** (`02-vibe` réutilisée).
 - **À propos** / **Contact** : layout éditorial, sloughi à l'encre décoratif.
+- **Lab** (`/lab`, `LabPage.tsx`) : showcase interne du taff IA, **non référencée** (aucun lien
+  depuis la nav/les autres pages, `robots: noindex, nofollow`). Un projet = un dossier
+  `public/lab/<slug>/`, qui peut contenir **plusieurs vidéos** :
+  `videos/<nom>.<mp4|webm|mov|m4v>` → `frames/<nom>/frame-NN.jpg` (filmstrip généré par
+  `npm run lab:frames`, cf. `scripts/extract-frames.mjs`, basé sur `ffmpeg-static` — pas
+  d'ffmpeg système requis). `meta.json` optionnel par projet pour surcharger titre/note/nombre
+  de frames. Survol d'une frame → la vidéo correspondante (autoplay muted loop) se cale sur ce
+  timecode. Projets en place : **Bassit** (VFX) et **Cristor** (VFX + Packshot IA, plusieurs
+  vidéos) — dossiers créés avec `meta.json`, vidéos à déposer dans `videos/` puis relancer
+  `npm run lab:frames`.
 
 ## Design system
 - Palette monochrome (gris bornés, jamais #000/#fff). Images : couleurs conservées + léger
@@ -59,6 +70,7 @@ sont mergés là et poussés).
 - Vérifs visuelles via Playwright/Chromium (`executablePath: /opt/pw-browsers/chromium`).
 
 ## En attente / décisions ouvertes
-1. Réparer `postwtf.vercel.app` côté Vercel (ou basculer la ligne « Web » sur kinaya-nine).
+1. Renommer le projet Vercel (et/ou réparer `postwtf.vercel.app`) pour que l'URL de prod ne
+   porte plus l'ancien nom.
 2. Confirmer l'email public (`wearepostagency@gmail.com`) + configurer les clés Resend/Notion.
-3. Renommer le repo GitHub / projet Vercel si on veut retirer « kinaya » de l'infra (hors code).
+3. Une fois l'URL de prod stabilisée, aligner la ligne « Web » de la page À propos dessus.
