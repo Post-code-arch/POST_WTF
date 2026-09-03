@@ -47,6 +47,13 @@ sont mergés là et poussés).
   `NN-slot-suffix.webp` sous `public/travaux/<slug>/`. Hero mobile optionnel `NN-hero-mobile`.
   Fennec : hero = **peinture orientaliste** (`02-vibe` réutilisée).
 - **À propos** / **Contact** : layout éditorial, sloughi à l'encre décoratif.
+- **Lab** (`/lab`, `LabPage.tsx`) : showcase interne du taff IA, **non référencée** (aucun lien
+  depuis la nav/les autres pages, `robots: noindex, nofollow`). Convention de contenu :
+  `public/lab/<slug>/source.<mp4|webm|mov|m4v>` + `public/lab/<slug>/frames/frame-NN.jpg`
+  (filmstrip généré par `npm run lab:frames`, cf. `scripts/extract-frames.mjs`, basé sur
+  `ffmpeg-static` — pas d'ffmpeg système requis). `meta.json` optionnel par pièce pour
+  surcharger titre/note/nombre de frames. Survol d'une frame → la vidéo (autoplay muted loop)
+  se cale sur ce timecode. Pas de contenu commité pour l'instant — à déposer manuellement.
 
 ## Design system
 - Palette monochrome (gris bornés, jamais #000/#fff). Images : couleurs conservées + léger
