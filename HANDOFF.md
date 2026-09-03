@@ -49,14 +49,13 @@ sont mergés là et poussés).
 - **À propos** / **Contact** : layout éditorial, sloughi à l'encre décoratif.
 - **Lab** (`/lab`, `LabPage.tsx`) : showcase interne du taff IA, **non référencée** (aucun lien
   depuis la nav/les autres pages, `robots: noindex, nofollow`). Un projet = un dossier
-  `public/lab/<slug>/`, qui peut contenir **plusieurs vidéos** :
-  `videos/<nom>.<mp4|webm|mov|m4v>` → `frames/<nom>/frame-NN.jpg` (filmstrip généré par
+  `public/lab/<slug>/`, qui peut contenir **plusieurs vidéos déposées directement à la racine**
+  du dossier : `<nom>.<mp4|webm|mov|m4v>` → `frames/<nom>/frame-NN.jpg` (filmstrip généré par
   `npm run lab:frames`, cf. `scripts/extract-frames.mjs`, basé sur `ffmpeg-static` — pas
   d'ffmpeg système requis). `meta.json` optionnel par projet pour surcharger titre/note/nombre
   de frames. Survol d'une frame → la vidéo correspondante (autoplay muted loop) se cale sur ce
-  timecode. Projets en place : **Bassit** (VFX) et **Cristor** (VFX + Packshot IA, plusieurs
-  vidéos) — dossiers créés avec `meta.json`, vidéos à déposer dans `videos/` puis relancer
-  `npm run lab:frames`.
+  timecode. Projets en place : **Bassit** (VFX, 1 vidéo) et **Cristor** (VFX + Packshot IA,
+  4 vidéos) — contenu déposé et frames générées.
 
 ## Design system
 - Palette monochrome (gris bornés, jamais #000/#fff). Images : couleurs conservées + léger

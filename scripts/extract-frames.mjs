@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Extrait un filmstrip pour chaque vidéo de public/lab/<slug>/videos/*.
- * Un projet peut contenir plusieurs vidéos (ex : plusieurs plans/packshots).
+ * Extrait un filmstrip pour chaque vidéo de public/lab/<slug>/*.
+ * Un projet peut contenir plusieurs vidéos (ex : plusieurs plans/packshots),
+ * déposées directement à la racine du dossier du projet.
  * Sortie : public/lab/<slug>/frames/<nom-vidéo>/frame-01.jpg … frame-NN.jpg
  *
  * Usage : npm run lab:frames
@@ -49,8 +50,13 @@ function extractFrame(sourcePath, timestamp, outPath) {
 function listVideoFiles(dir) {
   if (!fs.existsSync(dir)) return [];
   return fs
-    .readdirSync(dir)
-    .filter((f) => VIDEO_EXTENSIONS.includes(path.extname(f).toLowerCase()))
+    .readdirSync(dir, { withFileTypes: true })
+    .filter(
+      (e) =>
+        e.isFile() &&
+        VIDEO_EXTENSIONS.includes(path.extname(e.name).toLowerCase()),
+    )
+    .map((e) => e.name)
     .sort();
 }
 
@@ -75,11 +81,10 @@ function processVideo(videoPath, framesDir, frameCount, label) {
 
 function processProject(slug) {
   const dir = path.join(LAB_DIR, slug);
-  const videosDir = path.join(dir, "videos");
-  const videoFiles = listVideoFiles(videosDir);
+  const videoFiles = listVideoFiles(dir);
 
   if (videoFiles.length === 0) {
-    console.warn(`[lab] ${slug} : pas de vidéo dans videos/ — ignoré`);
+    console.warn(`[lab] ${slug} : pas de vidéo — ignoré`);
     return;
   }
 
@@ -96,7 +101,7 @@ function processProject(slug) {
   for (const file of videoFiles) {
     const stem = path.parse(file).name;
     processVideo(
-      path.join(videosDir, file),
+      path.join(dir, file),
       path.join(framesRoot, stem),
       frameCount,
       file,

@@ -5,10 +5,11 @@ import { imageSize } from "image-size";
 /* ════════════════════════════════════════════════════════════════
    Loader de la page /lab (showcase interne, non référencée).
    Source : public/lab/<slug>/
-     - videos/<nom>.<mp4|webm|mov|m4v>   → une ou plusieurs vidéos
-     - frames/<nom>/frame-NN.jpg         → filmstrip par vidéo (généré
-       par `npm run lab:frames`, cf. scripts/extract-frames.mjs)
-     - meta.json (optionnel)             → { "title": "…", "note": "…" }
+     - <nom>.<mp4|webm|mov|m4v>   → une ou plusieurs vidéos, déposées
+       directement à la racine du dossier du projet
+     - frames/<nom>/frame-NN.jpg → filmstrip par vidéo (généré par
+       `npm run lab:frames`, cf. scripts/extract-frames.mjs)
+     - meta.json (optionnel)     → { "title": "…", "note": "…" }
    Une vidéo sans frames extraites est ignorée. Un projet sans aucune
    vidéo prête est ignoré.
    ════════════════════════════════════════════════════════════════ */
@@ -46,8 +47,13 @@ function humanize(name: string): string {
 function listVideoFiles(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
   return fs
-    .readdirSync(dir)
-    .filter((f) => VIDEO_EXTENSIONS.includes(path.extname(f).toLowerCase()))
+    .readdirSync(dir, { withFileTypes: true })
+    .filter(
+      (e) =>
+        e.isFile() &&
+        VIDEO_EXTENSIONS.includes(path.extname(e.name).toLowerCase()),
+    )
+    .map((e) => e.name)
     .sort();
 }
 
@@ -64,7 +70,7 @@ export function getLabPieces(): LabPiece[] {
 
   for (const slug of slugs) {
     const dir = path.join(LAB_DIR, slug);
-    const videoFiles = listVideoFiles(path.join(dir, "videos"));
+    const videoFiles = listVideoFiles(dir);
 
     const videos: LabVideo[] = [];
     for (const file of videoFiles) {
@@ -83,14 +89,14 @@ export function getLabPieces(): LabPiece[] {
           fs.readFileSync(path.join(framesDir, f)),
         );
         return {
-          src: `/lab/${slug}/frames/${stem}/${f}`,
+          src: `/lab/${slug}/frames/${encodeURIComponent(stem)}/${f}`,
           ratio: width && height ? width / height : 16 / 9,
         };
       });
 
       videos.push({
         label: humanize(stem),
-        src: `/lab/${slug}/videos/${file}`,
+        src: `/lab/${slug}/${encodeURIComponent(file)}`,
         ratio: frames[0].ratio,
         frames,
       });
