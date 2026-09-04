@@ -46,14 +46,20 @@ sont mergés là et poussés).
 - **Lab** (`/lab`, `LabIndex.tsx` + `/lab/[slug]`, `LabProjectPage.tsx`) : showcase du taff IA,
   **dans la nav** (lien "Lab") mais toujours `robots: noindex, nofollow` (pas dans les moteurs
   de recherche). Design dark (palette `--espresso`/`--cream`, inspiré A24/NEON) distinct du
-  reste du site en cream : `/lab` = grille de posters (survol → aperçu vidéo, poster masqué
-  seulement une fois la vidéo prête à jouer pour éviter un flash noir sur les gros fichiers) ;
-  `/lab/<slug>` = page dédiée par projet (hero vidéo plein cadre, description optionnelle,
-  grille des vidéos avec filmstrip, lien « projet suivant »).
+  reste du site en cream : `/lab` = hero « à la une » + grille de posters portrait 2:3 (titre
+  sous l'image, layout calqué sur neonrated.com) — survol → aperçu vidéo léger (`preview.webm`,
+  ~200-300 Ko, généré exprès pour ça — pas le fichier source complet) ; poster masqué seulement
+  une fois l'aperçu prêt à jouer, pour éviter un flash noir. `/lab/<slug>` = page dédiée par
+  projet (hero vidéo plein cadre, description optionnelle, grille des vidéos avec filmstrip,
+  lien « projet suivant »).
   Un projet = un dossier `public/lab/<slug>/`, qui peut contenir **plusieurs vidéos déposées
   directement à la racine** du dossier : `<nom>.<mp4|webm|mov|m4v>` → `frames/<nom>/frame-NN.jpg`
-  (filmstrip généré par `npm run lab:frames`, cf. `scripts/extract-frames.mjs`, basé sur
-  `ffmpeg-static` — pas d'ffmpeg système requis). `meta.json` optionnel par projet :
+  + `frames/<nom>/preview.webm` (filmstrip + aperçu générés par `npm run lab:frames`, cf.
+  `scripts/extract-frames.mjs`, basé sur
+  `ffmpeg-static` — pas d'ffmpeg système requis). Détecte aussi un éventuel bandeau noir
+  cinéma (letterboxing intégré aux pixels, ex. 2.35:1 dans un cadre 16:9) via `cropdetect`
+  et le retire des visuels générés (vertical uniquement, jamais horizontal, pour ne pas
+  rogner du vrai contenu sur un faux positif). `meta.json` optionnel par projet :
   `{ "title", "note", "description": "…" ou ["§1", "§2"] }`. Survol d'une frame → la vidéo
   correspondante (autoplay muted loop) se cale sur ce timecode. Projets en place : **Bassit**
   (VFX, 1 vidéo) et **Cristor** (VFX + Packshot IA, 4 vidéos) — contenu déposé et frames

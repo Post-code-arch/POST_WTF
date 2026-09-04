@@ -3,7 +3,16 @@
  * Extrait un filmstrip pour chaque vidéo de public/lab/<slug>/*.
  * Un projet peut contenir plusieurs vidéos (ex : plusieurs plans/packshots),
  * déposées directement à la racine du dossier du projet.
- * Sortie : public/lab/<slug>/frames/<nom-vidéo>/frame-01.jpg … frame-NN.jpg
+ *
+ * Pour chaque vidéo :
+ *  - détecte un éventuel bandeau noir (letterboxing cinéma type 2.35:1
+ *    intégré aux pixels) via ffmpeg cropdetect, et le retire des visuels
+ *    générés (recadrage vertical uniquement — jamais horizontal, pour
+ *    éviter de rogner du vrai contenu sur un faux positif ponctuel) ;
+ *  - frame-01..NN.jpg (filmstrip, dont frame-01 sert de poster) ;
+ *  - preview.webm : clip muet, léger, recadré, pour l'aperçu au survol
+ *    de la grille /lab (évite de streamer le fichier source complet).
+ * Sortie : public/lab/<slug>/frames/<nom-vidéo>/
  *
  * Usage : npm run lab:frames
  * Nombre de frames par vidéo : 8 par défaut, surchargeable par
@@ -31,7 +40,45 @@ function getDurationSeconds(sourcePath) {
   return Number(h) * 3600 + Number(m) * 60 + Number(s);
 }
 
-function extractFrame(sourcePath, timestamp, outPath) {
+/**
+ * Détecte un bandeau noir vertical (haut/bas) constant sur plusieurs
+ * frames échantillonnées en milieu de vidéo. Ignore toute composante
+ * horizontale de cropdetect (pillarbox) : un faux positif ponctuel
+ * (zone sombre dans le cadre) ne doit jamais rogner du contenu réel
+ * sur les côtés — seul un bandeau haut/bas franc et répété est retenu.
+ */
+function detectVerticalCrop(videoPath, duration) {
+  const start = Math.min(Math.max(duration * 0.2, 1), Math.max(duration - 2, 0));
+  const result = spawnSync(
+    ffmpegPath,
+    [
+      "-ss", String(start),
+      "-i", videoPath,
+      "-vf", "cropdetect=24:2:0",
+      "-frames:v", "15",
+      "-f", "null", "-",
+    ],
+    { encoding: "utf8" },
+  );
+  const stderr = result.stderr ?? "";
+  const matches = [...stderr.matchAll(/crop=\d+:(\d+):\d+:(\d+)/g)];
+  if (matches.length === 0) return null;
+
+  const counts = new Map();
+  for (const [, h, y] of matches) {
+    const key = `${h}:${y}`;
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  const [best] = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+  const [h, y] = best[0].split(":").map(Number);
+  return y > 0 ? { h, y } : null;
+}
+
+function cropFilter(crop) {
+  return crop ? `crop=iw:${crop.h}:0:${crop.y},` : "";
+}
+
+function extractFrame(sourcePath, timestamp, outPath, crop) {
   execFileSync(
     ffmpegPath,
     [
@@ -40,7 +87,26 @@ function extractFrame(sourcePath, timestamp, outPath) {
       "-i", sourcePath,
       "-frames:v", "1",
       "-q:v", "3",
-      "-vf", "scale='min(720,iw)':-2",
+      "-vf", `${cropFilter(crop)}scale='min(720,iw)':-2`,
+      outPath,
+    ],
+    { stdio: ["ignore", "ignore", "ignore"] },
+  );
+}
+
+function extractPreview(sourcePath, duration, crop, outPath) {
+  const len = Math.min(4, duration);
+  execFileSync(
+    ffmpegPath,
+    [
+      "-y",
+      "-i", sourcePath,
+      "-t", String(len),
+      "-an",
+      "-vf", `${cropFilter(crop)}scale=640:-2`,
+      "-c:v", "libvpx",
+      "-b:v", "800k",
+      "-crf", "30",
       outPath,
     ],
     { stdio: ["ignore", "ignore", "ignore"] },
@@ -67,6 +133,8 @@ function processVideo(videoPath, framesDir, frameCount, label) {
     return;
   }
 
+  const crop = detectVerticalCrop(videoPath, duration);
+
   fs.mkdirSync(framesDir, { recursive: true });
   for (let i = 0; i < frameCount; i++) {
     const timestamp = (duration * (i + 0.5)) / frameCount;
@@ -74,9 +142,12 @@ function processVideo(videoPath, framesDir, frameCount, label) {
       framesDir,
       `frame-${String(i + 1).padStart(2, "0")}.jpg`,
     );
-    extractFrame(videoPath, timestamp, outPath);
+    extractFrame(videoPath, timestamp, outPath, crop);
   }
-  console.log(`[lab]   ${label} : ${frameCount} frames (${duration.toFixed(1)}s)`);
+  extractPreview(videoPath, duration, crop, path.join(framesDir, "preview.webm"));
+
+  const cropNote = crop ? `, bandeau retiré (h:${crop.h} y:${crop.y})` : "";
+  console.log(`[lab]   ${label} : ${frameCount} frames (${duration.toFixed(1)}s)${cropNote}`);
 }
 
 function processProject(slug) {

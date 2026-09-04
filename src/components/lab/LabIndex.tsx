@@ -72,7 +72,7 @@ function LabCard({ piece }: { piece: LabPiece }) {
         <video
           ref={videoRef}
           className={`${styles.posterVideo} ${showVideo ? styles.posterVideoVisible : ""}`}
-          src={piece.videos[0]?.src}
+          src={piece.videos[0]?.preview}
           muted
           loop
           playsInline

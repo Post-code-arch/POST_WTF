@@ -26,6 +26,8 @@ export interface LabFrame {
 export interface LabVideo {
   label: string;
   src: string;
+  /** clip muet, léger, recadré — pour l'aperçu au survol (fallback : src) */
+  preview: string;
   ratio: number;
   frames: LabFrame[];
 }
@@ -95,9 +97,16 @@ function loadPiece(slug: string): LabPiece | null {
       };
     });
 
+    const src = `/lab/${slug}/${encodeURIComponent(file)}`;
+    const previewPath = path.join(framesDir, "preview.webm");
+    const preview = fs.existsSync(previewPath)
+      ? `/lab/${slug}/frames/${encodeURIComponent(stem)}/preview.webm`
+      : src;
+
     videos.push({
       label: humanize(stem),
-      src: `/lab/${slug}/${encodeURIComponent(file)}`,
+      src,
+      preview,
       ratio: frames[0].ratio,
       frames,
     });
