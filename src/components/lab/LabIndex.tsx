@@ -10,7 +10,32 @@ function ratioStyle(ratio: number): CSSProperties {
   return { aspectRatio: String(ratio) };
 }
 
-function LabCard({ piece, index }: { piece: LabPiece; index: number }) {
+function Feature({ piece }: { piece: LabPiece }) {
+  return (
+    <section className={styles.feature}>
+      <video
+        className={styles.featureVideo}
+        src={piece.videos[0]?.src}
+        poster={piece.poster.src}
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <div className={styles.featureGradient} />
+      <div className={styles.featureContent}>
+        <span className={styles.featureKicker}>Lab — à la une</span>
+        <h1>{piece.title}</h1>
+        {piece.note && <span className={styles.featureNote}>{piece.note}</span>}
+        <Link href={`/lab/${piece.slug}`} className={styles.featureCta}>
+          Voir le projet
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+function LabCard({ piece }: { piece: LabPiece }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hover, setHover] = useState(false);
   const [ready, setReady] = useState(false);
@@ -37,17 +62,16 @@ function LabCard({ piece, index }: { piece: LabPiece; index: number }) {
       onFocus={onEnter}
       onBlur={onLeave}
     >
-      <span className={styles.cardNum}>{String(index + 1).padStart(2, "0")}</span>
-      <div className={styles.cardMedia} style={ratioStyle(piece.poster.ratio)}>
+      <div className={styles.poster} style={ratioStyle(2 / 3)}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className={`${styles.cardPoster} ${showVideo ? styles.cardPosterHidden : ""}`}
+          className={`${styles.posterImg} ${showVideo ? styles.posterImgHidden : ""}`}
           src={piece.poster.src}
           alt=""
         />
         <video
           ref={videoRef}
-          className={`${styles.cardVideo} ${showVideo ? styles.cardVideoVisible : ""}`}
+          className={`${styles.posterVideo} ${showVideo ? styles.posterVideoVisible : ""}`}
           src={piece.videos[0]?.src}
           muted
           loop
@@ -56,8 +80,8 @@ function LabCard({ piece, index }: { piece: LabPiece; index: number }) {
           onCanPlay={() => setReady(true)}
         />
       </div>
-      <div className={styles.cardInfo}>
-        <h2>{piece.title}</h2>
+      <div className={styles.cardText}>
+        <h3>{piece.title}</h3>
         {piece.note && <span className={styles.cardNote}>{piece.note}</span>}
       </div>
     </Link>
@@ -65,28 +89,37 @@ function LabCard({ piece, index }: { piece: LabPiece; index: number }) {
 }
 
 export default function LabIndex({ pieces }: { pieces: LabPiece[] }) {
+  const [feature] = pieces;
+
   return (
     <main className={styles.lab}>
       <Nav />
 
-      <header className={styles.header}>
-        <span className={styles.label}>Lab</span>
-        <h1>Taff IA</h1>
-        <p className={styles.intro}>
-          Expérimentations, VFX et productions assistées par l’IA — les
-          coulisses du studio.
-        </p>
-      </header>
-
-      {pieces.length === 0 ? (
-        <p className={styles.empty}>Rien pour l’instant.</p>
+      {feature ? (
+        <Feature piece={feature} />
       ) : (
-        <div className={styles.grid}>
-          {pieces.map((piece, i) => (
-            <LabCard key={piece.slug} piece={piece} index={i} />
-          ))}
-        </div>
+        <header className={styles.emptyHeader}>
+          <span className={styles.featureKicker}>Lab</span>
+          <h1>Taff IA</h1>
+        </header>
       )}
+
+      <section className={styles.gridSection}>
+        <div className={styles.sectionHead}>
+          <span className={styles.sectionLabel}>Tous les projets</span>
+          <h2>Taff IA</h2>
+        </div>
+
+        {pieces.length === 0 ? (
+          <p className={styles.empty}>Rien pour l’instant.</p>
+        ) : (
+          <div className={styles.grid}>
+            {pieces.map((piece) => (
+              <LabCard key={piece.slug} piece={piece} />
+            ))}
+          </div>
+        )}
+      </section>
     </main>
   );
 }
