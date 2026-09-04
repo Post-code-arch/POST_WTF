@@ -1,15 +1,20 @@
 "use client";
 
 import { useRef, type CSSProperties } from "react";
-import Nav from "@/components/Nav";
-import type { LabPiece, LabVideo } from "@/lib/lab";
-import styles from "./Lab.module.css";
+import type { LabVideo } from "@/lib/lab";
+import styles from "./LabVideoBlock.module.css";
 
 function ratioStyle(ratio: number): CSSProperties {
   return { aspectRatio: String(ratio) };
 }
 
-function LabVideoBlock({ video, label }: { video: LabVideo; label: string }) {
+export default function LabVideoBlock({
+  video,
+  ariaLabel,
+}: {
+  video: LabVideo;
+  ariaLabel: string;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const seekTo = (index: number) => {
@@ -24,7 +29,7 @@ function LabVideoBlock({ video, label }: { video: LabVideo; label: string }) {
   };
 
   return (
-    <div className={styles.videoBlock}>
+    <div className={styles.block}>
       <div className={styles.stage} style={ratioStyle(video.ratio)}>
         <video
           ref={videoRef}
@@ -51,7 +56,7 @@ function LabVideoBlock({ video, label }: { video: LabVideo; label: string }) {
             onMouseEnter={() => seekTo(i)}
             onFocus={() => seekTo(i)}
             onBlur={resume}
-            aria-label={`${label} — ${video.label} — frame ${i + 1}`}
+            aria-label={`${ariaLabel} — ${video.label} — frame ${i + 1}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={frame.src} alt="" loading="lazy" />
@@ -59,44 +64,5 @@ function LabVideoBlock({ video, label }: { video: LabVideo; label: string }) {
         ))}
       </div>
     </div>
-  );
-}
-
-function LabProject({ piece }: { piece: LabPiece }) {
-  return (
-    <article className={styles.project}>
-      <header className={styles.projectHeader}>
-        <h2>{piece.title}</h2>
-        {piece.note && <p>{piece.note}</p>}
-      </header>
-      <div className={styles.videos}>
-        {piece.videos.map((video) => (
-          <LabVideoBlock key={video.src} video={video} label={piece.title} />
-        ))}
-      </div>
-    </article>
-  );
-}
-
-export default function LabPage({ pieces }: { pieces: LabPiece[] }) {
-  return (
-    <main className={styles.lab}>
-      <Nav />
-
-      <header className={styles.header}>
-        <span className={styles.label}>Lab — usage interne</span>
-        <h1>Taff IA</h1>
-      </header>
-
-      {pieces.length === 0 ? (
-        <p className={styles.empty}>Rien pour l’instant.</p>
-      ) : (
-        <div className={styles.projects}>
-          {pieces.map((piece) => (
-            <LabProject key={piece.slug} piece={piece} />
-          ))}
-        </div>
-      )}
-    </main>
   );
 }

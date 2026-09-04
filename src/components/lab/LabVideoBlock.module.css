@@ -1,0 +1,62 @@
+.block {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--espresso-2);
+}
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoLabel {
+  font-family: var(--fl);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(242, 242, 242, 0.5);
+  margin-top: 14px;
+}
+
+.filmstrip {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filmstrip::-webkit-scrollbar {
+  display: none;
+}
+
+.frame {
+  flex: 0 0 auto;
+  width: 64px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: var(--espresso-2);
+  opacity: 0.45;
+  transition: opacity 0.15s ease;
+}
+.frame:hover,
+.frame:focus-visible {
+  opacity: 1;
+}
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame {
+    transition: none;
+  }
+}

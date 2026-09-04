@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getLabPieces } from "@/lib/lab";
-import LabPage from "@/components/lab/LabPage";
+import LabIndex from "@/components/lab/LabIndex";
 
 export const metadata: Metadata = {
   title: "Lab",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <LabPage pieces={getLabPieces()} />;
+  return <LabIndex pieces={getLabPieces()} />;
 }

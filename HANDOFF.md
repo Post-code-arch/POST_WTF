@@ -43,15 +43,21 @@ sont mergés là et poussés).
   `NN-slot-suffix.webp` sous `public/travaux/<slug>/`. Hero mobile optionnel `NN-hero-mobile`.
   Fennec : hero = **peinture orientaliste** (`02-vibe` réutilisée).
 - **À propos** / **Contact** : layout éditorial, sloughi à l'encre décoratif.
-- **Lab** (`/lab`, `LabPage.tsx`) : showcase interne du taff IA, **non référencée** (aucun lien
-  depuis la nav/les autres pages, `robots: noindex, nofollow`). Un projet = un dossier
-  `public/lab/<slug>/`, qui peut contenir **plusieurs vidéos déposées directement à la racine**
-  du dossier : `<nom>.<mp4|webm|mov|m4v>` → `frames/<nom>/frame-NN.jpg` (filmstrip généré par
-  `npm run lab:frames`, cf. `scripts/extract-frames.mjs`, basé sur `ffmpeg-static` — pas
-  d'ffmpeg système requis). `meta.json` optionnel par projet pour surcharger titre/note/nombre
-  de frames. Survol d'une frame → la vidéo correspondante (autoplay muted loop) se cale sur ce
-  timecode. Projets en place : **Bassit** (VFX, 1 vidéo) et **Cristor** (VFX + Packshot IA,
-  4 vidéos) — contenu déposé et frames générées.
+- **Lab** (`/lab`, `LabIndex.tsx` + `/lab/[slug]`, `LabProjectPage.tsx`) : showcase du taff IA,
+  **dans la nav** (lien "Lab") mais toujours `robots: noindex, nofollow` (pas dans les moteurs
+  de recherche). Design dark (palette `--espresso`/`--cream`, inspiré A24/NEON) distinct du
+  reste du site en cream : `/lab` = grille de posters (survol → aperçu vidéo, poster masqué
+  seulement une fois la vidéo prête à jouer pour éviter un flash noir sur les gros fichiers) ;
+  `/lab/<slug>` = page dédiée par projet (hero vidéo plein cadre, description optionnelle,
+  grille des vidéos avec filmstrip, lien « projet suivant »).
+  Un projet = un dossier `public/lab/<slug>/`, qui peut contenir **plusieurs vidéos déposées
+  directement à la racine** du dossier : `<nom>.<mp4|webm|mov|m4v>` → `frames/<nom>/frame-NN.jpg`
+  (filmstrip généré par `npm run lab:frames`, cf. `scripts/extract-frames.mjs`, basé sur
+  `ffmpeg-static` — pas d'ffmpeg système requis). `meta.json` optionnel par projet :
+  `{ "title", "note", "description": "…" ou ["§1", "§2"] }`. Survol d'une frame → la vidéo
+  correspondante (autoplay muted loop) se cale sur ce timecode. Projets en place : **Bassit**
+  (VFX, 1 vidéo) et **Cristor** (VFX + Packshot IA, 4 vidéos) — contenu déposé et frames
+  générées ; pas encore de `description` renseignée (à ajouter dans `meta.json`).
 
 ## Design system
 - Palette monochrome (gris bornés, jamais #000/#fff). Images : couleurs conservées + léger

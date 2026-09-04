@@ -1,0 +1,143 @@
+.lab {
+  position: relative;
+  min-height: 100vh;
+  background: var(--espresso);
+  color: var(--cream);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(120px, 16vh, 190px) var(--gutter) clamp(60px, 8vw, 110px);
+  max-width: 900px;
+}
+.label {
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 242, 242, 0.5);
+}
+.header h1 {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(52px, 9vw, 128px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+.intro {
+  font-family: var(--fb);
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.5;
+  color: rgba(242, 242, 242, 0.65);
+  max-width: 46ch;
+}
+
+.empty {
+  font-family: var(--fl);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(242, 242, 242, 0.5);
+  padding: 0 var(--gutter) clamp(80px, 12vw, 160px);
+}
+
+/* ---------- grille de posters ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(242, 242, 242, 0.12);
+  border-top: 1px solid rgba(242, 242, 242, 0.12);
+}
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  display: block;
+  background: var(--espresso);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+}
+
+.cardNum {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 2;
+  font-family: var(--fl);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: rgba(242, 242, 242, 0.55);
+}
+
+.cardMedia {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--espresso-2);
+}
+.cardPoster,
+.cardVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease, transform 0.6s ease;
+}
+.cardPoster {
+  opacity: 1;
+}
+.cardPosterHidden {
+  opacity: 0;
+}
+.cardVideo {
+  opacity: 0;
+}
+.cardVideoVisible {
+  opacity: 1;
+}
+.card:hover .cardMedia img,
+.card:focus-visible .cardMedia img,
+.card:hover .cardVideo,
+.card:focus-visible .cardVideo {
+  transform: scale(1.04);
+}
+
+.cardInfo {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px clamp(28px, 3vw, 40px);
+}
+.cardInfo h2 {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(26px, 2.6vw, 40px);
+  letter-spacing: -0.01em;
+}
+.cardNote {
+  font-family: var(--fl);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 242, 242, 0.5);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardPoster,
+  .cardVideo {
+    transition: none;
+  }
+}
