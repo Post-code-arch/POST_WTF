@@ -72,9 +72,9 @@ export default function ServicesPage({ services }: { services: Service[] }) {
             wearepostagency@gmail.com
           </div>
           <div className={styles.r}>
-            25 Rabah Bourbia,
+            08, Rue Didouche Mourad, 2ème étage, Bureau 09
             <br />
-            El Biar, Alger
+            16000 Alger, Algérie
           </div>
         </div>
         <div className={styles.footLogo}>

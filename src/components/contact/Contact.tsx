@@ -21,9 +21,9 @@ export default function Contact() {
             <div className={styles.row}>
               <span className={styles.k}>Atelier</span>
               <span>
-                25 Rabah Bourbia
+                08, Rue Didouche Mourad, 2ème étage, Bureau 09
                 <br />
-                El Biar, Alger
+                16000 Alger, Algérie
               </span>
             </div>
             <div className={styles.row}>
