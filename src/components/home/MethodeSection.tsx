@@ -41,16 +41,34 @@ const STAGES: Stage[] = [
 ];
 
 /* ── Trame progressive du sloughi ──────────────────────────────────────
-   Une seule image source, tramée en temps réel sur un <canvas> : le
-   dithering ordonné (matrice de Bayer) est appliqué image par image au
-   fil du scroll. En haut de section le chien est entièrement tramé
-   (pointillé), et il se résout en encre nette à mesure qu'on descend —
-   transition continue, sans crossfade ni palier. */
+   Vrai tramage ordonné 1-bit (matrice de Bayer) : deux couleurs seulement,
+   encre et crème, jamais de mélange avec l'image en niveaux de gris. Le
+   canvas est rendu à la résolution réelle de l'écran (taille affichée ×
+   devicePixelRatio) pour que chaque point de trame tombe sur des pixels
+   physiques, sans agrandissement flou. La trame s'affine par paliers au fil
+   du scroll, puis le dernier temps (Application) montre le dessin net. */
 const SLOUGHI_SRC = "/home/methode/sloughi.webp";
-const DITHER_CELL = 5; // taille du bloc de trame (plus grand = trame plus grosse)
-const CANVAS_W = 520; // résolution interne du canvas
+/** taille des cellules de trame, en px CSS, de la plus grossière à la plus fine */
+const DITHER_STEPS = [16, 12, 9, 7, 5, 4, 3, 2];
+/** part du scroll consacrée à la trame ; au-delà (4e temps), dessin net */
+const RESOLVE_END = 0.75;
 const INK = [23, 23, 23] as const; // noir doux (jamais #000)
 const CREAM = [242, 242, 242] as const; // blanc cassé neutre (jamais #fff)
+// pixels RGBA empaquetés pour un Uint32Array (canaux égaux : endianness neutre)
+const INK32 = (255 << 24) | (INK[2] << 16) | (INK[1] << 8) | INK[0];
+const CREAM32 = (255 << 24) | (CREAM[2] << 16) | (CREAM[1] << 8) | CREAM[0];
+
+/** bornes de luminance ramenées à 0..1 avant seuillage (encre ≈ 23, crème ≈ 242) */
+const LUM_LO = 40;
+const LUM_HI = 225;
+
+function levelForProgress(p: number) {
+  if (p >= RESOLVE_END) return DITHER_STEPS.length;
+  return Math.min(
+    DITHER_STEPS.length - 1,
+    Math.floor((p / RESOLVE_END) * DITHER_STEPS.length),
+  );
+}
 
 /** matrice de Bayer 8×8, seuils normalisés 0..1 */
 const BAYER8: number[][] = (() => {
@@ -119,8 +137,8 @@ function Topbar({ index }: { index: number }) {
 export default function MethodeSection() {
   const frameRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const renderRef = useRef<((amount: number) => void) | null>(null);
-  const amountRef = useRef(1);
+  const renderRef = useRef<((level: number) => void) | null>(null);
+  const levelRef = useRef(0);
   const reduced = useReducedMotion();
   const [pinEnabled, setPinEnabled] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -129,9 +147,10 @@ export default function MethodeSection() {
     setPinEnabled(!reduced);
   }, [reduced]);
 
-  // Prépare une fois les tables de trame (luminance + seuils de Bayer +
-  // LUT encre/crème), puis expose un render(amount) qui recompose le
-  // canvas en mélangeant le dégradé continu et le pointillé 1-bit.
+  // Charge le dessin, le prépare à la résolution réelle du canvas (luminance
+  // lissée + table de sommes pour moyenner chaque cellule en O(1)), puis
+  // expose render(level) : niveaux 0..n-1 = trame de plus en plus fine,
+  // niveau n = dessin net. Recalculé si le canvas change de taille.
   useEffect(() => {
     if (!pinEnabled) return;
     const canvas = canvasRef.current;
@@ -139,68 +158,130 @@ export default function MethodeSection() {
     if (!canvas || !ctx) return;
 
     let cancelled = false;
-    const img = new window.Image();
-    img.src = SLOUGHI_SRC;
-    img.onload = () => {
-      if (cancelled) return;
-      const W = CANVAS_W;
-      const H = Math.round((img.height / img.width) * W);
+    let img: HTMLImageElement | null = null;
+    let W = 0;
+    let H = 0;
+    let dpr = 1;
+    let lum: Float32Array | null = null;
+    let sat: Float64Array | null = null;
+    let out: ImageData | null = null;
+    let px: Uint32Array | null = null;
+    let drawn = -1;
+
+    // dégradé encre → crème, pour l'anticrénelage du dessin net
+    const ramp = new Uint32Array(256);
+    for (let v = 0; v < 256; v++) {
+      const t = v / 255;
+      const c = (k: 0 | 1 | 2) => Math.round(INK[k] + (CREAM[k] - INK[k]) * t);
+      ramp[v] = (255 << 24) | (c(2) << 16) | (c(1) << 8) | c(0);
+    }
+
+    const prepare = () => {
+      if (!img) return;
+      const cs = getComputedStyle(canvas);
+      const cw =
+        canvas.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const ch =
+        canvas.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      if (cw <= 0 || ch <= 0) return;
+      const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.max(1, Math.round(img.naturalWidth * scale * dpr));
+      H = Math.max(1, Math.round(img.naturalHeight * scale * dpr));
       canvas.width = W;
       canvas.height = H;
 
       const off = document.createElement("canvas");
       off.width = W;
       off.height = H;
-      const octx = off.getContext("2d");
+      const octx = off.getContext("2d", { willReadFrequently: true });
       if (!octx) return;
+      octx.fillStyle = `rgb(${CREAM.join(",")})`;
+      octx.fillRect(0, 0, W, H);
+      octx.imageSmoothingQuality = "high";
+      // léger flou d'un pixel source : efface le grain du scan, et donne des
+      // bords d'encre propres une fois seuillés à grande taille
+      octx.filter = `blur(${Math.max(0.6, scale * dpr * 0.9)}px)`;
       octx.drawImage(img, 0, 0, W, H);
-      const src = octx.getImageData(0, 0, W, H).data;
+      const d = octx.getImageData(0, 0, W, H).data;
 
       const n = W * H;
-      const cont = new Uint8ClampedArray(n); // dégradé continu (luminance)
-      const bin = new Uint8ClampedArray(n); // pointillé ordonné 1-bit
-      for (let i = 0; i < n; i++) {
-        const j = i * 4;
-        const lum = src[j] * 0.299 + src[j + 1] * 0.587 + src[j + 2] * 0.114;
-        cont[i] = lum;
-        const x = i % W;
-        const y = (i / W) | 0;
-        const thr =
-          BAYER8[(((y / DITHER_CELL) | 0) % 8)][(((x / DITHER_CELL) | 0) % 8)] *
-          255;
-        bin[i] = lum > thr ? 255 : 0;
-      }
-
-      const lutR = new Uint8ClampedArray(256);
-      const lutG = new Uint8ClampedArray(256);
-      const lutB = new Uint8ClampedArray(256);
-      for (let v = 0; v < 256; v++) {
-        const t = v / 255;
-        lutR[v] = INK[0] + (CREAM[0] - INK[0]) * t;
-        lutG[v] = INK[1] + (CREAM[1] - INK[1]) * t;
-        lutB[v] = INK[2] + (CREAM[2] - INK[2]) * t;
-      }
-
-      const out = ctx.createImageData(W, H);
-      const od = out.data;
-      for (let i = 0; i < n; i++) od[i * 4 + 3] = 255;
-
-      renderRef.current = (amount: number) => {
-        const a = amount;
-        const ia = 1 - amount;
-        for (let i = 0; i < n; i++) {
-          const o = (cont[i] * ia + bin[i] * a) | 0;
+      const W1 = W + 1;
+      lum = new Float32Array(n);
+      sat = new Float64Array(W1 * (H + 1));
+      for (let y = 0; y < H; y++) {
+        let row = 0;
+        for (let x = 0; x < W; x++) {
+          const i = y * W + x;
           const j = i * 4;
-          od[j] = lutR[o];
-          od[j + 1] = lutG[o];
-          od[j + 2] = lutB[o];
+          const l = d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114;
+          lum[i] = l;
+          row += l;
+          sat[(y + 1) * W1 + x + 1] = sat[y * W1 + x + 1] + row;
         }
-        ctx.putImageData(out, 0, 0);
-      };
-      renderRef.current(amountRef.current);
+      }
+      out = ctx.createImageData(W, H);
+      px = new Uint32Array(out.data.buffer);
+      drawn = -1;
     };
+
+    const render = (level: number) => {
+      if (!lum || !sat || !out || !px || level === drawn) return;
+      drawn = level;
+      const n = W * H;
+
+      if (level >= DITHER_STEPS.length) {
+        // dessin net : seuil étroit sur la luminance lissée (≈ encre pure,
+        // avec juste un pixel de transition pour des bords non crénelés)
+        for (let i = 0; i < n; i++) {
+          const t = (lum[i] - 100) / 56;
+          px[i] = ramp[t <= 0 ? 0 : t >= 1 ? 255 : (t * 255) | 0];
+        }
+      } else {
+        // trame ordonnée 1-bit : chaque cellule prend la moyenne de son bloc
+        // et la compare au seuil de Bayer → encre ou crème, rien entre les deux
+        const c = Math.max(1, Math.round(DITHER_STEPS[level] * dpr));
+        const W1 = W + 1;
+        for (let by = 0, cy = 0; by < H; by += c, cy++) {
+          const y1 = Math.min(H, by + c);
+          const bRow = BAYER8[cy & 7];
+          for (let bx = 0, cx = 0; bx < W; bx += c, cx++) {
+            const x1 = Math.min(W, bx + c);
+            const sum =
+              sat[y1 * W1 + x1] - sat[by * W1 + x1] - sat[y1 * W1 + bx] + sat[by * W1 + bx];
+            // normalise encre → 0, crème → 1 (avec marge) : un fond crème ne
+            // doit jamais passer sous un seuil de Bayer et semer des points
+            const avg = (sum / ((x1 - bx) * (y1 - by)) - LUM_LO) / (LUM_HI - LUM_LO);
+            const col = avg > bRow[cx & 7] ? CREAM32 : INK32;
+            for (let y = by; y < y1; y++) px.fill(col, y * W + bx, y * W + x1);
+          }
+        }
+      }
+      ctx.putImageData(out, 0, 0);
+    };
+
+    const redraw = () => {
+      prepare();
+      render(levelRef.current);
+    };
+
+    const image = new window.Image();
+    image.src = SLOUGHI_SRC;
+    image.onload = () => {
+      if (cancelled) return;
+      img = image;
+      redraw();
+      renderRef.current = render;
+    };
+
+    const ro = new ResizeObserver(() => {
+      if (img) redraw();
+    });
+    ro.observe(canvas);
+
     return () => {
       cancelled = true;
+      ro.disconnect();
       renderRef.current = null;
     };
   }, [pinEnabled]);
@@ -210,13 +291,12 @@ export default function MethodeSection() {
     const el = frameRef.current;
     if (!el) return;
 
-    // La trame est scrubbée en continu sur la position de scroll : haut de
-    // section = chien entièrement tramé (amount 1), bas = encre nette
-    // (amount 0). Aucun palier, la trame se dissout au rythme du défilement.
+    // Haut de section : trame la plus grossière. Elle s'affine par paliers
+    // pendant Lecture → Fabrication, puis le dessin est net sur Application.
     const applyProgress = (self: ScrollTrigger) => {
       const p = self.progress;
-      amountRef.current = 1 - p;
-      renderRef.current?.(amountRef.current);
+      levelRef.current = levelForProgress(p);
+      renderRef.current?.(levelRef.current);
       return Math.min(STAGES.length - 1, Math.floor(p * STAGES.length));
     };
 

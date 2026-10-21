@@ -130,6 +130,12 @@
   padding: clamp(14px, 2.4vw, 36px);
   box-sizing: border-box;
 }
+/* trame 1-bit : jamais de lissage à l'affichage, et pas de contrast(0.9)
+   global — la crème du canvas doit rester identique au fond de la section */
+.canvas {
+  image-rendering: pixelated;
+  filter: none;
+}
 
 /* ---------------- CTA (hors cadre pinné) ---------------- */
 .cta {
