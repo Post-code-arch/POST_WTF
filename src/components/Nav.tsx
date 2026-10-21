@@ -10,12 +10,11 @@ const LINKS: [string, string][] = [
   ["/travaux", "Travaux"],
   ["/services", "Champs"],
   ["/about", "À propos"],
-  ["/lab", "Lab"],
   ["/contact", "Contact"],
 ];
 
 /**
- * Nav desktop partagée (logo · Travaux · Champs · À propos · Lab … Contact),
+ * Nav desktop partagée (logo · Travaux · Champs · À propos … Contact),
  * fixe + mix-blend. Sur mobile : burger → overlay plein écran.
  */
 export default function Nav() {
@@ -69,7 +68,6 @@ export default function Nav() {
           <Link href="/travaux">Travaux</Link>
           <Link href="/services">Champs</Link>
           <Link href="/about">À propos</Link>
-          <Link href="/lab">Lab</Link>
         </div>
         <Link href="/contact" className={styles.contact}>
           Contact

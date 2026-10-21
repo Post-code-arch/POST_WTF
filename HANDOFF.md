@@ -42,28 +42,8 @@ sont mergés là et poussés).
 - **Fiches projet** (`app/travaux/[slug]/page.tsx`) : hero 150vh ; visuels via nommage
   `NN-slot-suffix.webp` sous `public/travaux/<slug>/`. Hero mobile optionnel `NN-hero-mobile`.
   Fennec : hero = **peinture orientaliste** (`02-vibe` réutilisée).
-- **À propos** / **Contact** : layout éditorial, sloughi à l'encre décoratif.
-- **Lab** (`/lab`, `LabIndex.tsx` + `/lab/[slug]`, `LabProjectPage.tsx`) : showcase du taff IA,
-  **dans la nav** (lien "Lab") mais toujours `robots: noindex, nofollow` (pas dans les moteurs
-  de recherche). Design dark (palette `--espresso`/`--cream`, inspiré A24/NEON) distinct du
-  reste du site en cream : `/lab` = hero « à la une » + grille de posters portrait 2:3 (titre
-  sous l'image, layout calqué sur neonrated.com) — survol → aperçu vidéo léger (`preview.webm`,
-  ~200-300 Ko, généré exprès pour ça — pas le fichier source complet) ; poster masqué seulement
-  une fois l'aperçu prêt à jouer, pour éviter un flash noir. `/lab/<slug>` = page dédiée par
-  projet (hero vidéo plein cadre, description optionnelle, grille des vidéos avec filmstrip,
-  lien « projet suivant »).
-  Un projet = un dossier `public/lab/<slug>/`, qui peut contenir **plusieurs vidéos déposées
-  directement à la racine** du dossier : `<nom>.<mp4|webm|mov|m4v>` → `frames/<nom>/frame-NN.jpg`
-  + `frames/<nom>/preview.webm` (filmstrip + aperçu générés par `npm run lab:frames`, cf.
-  `scripts/extract-frames.mjs`, basé sur
-  `ffmpeg-static` — pas d'ffmpeg système requis). Détecte aussi un éventuel bandeau noir
-  cinéma (letterboxing intégré aux pixels, ex. 2.35:1 dans un cadre 16:9) via `cropdetect`
-  et le retire des visuels générés (vertical uniquement, jamais horizontal, pour ne pas
-  rogner du vrai contenu sur un faux positif). `meta.json` optionnel par projet :
-  `{ "title", "note", "description": "…" ou ["§1", "§2"] }`. Survol d'une frame → la vidéo
-  correspondante (autoplay muted loop) se cale sur ce timecode. Projets en place : **Bassit**
-  (VFX, 1 vidéo) et **Cristor** (VFX + Packshot IA, 4 vidéos) — contenu déposé et frames
-  générées ; pas encore de `description` renseignée (à ajouter dans `meta.json`).
+- **À propos** : layout éditorial en fond sombre (espresso, texte crème), sans illustration.
+- **Contact** : layout éditorial, sloughi à l'encre décoratif.
 
 ## Design system
 - Palette monochrome (gris bornés, jamais #000/#fff). Images : couleurs conservées + léger
