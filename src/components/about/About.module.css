@@ -1,11 +1,11 @@
-/* Page À propos — layout éditorial (réf. Services Généraux), palette POST.
-   Texte à gauche, coordonnées en haut à droite, sloughi en bas à droite. */
+/* Page À propos — layout éditorial (réf. Services Généraux), palette POST
+   inversée : fond sombre, texte crème. Texte à gauche, coordonnées à droite. */
 
 .about {
   position: relative;
   min-height: 100vh;
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--espresso);
+  color: var(--cream);
   font-family: var(--fb);
   padding: clamp(96px, 13vh, 150px) clamp(20px, 4vw, 56px) clamp(40px, 6vw, 80px);
   overflow: hidden;
@@ -29,7 +29,7 @@
 }
 .logo {
   width: clamp(110px, 11vw, 150px);
-  color: var(--ink);
+  color: var(--cream);
   display: block;
 }
 .logo svg {
@@ -128,18 +128,6 @@
   opacity: 0.6;
 }
 
-/* ---------- SLOUGHI bas-droite ---------- */
-.sloughi {
-  position: absolute;
-  right: clamp(-30px, 1vw, 30px);
-  bottom: clamp(-20px, 1vw, 24px);
-  width: clamp(340px, 40vw, 760px);
-  height: auto;
-  z-index: 1;
-  pointer-events: none;
-  user-select: none;
-}
-
 @media (max-width: 860px) {
   .grid {
     grid-template-columns: 1fr;
@@ -147,14 +135,6 @@
   }
   .meta {
     justify-self: start;
-  }
-  .sloughi {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: min(90%, 520px);
-    margin: 40px auto 0;
-    display: block;
   }
   .right {
     display: none;

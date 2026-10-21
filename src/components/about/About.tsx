@@ -96,14 +96,6 @@ export default function About() {
           </div>
         </div>
       </div>
-
-      {/* sloughi bas-droite (encre sur transparent) */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className={styles.sloughi}
-        src="/about/sloughi/sloughi-01.webp"
-        alt="Sloughi au galop, à l’encre"
-      />
     </main>
   );
 }
