@@ -277,36 +277,6 @@
   line-height: 1.45;
   max-width: 52ch;
 }
-.stackDeliv {
-  width: 100%;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-.stackDeliv > .mono {
-  opacity: 0.6;
-}
-.stackGroups {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 32px;
-  margin-top: 12px;
-}
-.stackGroups b {
-  display: block;
-  font-family: var(--fl);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.stackList {
-  list-style: none;
-  font-size: 14px;
-  line-height: 1.45;
-}
-.stackList li {
-  padding: 3px 0;
-}
 .stackMedia {
   aspect-ratio: 4 / 3;
   overflow: hidden;
@@ -510,9 +480,7 @@
   .stackHead {
     padding-left: 34px;
   }
-  .stackGroups {
-    grid-template-columns: 1fr;
-  }
+
 }
 @media (max-width: 520px) {
   .caseGrid {

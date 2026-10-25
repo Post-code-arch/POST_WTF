@@ -9,7 +9,7 @@ import styles from "./OffresIndex.module.css";
 /**
  * Porte 2 — les offres en mots empilés : chaque nom, en très grand, est
  * rogné par le filet de la ligne suivante ; l'offre ouverte se déplie
- * (nom entier, description, livrables, visuel).
+ * (nom entier, description, visuel) ; les livrables vivent sur la page de l'offre.
  */
 export default function OffresStack({ items }: { items: OffreClient[] }) {
   const [open, setOpen] = useState(0);
@@ -38,23 +38,6 @@ export default function OffresStack({ items }: { items: OffreClient[] }) {
                 )}
                 <p className={styles.stackLead}>{typo(o.carte)}</p>
                 {o.mention && <p className={styles.mono}>{o.mention}</p>}
-                {o.livrables && (
-                  <div className={styles.stackDeliv}>
-                    <span className={styles.mono}>Ce qui est livré</span>
-                    <div className={styles.stackGroups}>
-                      {o.livrables.map((g) => (
-                        <div key={g.groupe}>
-                          <b>{g.groupe}</b>
-                          <ul className={styles.stackList}>
-                            {g.items.map((it) => (
-                              <li key={it}>{typo(it)}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
                 <Link href={`/offres/${o.slug}`} className={styles.arrowLink}>
                   <span className={styles.arrow} aria-hidden>
                     →
