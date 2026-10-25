@@ -63,10 +63,10 @@ export const travaux: Travail[] = [
     defi:
       "Deux métiers très différents sous le même nom : investir dans un avion, et investir dans l'aviation. L'investisseur devait comprendre l'offre avant de comprendre le cabinet ; il fallait qu'il sache en un clic par quelle porte entrer.",
     visuels: {
-      principal: "/travaux/mag-agency/01-hero.webp",
+      principal: "/travaux/mag-agency/07-fabrication-logo.webp",
       bande: [
+        "/travaux/mag-agency/01-hero.webp",
         "/travaux/mag-agency/04-direction-slider.webp",
-        "/travaux/mag-agency/07-fabrication-logo.webp",
         "/travaux/mag-agency/13-application-devices.webp",
       ],
     },
