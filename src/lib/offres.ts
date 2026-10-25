@@ -50,6 +50,8 @@ export interface Offre {
   cloture: string | null;
   /** offres : programmes dont elle fait partie (slugs) */
   programmes?: string[];
+  /** visuel d'illustration (page Offres) */
+  visuel?: string;
 }
 
 const PROCESS_TODO: Process = {
@@ -142,6 +144,7 @@ export const offres: Offre[] = [
   {
     slug: "identite",
     kind: "offre",
+    visuel: "/travaux/marpharmal/11-application-badge.webp",
     nom: "Identité",
     carte:
       "Créer une identité, ou remettre à niveau celle qui existe sans casser la reconnaissance. Le signe, la typographie, la couleur, le ton et les règles pour que tout tienne à l'usage. Pour les organisations qui lancent une marque, ou dont l'image a vieilli.",
@@ -166,6 +169,7 @@ export const offres: Offre[] = [
   {
     slug: "web",
     kind: "offre",
+    visuel: "/travaux/imlead/06-application-configurateur.webp",
     nom: "Web",
     carte:
       "Un site clair, rapide, qui ressemble à la marque qui le porte, du site vitrine au portail institutionnel. Pour les organisations dont le site ne dit plus ce qu'elles font.",
@@ -189,6 +193,7 @@ export const offres: Offre[] = [
   {
     slug: "film",
     kind: "offre",
+    visuel: "/home/aventures/av-7.webp",
     nom: "Film",
     carte:
       "Du portrait au film manifeste, écrit, tourné et monté avec des moyens de cinéma. Pour les organisations qui ont besoin d'un film de référence.",
@@ -213,6 +218,7 @@ export const offres: Offre[] = [
   {
     slug: "contenu",
     kind: "offre",
+    visuel: "/travaux/imlead/04-fabrication-social-posts.webp",
     nom: "Contenu",
     carte:
       "Un atelier externe sur un rythme régulier : éditions, rapports, présentations, capsules vidéo. Pour les structures qui veulent un flux cohérent sans recruter en interne.",
@@ -234,6 +240,10 @@ export const offres: Offre[] = [
     // TODO — programme de rattachement à confirmer
   },
 ];
+
+/** version sérialisable (sans le filtre RegExp) pour les composants client */
+export type OffreClient = Omit<Offre, "travaux">;
+export const toClient = ({ travaux: _travaux, ...o }: Offre): OffreClient => o;
 
 export const programmes = offres.filter((o) => o.kind === "programme");
 export const offresSeules = offres.filter((o) => o.kind === "offre");

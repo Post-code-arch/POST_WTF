@@ -120,49 +120,6 @@
   background: var(--cream);
 }
 
-/* ---------- portes d'entrée (cartes) ---------- */
-.porte {
-  display: grid;
-  grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr);
-  gap: clamp(24px, 4vw, 70px);
-}
-.porteHead {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.porteHead p {
-  font-size: clamp(14px, 1vw, 16px);
-  line-height: 1.5;
-  opacity: 0.7;
-  max-width: 34ch;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
-  gap: clamp(28px, 3vw, 48px) clamp(20px, 2.4vw, 40px);
-}
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(12px, 1.6vh, 18px);
-  padding-top: clamp(16px, 2vh, 22px);
-  border-top: 1px solid var(--ink);
-}
-.cardName {
-  font-family: var(--fh);
-  font-weight: 500;
-  font-size: clamp(22px, 2vw, 32px);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-}
-.card .body {
-  font-size: clamp(14px, 1vw, 16px);
-}
-.card .link {
-  margin-top: auto;
-}
-
 /* ---------- sections du gabarit ---------- */
 .split {
   display: grid;
@@ -278,23 +235,12 @@
   color: inherit;
 }
 
-@media (max-width: 1100px) {
-  .cards {
-    --cols: 2 !important;
-  }
-}
 @media (max-width: 860px) {
-  .porte,
   .split,
   .row {
     grid-template-columns: 1fr;
   }
   .results {
     grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 560px) {
-  .cards {
-    --cols: 1 !important;
   }
 }

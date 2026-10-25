@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import OffresPage from "@/components/offres/OffresPage";
-import { works } from "@/lib/works";
+import { getAllProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Offres",
@@ -9,5 +9,15 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <OffresPage works={works} />;
+  // aperçu des travaux : les quatre premières études de cas publiées
+  const cases = getAllProjects()
+    .slice(0, 4)
+    .map(({ meta }) => ({
+      slug: meta.slug,
+      titre: meta.titre,
+      sousTitre: meta.sousTitre,
+      secteur: meta.secteur,
+      champs: meta.champs,
+    }));
+  return <OffresPage cases={cases} />;
 }
