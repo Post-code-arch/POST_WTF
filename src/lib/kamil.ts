@@ -55,6 +55,23 @@ export const travaux: Travail[] = [
       "Quinze ans de missions, mais un discours qui ressemblait à celui de tout le monde. Leur vraie force, la connaissance du terrain là où les modèles importés se cassent, restait implicite : il fallait en faire l'axe de toute la marque.",
   },
   {
+    slug: "mag-agency",
+    role: "Identité · Web · Direction artistique",
+    annee: "2025",
+    projet:
+      "Identité, direction artistique et site d'un cabinet de conseil en investissement aéronautique installé à Dubaï, qui intervient en Europe, au Moyen-Orient et en Afrique.",
+    defi:
+      "Deux métiers très différents sous le même nom : investir dans un avion, et investir dans l'aviation. L'investisseur devait comprendre l'offre avant de comprendre le cabinet ; il fallait qu'il sache en un clic par quelle porte entrer.",
+    visuels: {
+      principal: "/travaux/mag-agency/01-hero.webp",
+      bande: [
+        "/travaux/mag-agency/04-direction-slider.webp",
+        "/travaux/mag-agency/07-fabrication-logo.webp",
+        "/travaux/mag-agency/13-application-devices.webp",
+      ],
+    },
+  },
+  {
     slug: "marpharmal",
     role: "Campagne · Branding · Motion",
     annee: "2024",
@@ -148,7 +165,8 @@ export const missions: Ligne[] = [
   { annee: "2026", titre: "Astarté Conseils", detail: "Direction créative · Web · Branding" },
   { annee: "2026", titre: "IMLEAD", detail: "Direction créative · Web · Branding · Audit stratégique" },
   { annee: "2026", titre: "Atelier Spoon", detail: "Direction créative · Éditorial · Branding" },
-  { annee: "2026", titre: "Mag Agency", detail: "Web" },
+
+  { annee: "2025", titre: "MAG Agency", detail: "Identité · Web · Direction artistique" },
   {
     annee: "2025",
     titre: "Fennec Coffee Roasters",
