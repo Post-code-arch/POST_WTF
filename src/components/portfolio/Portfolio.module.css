@@ -302,6 +302,21 @@
   line-height: 1.3;
   opacity: 0.7;
 }
+.caseText {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.5;
+  color: rgba(23, 23, 23, 0.82);
+}
+.caseText .mono {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  opacity: 0.55;
+  font-size: 11px;
+}
 .caseMeta {
   display: grid;
   grid-template-columns: 76px 1fr;
@@ -323,8 +338,19 @@
 .strip {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: clamp(8px, 1vw, 16px);
+}
+/* 3 vignettes par rangée ; la dernière rangée incomplète se partage la largeur */
+.strip img {
+  grid-column: span 2;
+}
+.strip[data-count="5"] img:nth-child(n + 4),
+.strip[data-count="2"] img {
+  grid-column: span 3;
+}
+.strip[data-count="1"] img {
+  grid-column: 1 / -1;
 }
 .strip img {
   width: 100%;
@@ -519,8 +545,14 @@
   .strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .strip img:nth-child(3) {
-    display: none;
+  .strip img,
+  .strip[data-count] img {
+    grid-column: auto;
+  }
+  /* nombre impair : la dernière vignette prend toute la largeur */
+  .strip[data-count="3"] img:last-child,
+  .strip[data-count="5"] img:last-child {
+    grid-column: 1 / -1;
   }
   .grid4 {
     grid-template-columns: 1fr;

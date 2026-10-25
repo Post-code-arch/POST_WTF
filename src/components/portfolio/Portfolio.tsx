@@ -18,6 +18,8 @@ export interface PortfolioCase {
   secteur: string;
   role: string;
   annee: string;
+  projet: string;
+  defi: string;
   hero?: string;
   strip: string[];
 }
@@ -160,6 +162,16 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
               </span>
               <h3 className={styles.caseTitle}>{c.titre}</h3>
               <p className={styles.caseQuote}>{typo(c.sousTitre)}</p>
+              <div className={styles.caseText}>
+                <p>
+                  <span className={styles.mono}>Le projet</span>
+                  {typo(c.projet)}
+                </p>
+                <p>
+                  <span className={styles.mono}>Le défi</span>
+                  {typo(c.defi)}
+                </p>
+              </div>
               <dl className={styles.caseMeta}>
                 <dt>Rôle</dt>
                 <dd>{c.role}</dd>
@@ -170,7 +182,7 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
               </dl>
             </div>
             {c.strip.length > 0 && (
-              <div className={styles.strip}>
+              <div className={styles.strip} data-count={c.strip.length}>
                 {c.strip.map((s) => (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img key={s} src={s} alt="" loading="lazy" />

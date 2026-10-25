@@ -23,13 +23,74 @@ export const roles = [
   { titre: "Artiste visuel", champs: ["Installation", "Musique"] },
 ];
 
-/** projets montrés (visuels des études de cas), avec le rôle de Kamil (CV) */
-export const travaux: { slug: string; role: string; annee: string }[] = [
-  { slug: "imlead", role: "Direction créative · Web · Branding · Audit stratégique", annee: "2026" },
-  { slug: "astarte-conseils", role: "Direction créative · Web · Branding", annee: "2026" },
-  { slug: "marpharmal", role: "Campagne · Branding · Motion", annee: "2024" },
-  { slug: "fennec-coffee-roasters", role: "Branding · Packaging · Réseaux sociaux", annee: "2025" },
-  { slug: "spoon-atelier", role: "Direction créative · Éditorial · Branding", annee: "2026" },
+/** projets montrés (visuels des études de cas), avec le rôle de Kamil (CV),
+ *  ce qu'est le projet et son défi — résumés des textes des études de cas */
+export interface Travail {
+  slug: string;
+  role: string;
+  annee: string;
+  projet: string;
+  defi: string;
+  /** visuels choisis à la main (sinon : hero + 3 visuels d'application) */
+  visuels?: { principal: string; bande: string[] };
+}
+
+export const travaux: Travail[] = [
+  {
+    slug: "imlead",
+    role: "Direction créative · Web · Branding · Audit stratégique",
+    annee: "2026",
+    projet:
+      "Identité, charte, contenus sociaux et site d'un cabinet de gouvernance de projet, qui représente le maître d'ouvrage dans les opérations immobilières à forts enjeux.",
+    defi:
+      "Un métier que le marché nomme mal, dans un secteur immobilier algérien dominé par des codes visuels génériques. Il fallait rendre visible une position : le tiers rigoureux qui arbitre, là où d'autres exécutent.",
+  },
+  {
+    slug: "astarte-conseils",
+    role: "Direction créative · Web · Branding",
+    annee: "2026",
+    projet:
+      "Identité de marque, direction artistique, éditorial et site d'un cabinet d'études et de conseil qui travaille en Algérie, au Maghreb et au Sahel.",
+    defi:
+      "Quinze ans de missions, mais un discours qui ressemblait à celui de tout le monde. Leur vraie force, la connaissance du terrain là où les modèles importés se cassent, restait implicite : il fallait en faire l'axe de toute la marque.",
+  },
+  {
+    slug: "marpharmal",
+    role: "Campagne · Branding · Motion",
+    annee: "2024",
+    projet:
+      "Identité et système visuel de la conférence nationale sur l'économie pharmaceutique et l'innovation issue des produits de la mer, déclinés sur tous les supports : scène, banderoles, écrans, badges, programme et magazine.",
+    defi:
+      "Partir d'une page blanche et tenir une tension : rester crédible auprès des chercheurs tout en restant lisible pour tous. Vulgariser sans décrédibiliser.",
+    visuels: {
+      principal: "/travaux/marpharmal/08-application-scene.webp",
+      bande: [
+        "/travaux/marpharmal/09-application-banner.webp",
+        "/travaux/marpharmal/10-application-ecran.webp",
+        "/travaux/marpharmal/11-application-badge.webp",
+        "/travaux/marpharmal/12-application-programme.webp",
+        "/travaux/marpharmal/13-application-magazine.webp",
+      ],
+    },
+  },
+  {
+    slug: "fennec-coffee-roasters",
+    role: "Branding · Packaging · Réseaux sociaux",
+    annee: "2025",
+    projet:
+      "Identité, illustration, packaging et signalétique d'un torréfacteur de café de spécialité, créé de zéro pour une compagnie américaine.",
+    defi:
+      "Donner à des clients d'ailleurs les codes d'ici, sans carte postale ni cliché, et faire qu'un sachet parle de torréfaction et d'un imaginaire, en rayon.",
+  },
+  {
+    slug: "spoon-atelier",
+    role: "Direction créative · Éditorial · Branding",
+    annee: "2026",
+    projet:
+      "Identité, charte, visualisation 3D et fiches produit d'un atelier qui fabrique ses meubles une à une.",
+    defi:
+      "Le travail était là, le cadre manquait : chaque objet existait pour lui-même, sans grammaire commune. Il fallait transformer des meubles isolés en une collection.",
+  },
 ];
 
 export interface Ligne {

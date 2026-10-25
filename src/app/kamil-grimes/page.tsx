@@ -11,25 +11,29 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  const cases: PortfolioCase[] = travaux.flatMap(({ slug, role, annee }) => {
-    const p = getProject(slug);
+  const cases: PortfolioCase[] = travaux.flatMap((t) => {
+    const p = getProject(t.slug);
     if (!p || p.meta.brouillon) return [];
-    const hero = p.visuals.find((v) => v.slot === "hero" && !v.isVideo && !/-hero-mobile\./.test(v.src));
-    // bandeau : trois visuels d'application / fabrication, hors vidéos
+    const hero = p.visuals.find(
+      (v) => v.slot === "hero" && !v.isVideo && !/-hero-mobile\./.test(v.src)
+    );
+    // bandeau par défaut : trois visuels d'application / fabrication, hors vidéos
     const strip = p.visuals
       .filter((v) => !v.isVideo && (v.slot === "application" || v.slot === "fabrication"))
       .slice(0, 3)
       .map((v) => v.src);
     return [
       {
-        slug,
+        slug: t.slug,
         titre: p.meta.titre,
         sousTitre: p.meta.sousTitre,
         secteur: p.meta.secteur,
-        role,
-        annee,
-        hero: hero?.src,
-        strip,
+        role: t.role,
+        annee: t.annee,
+        projet: t.projet,
+        defi: t.defi,
+        hero: t.visuels?.principal ?? hero?.src,
+        strip: t.visuels?.bande ?? strip,
       },
     ];
   });
