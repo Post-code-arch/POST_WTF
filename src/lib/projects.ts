@@ -29,6 +29,10 @@ export interface Visual {
   isVideo: boolean;
   /** ratio largeur/hauteur naturel (pour composer des galeries sans recadrage) */
   ratio: number;
+  /** image d'affiche d'une vidéo : fichier « <même nom>-poster.jpg|webp » */
+  poster?: string;
+  /** suffixe « -desktop » / « -mobile » : servi seulement sur cet écran */
+  only?: "desktop" | "mobile";
 }
 
 export interface Temoignage {
@@ -45,6 +49,8 @@ export interface ProjectMeta {
   titre: string;
   sousTitre: string;
   secteur: string;
+  /** gamme (optionnel, affiché dans « Le dossier ») */
+  gamme?: string;
   /** marchés / implantation (optionnel, affiché dans « Le dossier ») */
   marches?: string;
   /** site du client (optionnel, affiché dans « Le dossier ») */
@@ -226,22 +232,33 @@ function readRatio(absPath: string, isVideo: boolean): number {
   }
 }
 
+/** affiches de vidéos : jamais des visuels à part entière */
+const POSTER_RE = /-poster\.(jpe?g|webp|png)$/i;
+
 function readVisuals(slug: string): Visual[] {
   const dir = path.join(TRAVAUX_DIR, slug);
-  return fs
-    .readdirSync(dir)
+  const files = fs.readdirSync(dir);
+  return files
     .map((f) => {
+      if (POSTER_RE.test(f)) return null;
       const m = f.match(VISUAL_RE);
       if (!m) return null;
       let slot = m[2].toLowerCase() as VisualSlot;
       if (!KNOWN_SLOTS.includes(slot)) slot = "asset";
       const isVideo = VIDEO_EXT.test(f);
+      const base = f.replace(/\.[a-z0-9]+$/i, "");
+      const poster = isVideo
+        ? files.find((p) => POSTER_RE.test(p) && p.startsWith(`${base}-poster.`))
+        : undefined;
+      const only = slot !== "hero" ? base.match(/-(desktop|mobile)$/)?.[1] : undefined;
       return {
         n: parseInt(m[1], 10),
         slot,
         src: `/travaux/${slug}/${f}`,
         isVideo,
         ratio: readRatio(path.join(dir, f), isVideo),
+        ...(poster ? { poster: `/travaux/${slug}/${poster}` } : {}),
+        ...(only ? { only } : {}),
       } as Visual;
     })
     .filter((v): v is Visual => v !== null)

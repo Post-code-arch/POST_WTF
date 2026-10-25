@@ -674,3 +674,15 @@ canvas {
 .hero :focus-visible {
   outline-color: rgba(242, 242, 242, 0.7);
 }
+
+/* visuels servis sur un seul type d'écran (suffixe -desktop / -mobile) */
+@media (max-width: 760px) {
+  .only-desktop {
+    display: none !important;
+  }
+}
+@media (min-width: 761px) {
+  .only-mobile {
+    display: none !important;
+  }
+}

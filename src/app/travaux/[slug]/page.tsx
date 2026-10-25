@@ -75,18 +75,25 @@ export default async function ProjectPage({
   // Marpharmal : visuels agrandis, rangées de 2 max (pas de rangée de 3).
   const galleryPerRow = slug === "marpharmal" ? 2 : 3;
   // Certains visuels sortent du flux en rangées pour passer en pleine
-  // largeur. `pos` place ces visuels avant ou après la grille de leur
+  // largeur. `pos` place chaque visuel avant ou après la grille de sa
   // section. Marpharmal : badge + couvertures en fin ; Astarté : le banner
-  // (billboard) en tête.
-  const fullWidthCfg: { re: RegExp; pos: "before" | "after" } | null =
-    slug === "marpharmal"
-      ? { re: /(11-application-badge|12-application-programme)\.webp$/, pos: "after" }
-      : slug === "astarte-conseils"
-        ? { re: /02-application-billboard\.webp$/, pos: "before" }
-        : slug === "imlead"
-          ? { re: /05-fabrication-social-stories\.webp$/, pos: "after" }
-          : null;
-  const isFull = (v: Visual) => !!fullWidthCfg && fullWidthCfg.re.test(v.src);
+  // (billboard) en tête ; Fennec : paysages, sachet de profil, carte et
+  // films en pleine largeur.
+  const FULL_WIDTH: Record<string, { re: RegExp; pos: "before" | "after" }[]> = {
+    marpharmal: [{ re: /(11-application-badge|12-application-programme)\.webp$/, pos: "after" }],
+    "astarte-conseils": [{ re: /02-application-billboard\.webp$/, pos: "before" }],
+    imlead: [{ re: /05-fabrication-social-stories\.webp$/, pos: "after" }],
+    "fennec-coffee-roasters": [
+      { re: /02-vibe-paysage-tassili\./, pos: "before" },
+      { re: /0[45]-direction-tassili-/, pos: "before" },
+      { re: /14-fabrication-carte-logo\./, pos: "after" },
+      { re: /17-application-film-aures-nuit\./, pos: "before" },
+      { re: /2[45]-application-film-tassili-sable-/, pos: "after" },
+    ],
+  };
+  const fullWidth = FULL_WIDTH[slug] ?? [];
+  const fullPos = (v: Visual) => fullWidth.find((c) => c.re.test(v.src))?.pos;
+  const isFull = (v: Visual) => !!fullPos(v);
   const nextCandidate = meta.suivant ? getProject(meta.suivant.slug) : null;
   const nextProject = nextCandidate && !nextCandidate.meta.brouillon ? nextCandidate : null;
   const nextHero = nextProject
@@ -110,8 +117,10 @@ export default async function ProjectPage({
             (v) => v.slot === SECTION_VISUAL_SLOT[s.bloc]
           );
           const rowed = sectionVisuals.filter((v) => !isFull(v));
-          const fulls = sectionVisuals.filter((v) => isFull(v));
-          const fullEls = fulls.map((v) => <Media key={v.src} v={v} />);
+          const fullEls = (pos: "before" | "after") =>
+            sectionVisuals
+              .filter((v) => fullPos(v) === pos)
+              .map((v) => <Media key={v.src} v={v} />);
           return (
             <Fragment key={s.bloc}>
               <Section
@@ -124,13 +133,13 @@ export default async function ProjectPage({
                 ))}
                 {s.bloc === "lecture" && <Details meta={meta} />}
               </Section>
-              {fullWidthCfg?.pos === "before" && fullEls}
+              {fullEls("before")}
               {rowed.length === 1 ? (
                 <Media v={rowed[0]} />
               ) : rowed.length > 1 ? (
                 <Gallery visuals={rowed} maxPerRow={galleryPerRow} />
               ) : null}
-              {fullWidthCfg?.pos !== "before" && fullEls}
+              {fullEls("after")}
             </Fragment>
           );
         })}

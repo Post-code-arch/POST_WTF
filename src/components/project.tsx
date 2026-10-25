@@ -3,13 +3,15 @@ import Link from "next/link";
 import Marquee from "./Marquee";
 import Reveal from "./Reveal";
 import JustifiedRow from "./JustifiedRow";
+import AutoVideo from "./AutoVideo";
 import type { ProjectMeta, Visual } from "@/lib/projects";
+import { typo } from "@/lib/typo";
 
 /* ---------- média ---------- */
 
 function MediaInner({ v }: { v: Visual }) {
   if (v.isVideo) {
-    return <video src={v.src} autoPlay loop muted playsInline aria-hidden />;
+    return <AutoVideo src={v.src} poster={v.poster} />;
   }
   return <img src={v.src} alt="" />;
 }
@@ -46,7 +48,7 @@ export function Hero({
       <h1 className="hero-title">
         <Marquee items={titre} repeat={4} />
       </h1>
-      <p className="hero-sub">{sousTitre}</p>
+      <p className="hero-sub">{typo(sousTitre)}</p>
       <div className="hero-foot">
         <span>(SCROLL)</span>
         <Link href="/travaux">Tous les travaux →</Link>
@@ -96,6 +98,11 @@ export function Details({ meta }: { meta: ProjectMeta }) {
         <li>
           <b>Secteur</b> {meta.secteur}
         </li>
+        {meta.gamme && (
+          <li>
+            <b>Gamme</b> {meta.gamme}
+          </li>
+        )}
         {meta.marches && (
           <li>
             <b>Marchés</b> {meta.marches}
@@ -130,7 +137,7 @@ export function Details({ meta }: { meta: ProjectMeta }) {
 
 export function Media({ v }: { v: Visual }) {
   return (
-    <Reveal className="media-full">
+    <Reveal className={`media-full${v.only ? ` only-${v.only}` : ""}`}>
       <div className={`ph${v.slot === "vibe" ? " vibe" : ""}`}>
         <MediaInner v={v} />
       </div>

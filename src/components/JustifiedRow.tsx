@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import Reveal from "./Reveal";
+import AutoVideo from "./AutoVideo";
 import type { Visual } from "@/lib/projects";
 
 function Cell({ v }: { v: Visual }) {
@@ -16,7 +17,7 @@ function Cell({ v }: { v: Visual }) {
       }
     >
       {v.isVideo ? (
-        <video src={v.src} autoPlay loop muted playsInline aria-hidden />
+        <AutoVideo src={v.src} poster={v.poster} />
       ) : (
         <img src={v.src} alt="" />
       )}
