@@ -1,14 +1,20 @@
 import Nav from "@/components/Nav";
+import Todo from "@/components/Todo";
+import { typo } from "@/lib/typo";
 import styles from "./About.module.css";
 
-const CHAMPS = [
-  "Stratégie",
-  "Identité",
-  "Web",
-  "Production",
-  "Motion",
-  "3D",
-  "AI",
+const OFFRES = ["Identité", "Web", "Film", "Contenu"];
+
+const PARAGRAPHES = [
+  "post_ est une agence d'image basée à Alger. Nous travaillons pour des institutions et des entreprises dont la réalité dépasse l'image qu'elles renvoient.",
+  "Notre particularité tient en une phrase : l'identité, le site et le film sont conçus et fabriqués chez nous, sous une seule direction. Pas de sous-traitance en cascade, pas de trois prestataires à coordonner.",
+  "L'équipe vient de la production télévisée et du cinéma. Nous appliquons ce standard à chaque film institutionnel, et la même exigence au reste.",
+  "On finit par livrer quelque chose qui peut tourner sans nous. Le bon travail ne crée pas de dépendance.",
+];
+
+const FONDATEURS = [
+  { nom: "Grimes Kamil-Ilies", role: "co-fondateur" },
+  { nom: "Akram Chikhi Abdellah", role: "co-fondateur" },
 ];
 
 const TRAVAUX = [
@@ -17,7 +23,10 @@ const TRAVAUX = [
   "Atelier Spoon",
   "Astarté",
   "Marpharma",
+  // TODO — Phase 0 : à expliquer ou retirer (décision post_)
   "Phase 0",
+  // TODO — Présidence : gardée en off tant que l'étude de cas est en brouillon
+  // "Présidence",
 ];
 
 export default function About() {
@@ -28,32 +37,36 @@ export default function About() {
       <div className={styles.grid}>
         {/* colonne texte */}
         <div className={styles.text}>
-          <p>
-            <b>POST</b> est une agence créative basée à Alger, menée par une
-            petite équipe depuis un atelier.
-          </p>
-          <p>
-            On travaille quatre champs : la stratégie, pour poser les fondations
-            avant de construire. L’identité, pour donner à une marque un visage
-            qui tient. Le web, pour que tout ça vive en ligne proprement. La
-            production — film, photo, contenu — pour le montrer au monde.
-          </p>
-          <p>
-            On expérimente, et on applique. Puis on recommence. Ce qui marche,
-            on le garde, on l’affine, on s’en sert pour de vrai. Une chose
-            appelle l’autre, sans fin.
-          </p>
-          <p>
-            On finit par livrer quelque chose qui peut tourner sans nous. C’est
-            aussi simple que ça.
-          </p>
+          <h1 className={styles.title}>
+            Une direction, un atelier, des outils qui durent.
+          </h1>
+          {PARAGRAPHES.map((p) => (
+            <p key={p}>{typo(p)}</p>
+          ))}
 
-          <h2 className={styles.label}>Champs</h2>
+          <h2 className={styles.label}>Offres</h2>
           <ul className={styles.list}>
-            {CHAMPS.map((c) => (
+            {OFFRES.map((c) => (
               <li key={c}>{c}</li>
             ))}
           </ul>
+
+          <h2 className={styles.label}>Fondateurs</h2>
+          <ul className={styles.people}>
+            {FONDATEURS.map((f) => (
+              <li key={f.nom}>
+                <b>{f.nom}</b>, {f.role}
+                {/* TODO — une ligne de parcours */}
+                <span className={styles.bio}>
+                  <Todo label="parcours" />
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <h2 className={styles.label}>Références</h2>
+          {/* TODO — liste institutionnelle à fournir */}
+          <Todo label="références institutionnelles" />
 
           <ul className={styles.works}>
             {TRAVAUX.map((t) => (

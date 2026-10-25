@@ -53,6 +53,10 @@ export interface ProjectMeta {
   ideeDirectrice?: string;
   temoignage?: Temoignage;
   suivant?: Suivant;
+  /** position dans les listes (accueil, index) — croissant ; sans ordre = en fin */
+  ordre?: number;
+  /** projet préparé mais non publié : absent des listes et sans page */
+  brouillon?: boolean;
 }
 
 export type SectionBloc = "lecture" | "direction" | "fabrication" | "application";
@@ -240,10 +244,21 @@ export function getProject(slug: string): Project | null {
   };
 }
 
+/** projets publiés (hors brouillons), triés par `ordre` puis par titre */
 export function getAllProjects(): Project[] {
   return getProjectSlugs()
     .map(getProject)
-    .filter((p): p is Project => p !== null);
+    .filter((p): p is Project => p !== null && !p.meta.brouillon)
+    .sort(
+      (a, b) =>
+        (a.meta.ordre ?? Infinity) - (b.meta.ordre ?? Infinity) ||
+        a.meta.titre.localeCompare(b.meta.titre, "fr")
+    );
+}
+
+/** slugs des projets publiés — ceux qui ont une page */
+export function getPublishedSlugs(): string[] {
+  return getAllProjects().map((p) => p.meta.slug);
 }
 
 /* ---------- grille d'accueil / index travaux ---------- */
@@ -255,6 +270,7 @@ export interface GridWork {
   /** disciplines normalisées pour le filtre (Branding, Web, …) */
   disciplines: string[];
   color: string;
+  /** visuel de couverture — absent : la carte s'affiche en texte seul */
   image?: string;
 }
 

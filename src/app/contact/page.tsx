@@ -4,7 +4,7 @@ import Contact from "@/components/contact/Contact";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Un projet, une question ? Écrivez à POST — on lit tout, et on répond.",
+    "Un projet d’image, une échéance ? Écrivez-nous, nous répondons sous 48 heures.",
 };
 
 export default function ContactPage() {

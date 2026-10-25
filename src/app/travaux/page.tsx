@@ -4,7 +4,7 @@ import { works } from "@/lib/works";
 
 export const metadata: Metadata = {
   title: "Travaux",
-  description: "Les travaux de POST. On préfère montrer que raconter.",
+  description: "Des organisations solides, une image en retard. Ce qu’on a changé.",
 };
 
 export default function TravauxIndex() {

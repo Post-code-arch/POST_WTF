@@ -3,28 +3,29 @@
 import { useState } from "react";
 import {
   PROJECT_TYPES,
-  BUDGETS,
-  PROFILS,
   validateContact,
   type ContactErrors,
   type ContactPayload,
 } from "@/lib/contact";
+import { typeForOffre, useOffreParam } from "./useOffreParam";
 import styles from "./Contact.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
 
 const EMPTY: ContactPayload = {
-  profil: "",
   nom: "",
   email: "",
   type: "",
-  budget: "",
   message: "",
   company: "",
 };
 
 export default function ContactForm() {
-  const [v, setV] = useState<ContactPayload>(EMPTY);
+  // arrivée depuis une page offre : type présélectionné, offre transmise
+  const offre = useOffreParam();
+  const [v, setV] = useState<ContactPayload>(() =>
+    offre ? { ...EMPTY, type: typeForOffre(offre), offre: offre.nom } : EMPTY
+  );
   const [errors, setErrors] = useState<ContactErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
@@ -71,41 +72,13 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <div className={styles.success} role="status">
-        <p>Bien reçu. On lit, puis on répond — comptez deux jours ouvrés.</p>
+        <p>Bien reçu. Nous revenons vers vous sous 48 heures pour fixer un premier échange.</p>
       </div>
     );
   }
 
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
-      <div className={styles.field}>
-        <span className={styles.lab}>
-          Vous êtes <span className={styles.req}>*</span>
-        </span>
-        <div
-          className={styles.segmented}
-          role="radiogroup"
-          aria-label="Vous êtes"
-        >
-          {PROFILS.map((pf) => (
-            <button
-              key={pf}
-              type="button"
-              role="radio"
-              aria-checked={v.profil === pf}
-              className={`${styles.seg} ${v.profil === pf ? styles.segOn : ""}`}
-              onClick={() => {
-                setV((prev) => ({ ...prev, profil: pf }));
-                if (errors.profil) setErrors((p) => ({ ...p, profil: undefined }));
-              }}
-            >
-              {pf}
-            </button>
-          ))}
-        </div>
-        {errors.profil && <span className={styles.err}>{errors.profil}</span>}
-      </div>
-
       <div className={styles.field}>
         <label htmlFor="nom" className={styles.lab}>
           Nom <span className={styles.req}>*</span>
@@ -162,26 +135,6 @@ export default function ContactForm() {
           ))}
         </select>
         {errors.type && <span className={styles.err}>{errors.type}</span>}
-      </div>
-
-      <div className={styles.field}>
-        <label htmlFor="budget" className={styles.lab}>
-          Budget approximatif <span className={styles.opt}>(optionnel)</span>
-        </label>
-        <select
-          id="budget"
-          name="budget"
-          className={`${styles.input} ${styles.select}`}
-          value={v.budget}
-          onChange={set("budget")}
-        >
-          <option value="">Sélectionnez…</option>
-          {BUDGETS.map((b) => (
-            <option key={b} value={b}>
-              {b}
-            </option>
-          ))}
-        </select>
       </div>
 
       <div className={styles.field}>

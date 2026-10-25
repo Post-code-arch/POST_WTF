@@ -5,6 +5,7 @@ sousTitre: « Le terrain comme doctrine. »
 secteur: Conseil & études — Maghreb, Sahel
 type: Branding & éditorial
 annee: 2026
+ordre: 3
 champs: Identité · Direction artistique · Éditorial · Site
 ideeDirectrice: « Un cabinet né de la connaissance du terrain. »
 suivant:

@@ -100,7 +100,7 @@ export function Details({ meta }: { meta: ProjectMeta }) {
           <b>Année</b> {meta.annee}
         </li>
         <li>
-          <b>Champs</b>{" "}
+          <b>Livrables</b>{" "}
           {meta.champs.map((c, i) => (
             <Fragment key={c}>
               {i > 0 && <span className="ac">،</span>}

@@ -14,7 +14,7 @@ import {
 } from "@/components/project";
 import {
   getProject,
-  getProjectSlugs,
+  getPublishedSlugs,
   SECTION_VISUAL_SLOT,
   type Visual,
 } from "@/lib/projects";
@@ -39,7 +39,7 @@ function inline(text: string): ReactNode[] {
 }
 
 export function generateStaticParams() {
-  return getProjectSlugs().map((slug) => ({ slug }));
+  return getPublishedSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -49,7 +49,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
-  if (!project) return {};
+  if (!project || project.meta.brouillon) return {};
   return {
     title: project.meta.titre,
     description: project.meta.sousTitre,
@@ -63,7 +63,7 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
   const project = getProject(slug);
-  if (!project) notFound();
+  if (!project || project.meta.brouillon) notFound();
 
   const { meta, sections, visuals } = project;
   // variante portrait optionnelle du hero : fichier « NN-hero-mobile.ext »
@@ -87,7 +87,8 @@ export default async function ProjectPage({
           ? { re: /05-fabrication-social-stories\.webp$/, pos: "after" }
           : null;
   const isFull = (v: Visual) => !!fullWidthCfg && fullWidthCfg.re.test(v.src);
-  const nextProject = meta.suivant ? getProject(meta.suivant.slug) : null;
+  const nextCandidate = meta.suivant ? getProject(meta.suivant.slug) : null;
+  const nextProject = nextCandidate && !nextCandidate.meta.brouillon ? nextCandidate : null;
   const nextHero = nextProject
     ? nextProject.visuals.find((v) => v.slot === "hero" && !isMobileHero(v)) ??
       nextProject.visuals[0]

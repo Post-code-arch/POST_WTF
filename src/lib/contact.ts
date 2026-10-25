@@ -1,31 +1,21 @@
-/* Contrat partagé client ⇄ serveur pour le formulaire de contact. */
+/* Contrat partagé client ⇄ serveur pour le formulaire de contact.
+   Ni budget ni prix : la demande part de la situation du client. */
 
 export const PROJECT_TYPES = [
+  "Programme",
   "Identité",
   "Web",
-  "Film & contenu",
-  "Édition",
+  "Film",
+  "Contenu",
   "Autre",
 ] as const;
 
-export const BUDGETS = [
-  "Moins de 300k DZD",
-  "300k–800k",
-  "800k–2M",
-  "Plus de 2M",
-  "Je ne sais pas encore",
-] as const;
-
-/** profil du contact — distingue création directe (marque) et sous-traitance (agence) */
-export const PROFILS = ["Une marque", "Une agence"] as const;
-
 export interface ContactPayload {
-  /** « Une marque » (création) ou « Une agence » (outsourcing) */
-  profil: string;
   nom: string;
   email: string;
   type: string;
-  budget?: string;
+  /** offre ou programme d'origine (paramètre ?offre= de l'URL), si présent */
+  offre?: string;
   message: string;
   /** honeypot anti-spam — doit rester vide */
   company?: string;
@@ -38,15 +28,11 @@ export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /** Validation commune. Renvoie les messages d'erreur (français, sobres). */
 export function validateContact(p: Partial<ContactPayload>): ContactErrors {
   const e: ContactErrors = {};
-  if (!p.profil || !PROFILS.includes(p.profil as (typeof PROFILS)[number]))
-    e.profil = "Marque ou agence ?";
   if (!p.nom || !p.nom.trim()) e.nom = "Votre nom, s’il vous plaît.";
   if (!p.email || !p.email.trim()) e.email = "Une adresse pour vous répondre.";
   else if (!EMAIL_RE.test(p.email.trim())) e.email = "Cette adresse semble incomplète.";
   if (!p.type || !PROJECT_TYPES.includes(p.type as (typeof PROJECT_TYPES)[number]))
     e.type = "Choisissez un type de projet.";
-  if (p.budget && !BUDGETS.includes(p.budget as (typeof BUDGETS)[number]))
-    e.budget = "Budget non reconnu.";
   if (!p.message || !p.message.trim()) e.message = "Dites-nous quelques mots.";
   return e;
 }

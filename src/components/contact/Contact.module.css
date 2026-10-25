@@ -70,6 +70,24 @@
   max-width: 42ch;
   color: rgba(23, 23, 23, 0.78);
 }
+/* lien principal « Demander un rendez-vous » — même pastille que l'envoi */
+.rdv {
+  display: inline-block;
+  margin-top: clamp(22px, 3vw, 34px);
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 34px;
+  border-radius: 40px;
+  transition: opacity 0.25s ease;
+}
+.rdv:hover {
+  opacity: 0.82;
+}
 .meta {
   margin-top: clamp(32px, 5vw, 60px);
   font-family: var(--fl);

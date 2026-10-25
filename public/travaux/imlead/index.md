@@ -5,6 +5,7 @@ sousTitre: « Gouverner pour valoriser. »
 secteur: Immobilier — Assistance à maîtrise d'ouvrage
 type: Branding & content
 annee: 2026
+ordre: 1
 champs: Identité · Charte · Content · Site
 ideeDirectrice: « Là où d'autres exécutent, IMLEAD arbitre. »
 suivant:

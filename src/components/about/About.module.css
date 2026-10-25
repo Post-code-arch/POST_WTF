@@ -64,6 +64,15 @@
   font-size: clamp(16px, 1.2vw, 19px);
   line-height: 1.5;
 }
+.title {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(36px, 4.6vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin-bottom: clamp(28px, 4vw, 56px);
+}
 .text p {
   margin: 0 0 1.25em;
 }
@@ -90,6 +99,20 @@
   content: "•";
   margin-right: 0.7em;
   opacity: 0.55;
+}
+.people {
+  list-style: none;
+  font-size: clamp(15px, 1.15vw, 18px);
+}
+.people li {
+  padding: 4px 0;
+}
+.people .bio {
+  display: block;
+  margin-top: 4px;
+}
+.people .bio:empty {
+  display: none;
 }
 /* liste des travaux, séparée par la virgule arabe */
 .works {

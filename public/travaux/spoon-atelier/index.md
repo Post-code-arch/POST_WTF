@@ -5,6 +5,7 @@ sousTitre: « Le mobilier comme pièce. »
 secteur: Mobilier — Atelier de création
 type: Branding & visualisation
 annee: 2026
+ordre: 6
 champs: Identité · Charte · Visualisation 3D · Fiches produit
 ideeDirectrice: « Chaque meuble est une pièce, pas un produit. »
 suivant:

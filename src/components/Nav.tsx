@@ -7,14 +7,14 @@ import POSTLogo from "./POSTLogo";
 import styles from "./Nav.module.css";
 
 const LINKS: [string, string][] = [
+  ["/offres", "Offres"],
   ["/travaux", "Travaux"],
-  ["/services", "Champs"],
   ["/about", "À propos"],
   ["/contact", "Contact"],
 ];
 
 /**
- * Nav desktop partagée (logo · Travaux · Champs · À propos … Contact),
+ * Nav desktop partagée (logo · Offres · Travaux · À propos … Contact),
  * fixe + mix-blend. Sur mobile : burger → overlay plein écran.
  */
 export default function Nav() {
@@ -59,14 +59,14 @@ export default function Nav() {
         <Link
           href="/"
           className={styles.logo}
-          aria-label="POST — accueil"
+          aria-label="post_ — accueil"
           data-nav-logo
         >
           <POSTLogo />
         </Link>
         <div className={`${styles.links} ${docked ? "" : styles.hidden}`}>
+          <Link href="/offres">Offres</Link>
           <Link href="/travaux">Travaux</Link>
-          <Link href="/services">Champs</Link>
           <Link href="/about">À propos</Link>
         </div>
         <Link href="/contact" className={styles.contact}>

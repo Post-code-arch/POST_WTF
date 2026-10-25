@@ -5,6 +5,7 @@ sousTitre: « Les codes d'ici, dans la tasse de là-bas. »
 secteur: Torréfaction — café de spécialité
 type: Branding & packaging
 annee: 2026
+ordre: 5
 champs: Identité · Illustration · Packaging · Signalétique
 ideeDirectrice: « Le paquet comme argument de vente. »
 suivant:

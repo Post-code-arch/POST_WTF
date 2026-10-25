@@ -6,9 +6,10 @@ import HeroLogoTravel from "./HeroLogoTravel";
 import HeroTicker from "./HeroTicker";
 import IntroReveal from "./IntroReveal";
 import AventuresStage from "./AventuresStage";
-import DepartementsSection from "./DepartementsSection";
 import MethodeSection from "./MethodeSection";
 import WorkGrid from "./WorkGrid";
+import OffresSection from "./OffresSection";
+import { typo } from "@/lib/typo";
 import type { Work } from "@/lib/works";
 import styles from "./Home.module.css";
 
@@ -51,10 +52,10 @@ export default function HomeStatic({ works }: { works: Work[] }) {
           <div className={styles.heroFoot}>
             <HeroHeadline
               className={styles.heroHeadline}
-              lines={["Les bonnes idées n'ont pas", "besoin de hausser le ton."]}
+              lines={["Mettre votre image à la", "hauteur de votre réalité."]}
             />
             <div className={styles.heroMeta}>
-              Agence créative
+              {typo("Architectes d'image")}
               <span className={styles.dot}>·</span>
               Alger
               <span className={styles.dot}>·</span>
@@ -72,23 +73,36 @@ export default function HomeStatic({ works }: { works: Work[] }) {
         </div>
       </section>
 
+      {/* OFFRES — deux portes d'entrée */}
+      <OffresSection />
+
       {/* WORK */}
       <section className={styles.work} data-theme="light">
         <RevealWords
           className={styles.workTitle}
-          lines={["L’art de dire une chose", "pour en signifier une autre."]}
+          lines={["Ce qui ne se voyait pas."]}
         />
+        <p className={styles.workSub}>
+          {typo(
+            "Des organisations solides, une image en retard. Voici ce qu'on a changé."
+          )}
+        </p>
         <WorkGrid items={featured} />
       </section>
 
       {/* MÉTHODE — 4 phases, ancrage numéroté */}
       <MethodeSection />
 
-      {/* DÉPARTEMENTS — placé avant Aventures */}
-      <DepartementsSection />
-
       {/* AVENTURES — composition + parallaxe curseur */}
       <AventuresStage />
+
+      {/* SIGNATURE — l'ancien H1 */}
+      <section className={styles.signature} data-theme="light">
+        <RevealWords
+          className={styles.workTitle}
+          lines={[typo("Les bonnes idées n'ont pas"), "besoin de hausser le ton."]}
+        />
+      </section>
 
       {/* FOOTER */}
       <section className={styles.footer} data-theme="light">

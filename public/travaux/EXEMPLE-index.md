@@ -19,6 +19,8 @@ champs:                       # (*) disciplines mobilisées (liste)
   - Site
 
 client: Nom du client         # (optionnel) si différent du titre
+ordre: 7                      # (optionnel) position dans l'accueil et l'index
+brouillon: true               # (optionnel) préparé mais non publié : ni carte ni page
 
 ideeDirectrice: >             # (optionnel) la phrase-manifeste du projet
   La conviction qui tient toute la page.

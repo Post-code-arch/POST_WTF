@@ -1,0 +1,300 @@
+/* Pages Offres (index + gabarit programme / offre) — mêmes ingrédients que
+   l'ancienne page Champs : nom en display, filet, accroche en Space Grotesk,
+   corps en Instrument, listes à puce, liens soulignés. */
+
+.page {
+  --pad: clamp(16px, 4vw, 56px);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--fb);
+  min-height: 100vh;
+}
+
+.sec {
+  padding: clamp(56px, 9vw, 120px) var(--pad);
+  border-top: 1px solid var(--line);
+}
+.head {
+  padding: clamp(110px, 16vh, 170px) var(--pad) clamp(56px, 8vw, 100px);
+}
+
+/* ---------- typographie ---------- */
+.kicker {
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+.name {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(44px, 7.4vw, 120px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin-top: clamp(14px, 2vh, 24px);
+  text-wrap: balance;
+}
+.rule {
+  height: 1px;
+  background: var(--line);
+  margin: clamp(18px, 3vh, 34px) 0 clamp(24px, 4vh, 48px);
+}
+.line {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+.body {
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.5;
+  color: rgba(23, 23, 23, 0.78);
+  max-width: 62ch;
+}
+.sub {
+  font-family: var(--fh);
+  font-size: clamp(16px, 1.3vw, 21px);
+  opacity: 0.6;
+  margin-bottom: clamp(10px, 1.6vh, 18px);
+}
+.mention {
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-top: clamp(16px, 2.4vh, 28px);
+}
+.secTitle {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 60px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+/* ---------- liens / boutons ---------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+  margin-top: clamp(24px, 3.6vh, 44px);
+}
+.link {
+  align-self: flex-start;
+  font-family: var(--fl);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 3px;
+}
+.link:hover {
+  opacity: 0.6;
+}
+.btn {
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--ink);
+  text-decoration: none;
+  padding: 15px 34px;
+  border-radius: 40px;
+  transition: opacity 0.25s ease;
+}
+.btn:hover {
+  opacity: 0.82;
+}
+.dark .btn {
+  color: var(--ink);
+  background: var(--cream);
+}
+
+/* ---------- portes d'entrée (cartes) ---------- */
+.porte {
+  display: grid;
+  grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 70px);
+}
+.porteHead {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.porteHead p {
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.5;
+  opacity: 0.7;
+  max-width: 34ch;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 48px) clamp(20px, 2.4vw, 40px);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vh, 18px);
+  padding-top: clamp(16px, 2vh, 22px);
+  border-top: 1px solid var(--ink);
+}
+.cardName {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(22px, 2vw, 32px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+.card .body {
+  font-size: clamp(14px, 1vw, 16px);
+}
+.card .link {
+  margin-top: auto;
+}
+
+/* ---------- sections du gabarit ---------- */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 90px);
+  align-items: start;
+}
+.list {
+  list-style: none;
+  margin-top: clamp(18px, 2.6vh, 30px);
+}
+.list li {
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.45;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 22px 1fr;
+}
+.list li::before {
+  content: "•";
+  opacity: 0.5;
+}
+.refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px clamp(20px, 3vw, 44px);
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(22px, 2.6vw, 42px);
+  letter-spacing: -0.01em;
+  margin-top: clamp(16px, 2.4vh, 28px);
+}
+.refs a {
+  color: inherit;
+  text-decoration: none;
+}
+.refs a:hover {
+  opacity: 0.6;
+}
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 48px);
+  margin-top: clamp(22px, 3.4vh, 40px);
+}
+.results p {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(19px, 1.7vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  padding-top: 14px;
+  border-top: 1px solid var(--ink);
+}
+.results span {
+  display: block;
+  font-family: var(--fl);
+  font-size: 13px;
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+.steps {
+  margin-top: clamp(22px, 3.4vh, 40px);
+}
+.rows {
+  margin-top: clamp(22px, 3.4vh, 40px);
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 60px);
+  padding: clamp(14px, 2vh, 22px) 0;
+  border-top: 1px solid var(--line);
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.5;
+}
+.row .k {
+  font-family: var(--fl);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  padding-top: 4px;
+}
+.row .n {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(18px, 1.5vw, 24px);
+}
+
+/* ---------- clôture (fond sombre) ---------- */
+.dark {
+  background: var(--espresso);
+  color: var(--cream);
+  border-top: none;
+}
+.closing {
+  padding: clamp(80px, 12vw, 170px) var(--pad);
+}
+.closing .secTitle {
+  font-family: var(--fd);
+  font-size: clamp(36px, 5.6vw, 92px);
+  line-height: 0.98;
+  max-width: 18ch;
+}
+.closing .note {
+  margin-top: clamp(26px, 4vh, 48px);
+  font-size: clamp(15px, 1.1vw, 18px);
+  opacity: 0.7;
+}
+.closing .note a {
+  color: inherit;
+}
+
+@media (max-width: 1100px) {
+  .cards {
+    --cols: 2 !important;
+  }
+}
+@media (max-width: 860px) {
+  .porte,
+  .split,
+  .row {
+    grid-template-columns: 1fr;
+  }
+  .results {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .cards {
+    --cols: 1 !important;
+  }
+}

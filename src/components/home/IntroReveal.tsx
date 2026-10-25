@@ -1,21 +1,23 @@
 "use client";
 
 import { Fragment, useEffect, useRef } from "react";
+import { typo } from "@/lib/typo";
 import styles from "./IntroReveal.module.css";
 
-const TEXT =
-  "Une agence créative qui travaille la stratégie, l’identité, le web et la production avec la même attention. Une moitié du temps à comprendre ce qui est déjà là. L’autre à faire les choses jusqu’au bout, en laissant au client l’autonomie pour la suite.";
-
-const WORDS = TEXT.split(" ");
+/** texte A — deux paragraphes, révélés d'une seule vague */
+const PARAGRAPHS = [
+  "En Algérie, beaucoup d'institutions et d'entreprises valent mieux que ce qu'elles montrent. Leurs équipes, leurs infrastructures et leur savoir-faire dépassent ce que leur image laisse percevoir. Or c'est sur cette image qu'on les juge, avant même qu'elles prennent la parole.",
+  "post_ corrige cet écart. Identité, site, film : nous concevons et fabriquons l'ensemble sous un même toit, avec une seule direction, pour des outils qui tiennent des années.",
+].map((p) => typo(p).split(" "));
 
 /**
- * Paragraphe d'intro de l'accueil. Révélation accentuée mot à mot : au scroll,
+ * Intro de l'accueil (deux paragraphes). Révélation accentuée mot à mot : au scroll,
  * chaque mot passe de flou + estompé + abaissé à net + pleine encre, en
  * cascade de gauche à droite à mesure que la section traverse le viewport.
  * reduced-motion : texte plein d'emblée.
  */
 export default function IntroReveal() {
-  const ref = useRef<HTMLParagraphElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -65,14 +67,18 @@ export default function IntroReveal() {
   }, []);
 
   return (
-    <p ref={ref} className={styles.fill}>
-      <span className={styles.sq} />
-      {WORDS.map((word, i) => (
-        <Fragment key={i}>
-          <span className={styles.word}>{word}</span>
-          {i < WORDS.length - 1 ? " " : ""}
-        </Fragment>
+    <div ref={ref}>
+      {PARAGRAPHS.map((words, pi) => (
+        <p key={pi} className={styles.fill}>
+          {pi === 0 && <span className={styles.sq} />}
+          {words.map((word, i) => (
+            <Fragment key={i}>
+              <span className={styles.word}>{word}</span>
+              {i < words.length - 1 ? " " : ""}
+            </Fragment>
+          ))}
+        </p>
       ))}
-    </p>
+    </div>
   );
 }

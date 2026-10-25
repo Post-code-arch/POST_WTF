@@ -20,11 +20,10 @@ function esc(s: string) {
 async function sendEmail(p: ContactPayload) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const rows: [string, string][] = [
-    ["Profil", p.profil],
     ["Nom", p.nom],
     ["Email", p.email],
     ["Type de projet", p.type],
-    ["Budget", p.budget || "—"],
+    ["Offre d’origine", p.offre || "—"],
   ];
   const html = `
     <div style="font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#171717">
@@ -41,11 +40,10 @@ async function sendEmail(p: ContactPayload) {
       <p style="white-space:pre-wrap;margin:0">${esc(p.message)}</p>
     </div>`;
   const text = `Nouveau contact — ${p.type}
-Profil : ${p.profil}
 Nom : ${p.nom}
 Email : ${p.email}
 Type de projet : ${p.type}
-Budget : ${p.budget || "—"}
+Offre d’origine : ${p.offre || "—"}
 
 Message :
 ${p.message}`;
@@ -67,27 +65,27 @@ async function sendAck(p: ContactPayload) {
   const html = `
     <div style="font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#171717">
       <p>Bonjour ${esc(p.nom)},</p>
-      <p>Merci de nous avoir écrit. On a bien reçu votre message — on le lit,
-      puis on revient vers vous. Comptez deux jours ouvrés.</p>
+      <p>Merci de nous avoir écrit. Nous avons bien reçu votre message et
+      revenons vers vous sous 48 heures pour fixer un premier échange.</p>
       <p style="color:#8a8a8a;margin-top:20px">Ce que vous nous avez adressé :</p>
       <p style="white-space:pre-wrap;border-left:2px solid #e7e7e7;padding-left:14px;margin:6px 0 24px">${esc(p.message)}</p>
-      <p>— L’équipe POST<br><span style="color:#8a8a8a">Agence créative · Alger</span></p>
+      <p>— L’équipe post_<br><span style="color:#8a8a8a">Architectes d’image · Alger</span></p>
     </div>`;
   const text = `Bonjour ${p.nom},
 
-Merci de nous avoir écrit. On a bien reçu votre message — on le lit, puis on revient vers vous. Comptez deux jours ouvrés.
+Merci de nous avoir écrit. Nous avons bien reçu votre message et revenons vers vous sous 48 heures pour fixer un premier échange.
 
 Ce que vous nous avez adressé :
 ${p.message}
 
-— L'équipe POST
-Agence créative · Alger`;
+— L’équipe post_
+Architectes d’image · Alger`;
 
   const { error } = await resend.emails.send({
     from: CONTACT_FROM,
     to: p.email,
     replyTo: CONTACT_TO,
-    subject: "On a bien reçu votre message — POST",
+    subject: "Nous avons bien reçu votre message — post_",
     html,
     text,
   });
@@ -103,9 +101,7 @@ async function createNotionPage(p: ContactPayload) {
     properties: {
       Nom: { title: [{ text: { content: p.nom } }] },
       Email: { email: p.email },
-      Profil: { select: { name: p.profil } },
       Type: { select: { name: p.type } },
-      ...(p.budget ? { Budget: { select: { name: p.budget } } } : {}),
       Message: { rich_text: [{ text: { content: p.message.slice(0, 2000) } }] },
       Statut: { select: { name: "Nouveau" } },
     },
@@ -131,11 +127,10 @@ export async function POST(req: Request) {
   }
 
   const payload: ContactPayload = {
-    profil: body.profil!,
     nom: body.nom!.trim(),
     email: body.email!.trim(),
     type: body.type!,
-    budget: body.budget || undefined,
+    offre: body.offre?.trim() || undefined,
     message: body.message!.trim(),
   };
 

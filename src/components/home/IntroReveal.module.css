@@ -10,6 +10,9 @@
   letter-spacing: 0.005em;
   color: var(--cream);
 }
+.fill + .fill {
+  margin-top: 1em;
+}
 
 /* chaque mot : --w 0 → 1 pilote opacité, flou et glissement vertical.
    À 0 : estompé, flou, légèrement abaissé. À 1 : net, plein, en place. */

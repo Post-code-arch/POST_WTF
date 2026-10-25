@@ -113,12 +113,17 @@ export default function WorkGrid({ items }: { items: Work[] }) {
                 className={styles.workMedia}
                 style={w.image ? { backgroundImage: `url(${w.image})` } : undefined}
               />
+              {!w.image && (
+                <span className={styles.workText} aria-hidden>
+                  {w.title}
+                </span>
+              )}
             </div>
             <div className={styles.workCap}>
               <span className={styles.workName} aria-label={w.title}>
                 <DecipherTitle text={w.title} active={hoveredIndex === i} skip={!!reduced} />
               </span>
-              <span className={styles.workDisc}>{w.categories[0]}</span>
+              <span className={styles.workDisc}>{w.categories.join(" · ")}</span>
             </div>
           </Link>
         </div>

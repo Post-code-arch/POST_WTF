@@ -4,7 +4,7 @@ import About from "@/components/about/About";
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "POST est une agence créative basée à Alger. On préfère montrer que raconter.",
+    "Agence d’image à Alger. Identité, site et film sous une seule direction.",
 };
 
 export default function AboutPage() {

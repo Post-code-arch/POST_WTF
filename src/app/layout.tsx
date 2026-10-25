@@ -4,11 +4,11 @@ import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "POST",
-    template: "%s — POST",
+    default: "post_ — Architectes d’image, Alger",
+    template: "%s — post_",
   },
   description:
-    "On est une agence créative. On essaie de ne pas en avoir l'air. Studio à Alger — stratégie, identité, web, production.",
+    "Identité, site et film pour les institutions et entreprises algériennes. Mettre votre image à la hauteur de votre réalité.",
 };
 
 export default function RootLayout({

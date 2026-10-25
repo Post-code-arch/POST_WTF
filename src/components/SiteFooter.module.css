@@ -1,0 +1,53 @@
+/* Pied de page partagé des pages intérieures — repris de l'ancienne page
+   Champs. */
+.footer {
+  --pad: clamp(16px, 4vw, 56px);
+  background: var(--espresso);
+  color: var(--cream);
+  position: relative;
+  z-index: 50;
+}
+.footTop {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  padding: clamp(40px, 6vw, 70px) var(--pad);
+  font-family: var(--fh);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+.footTop .l span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footTop .l .sq {
+  width: 9px;
+  height: 9px;
+  background: var(--cream);
+  display: inline-block;
+}
+.footTop .r {
+  text-align: right;
+}
+.footLogo {
+  color: var(--cream);
+  padding: 0 var(--pad) clamp(10px, 1.5vw, 24px);
+}
+.footLogo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 760px) {
+  .footTop {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .footTop .r {
+    text-align: left;
+  }
+}
