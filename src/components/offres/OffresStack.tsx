@@ -18,9 +18,6 @@ export default function OffresStack({ items }: { items: OffreClient[] }) {
     <ol className={styles.stack}>
       {items.map((o, i) => {
         const isOpen = i === open;
-        const livrables = o.pratique.livre
-          ? o.pratique.livre.replace(/\.$/, "").split(/,\s*(?![^()]*\))/)
-          : [];
         return (
           <li key={o.slug} className={`${styles.stackRow} ${isOpen ? styles.stackOpen : ""}`}>
             <button
@@ -41,12 +38,22 @@ export default function OffresStack({ items }: { items: OffreClient[] }) {
                 )}
                 <p className={styles.stackLead}>{typo(o.carte)}</p>
                 {o.mention && <p className={styles.mono}>{o.mention}</p>}
-                {livrables.length > 0 && (
-                  <ul className={styles.stackList}>
-                    {livrables.map((l) => (
-                      <li key={l}>{typo(l.charAt(0).toUpperCase() + l.slice(1))}</li>
-                    ))}
-                  </ul>
+                {o.livrables && (
+                  <div className={styles.stackDeliv}>
+                    <span className={styles.mono}>Ce qui est livré</span>
+                    <div className={styles.stackGroups}>
+                      {o.livrables.map((g) => (
+                        <div key={g.groupe}>
+                          <b>{g.groupe}</b>
+                          <ul className={styles.stackList}>
+                            {g.items.map((it) => (
+                              <li key={it}>{typo(it)}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 )}
                 <Link href={`/offres/${o.slug}`} className={styles.arrowLink}>
                   <span className={styles.arrow} aria-hidden>

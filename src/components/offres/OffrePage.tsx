@@ -192,14 +192,33 @@ export default function OffrePage({
               ["Ce qu'on demande à la direction", pratique.demande],
               ["Ce qui est livré", pratique.livre],
             ] as const
-          ).map(([k, v]) =>
-            show(v) ? (
+          ).map(([k, v]) => {
+            const detail = k === "Ce qui est livré" ? offre.livrables : undefined;
+            if (!show(v) && !detail) return null;
+            return (
               <div key={k} className={styles.row}>
                 <span className={styles.k}>{typo(k)}</span>
-                <span>{v ? typo(v) : <Todo label="à rédiger" />}</span>
+                <div>
+                  {/* le détail des livrables remplace le résumé quand il existe */}
+                  {!detail && (v ? <p>{typo(v)}</p> : <Todo label="à rédiger" />)}
+                  {detail && (
+                    <div className={styles.deliv}>
+                      {detail.map((g) => (
+                        <div key={g.groupe}>
+                          <h3 className={styles.delivHead}>{g.groupe}</h3>
+                          <ul>
+                            {g.items.map((it) => (
+                              <li key={it}>{typo(it)}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            ) : null
-          )}
+            );
+          })}
         </div>
       </section>
 

@@ -10,6 +10,8 @@
    repère « TODO » ; en production, la section ou la ligne est omise.
    ════════════════════════════════════════════════════════════════ */
 
+import { LIVRABLES, type GroupeLivrables } from "./livrables";
+
 export type OffreKind = "programme" | "offre";
 
 /** les 4 temps du process, une phrase adaptée par page */
@@ -54,6 +56,8 @@ export interface Offre {
   programmes?: string[];
   /** visuel d'illustration (page Offres) */
   visuel?: string;
+  /** livrables détaillés, regroupés par nature (lib/livrables.ts) */
+  livrables?: GroupeLivrables[];
 }
 
 const PROCESS_TODO: Process = {
@@ -242,13 +246,15 @@ export const offres: Offre[] = [
       pourQui:
         "Les structures qui veulent un flux cohérent sans recruter en interne.",
       demande: null, // TODO
-      // TODO — l'ancienne page Champs ne listait pas de livrables « contenu »
+      // résumé non rédigé : le détail vient de lib/livrables.ts
       livre: null,
     },
     cloture: null, // TODO
     // TODO — programme de rattachement à confirmer
   },
 ];
+
+for (const o of offres) o.livrables = LIVRABLES[o.slug];
 
 /** version sérialisable (sans le filtre RegExp) pour les composants client */
 export type OffreClient = Omit<Offre, "travaux">;

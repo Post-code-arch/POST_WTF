@@ -211,6 +211,37 @@
   font-size: clamp(18px, 1.5vw, 24px);
 }
 
+/* livrables détaillés, par groupe */
+.deliv {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: clamp(18px, 2.4vw, 36px);
+  margin-top: 18px;
+}
+.deliv ul {
+  list-style: none;
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.45;
+}
+.deliv li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+}
+.deliv li::before {
+  content: "—";
+  opacity: 0.4;
+}
+.delivHead {
+  font-family: var(--fl);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
 /* ---------- clôture (fond sombre) ---------- */
 .dark {
   background: var(--espresso);
