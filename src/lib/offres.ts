@@ -126,13 +126,14 @@ export const offres: Offre[] = [
         "Votre film de présentation date, ou n'existe pas.",
       ],
     },
-    references: null, // TODO — références à fournir
+    // MAG Agency (Dubaï) ; autres références : TODO
+    references: ["mag-agency"],
     changements: [
       "Une image au standard de vos interlocuteurs.",
       "Une offre lisible en trois langues.",
       "Des supports prêts pour le rendez-vous.",
     ],
-    travaux: { slugs: [] }, // TODO — études de cas liées
+    travaux: { slugs: ["mag-agency"] }, // TODO — autres études de cas liées
     process: PROCESS_TODO, // TODO — une phrase par temps
     pratique: {
       pourQui: "Organisations qui exportent ou s'ouvrent à l'international.",

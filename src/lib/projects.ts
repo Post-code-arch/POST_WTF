@@ -45,6 +45,10 @@ export interface ProjectMeta {
   titre: string;
   sousTitre: string;
   secteur: string;
+  /** marchés / implantation (optionnel, affiché dans « Le dossier ») */
+  marches?: string;
+  /** site du client (optionnel, affiché dans « Le dossier ») */
+  lien?: string;
   type: string;
   annee: string | number;
   champs: string[];
@@ -189,8 +193,31 @@ function parseSections(body: string): ProjectSection[] {
 /** ratio par défaut pour les vidéos (la sonde de dimensions ne lit pas les conteneurs vidéo) */
 const DEFAULT_VIDEO_RATIO = 16 / 9;
 
+/** dimensions d'une vidéo MP4 : lues dans la première piste « tkhd » non vide */
+function mp4Ratio(absPath: string): number | null {
+  const buf = fs.readFileSync(absPath);
+  for (let i = buf.indexOf("tkhd"); i !== -1; i = buf.indexOf("tkhd", i + 4)) {
+    const version = buf[i + 4];
+    const off = i + 80 + (version === 1 ? 12 : 0);
+    if (off + 8 > buf.length) break;
+    const w = buf.readUInt32BE(off) / 65536;
+    const h = buf.readUInt32BE(off + 4) / 65536;
+    if (w > 0 && h > 0) return w / h;
+  }
+  return null;
+}
+
 function readRatio(absPath: string, isVideo: boolean): number {
-  if (isVideo) return DEFAULT_VIDEO_RATIO;
+  if (isVideo) {
+    if (/\.mp4$/i.test(absPath)) {
+      try {
+        return mp4Ratio(absPath) ?? DEFAULT_VIDEO_RATIO;
+      } catch {
+        return DEFAULT_VIDEO_RATIO;
+      }
+    }
+    return DEFAULT_VIDEO_RATIO;
+  }
   try {
     const { width, height } = imageSize(fs.readFileSync(absPath));
     return width / height;

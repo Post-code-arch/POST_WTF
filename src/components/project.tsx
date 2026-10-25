@@ -96,6 +96,11 @@ export function Details({ meta }: { meta: ProjectMeta }) {
         <li>
           <b>Secteur</b> {meta.secteur}
         </li>
+        {meta.marches && (
+          <li>
+            <b>Marchés</b> {meta.marches}
+          </li>
+        )}
         <li>
           <b>Année</b> {meta.annee}
         </li>
@@ -108,6 +113,14 @@ export function Details({ meta }: { meta: ProjectMeta }) {
             </Fragment>
           ))}
         </li>
+        {meta.lien && (
+          <li>
+            <b>Site</b>{" "}
+            <a href={meta.lien} target="_blank" rel="noreferrer">
+              {meta.lien.replace(/^https?:\/\//, "")}
+            </a>
+          </li>
+        )}
       </ul>
     </div>
   );
