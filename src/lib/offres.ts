@@ -24,8 +24,10 @@ export interface Offre {
   slug: string;
   kind: OffreKind;
   nom: string;
-  /** paragraphe de la carte (/offres et accueil) */
+  /** paragraphe de la carte (page Offres) */
   carte: string;
+  /** résumé en quelques mots (tableau de l'accueil), tiré de la carte */
+  resume: string;
   /** hero — phrase de promesse */
   promesse: string;
   /** hero — accroche placée en sous-titre (reprise des anciennes accroches) */
@@ -67,6 +69,7 @@ export const offres: Offre[] = [
     slug: "mutation-structuration",
     kind: "programme",
     nom: "Mutation & Structuration",
+    resume: "Croissance · transmission · filiales à harmoniser",
     carte:
       "Un dispositif complet pour les organisations qui ont changé plus vite que leur image : croissance, transmission, filiales à harmoniser. Architecture de marque, identité, portail et film de groupe, menés ensemble. Pour les groupes, les ETI et les entreprises en restructuration.",
     promesse:
@@ -106,6 +109,7 @@ export const offres: Offre[] = [
     slug: "rayonnement-expansion",
     kind: "programme",
     nom: "Rayonnement & Expansion",
+    resume: "Nouveau marché · bailleur · grand salon",
     carte:
       "Un dispositif complet pour aborder un nouveau marché, un bailleur ou un grand salon. Identité, site trilingue, film de présentation et supports d'exposition, au niveau de vos interlocuteurs. Pour les organisations qui exportent ou s'ouvrent à l'international.",
     promesse:
@@ -146,6 +150,7 @@ export const offres: Offre[] = [
     kind: "offre",
     visuel: "/travaux/marpharmal/11-application-badge.webp",
     nom: "Identité",
+    resume: "Signe · typographie · couleur · ton",
     carte:
       "Créer une identité, ou remettre à niveau celle qui existe sans casser la reconnaissance. Le signe, la typographie, la couleur, le ton et les règles pour que tout tienne à l'usage. Pour les organisations qui lancent une marque, ou dont l'image a vieilli.",
     promesse:
@@ -171,6 +176,7 @@ export const offres: Offre[] = [
     kind: "offre",
     visuel: "/travaux/imlead/06-application-configurateur.webp",
     nom: "Web",
+    resume: "Du site vitrine au portail institutionnel",
     carte:
       "Un site clair, rapide, qui ressemble à la marque qui le porte, du site vitrine au portail institutionnel. Pour les organisations dont le site ne dit plus ce qu'elles font.",
     promesse:
@@ -195,6 +201,7 @@ export const offres: Offre[] = [
     kind: "offre",
     visuel: "/home/aventures/av-7.webp",
     nom: "Film",
+    resume: "Du portrait au film manifeste",
     carte:
       "Du portrait au film manifeste, écrit, tourné et monté avec des moyens de cinéma. Pour les organisations qui ont besoin d'un film de référence.",
     promesse:
@@ -220,6 +227,7 @@ export const offres: Offre[] = [
     kind: "offre",
     visuel: "/travaux/imlead/04-fabrication-social-posts.webp",
     nom: "Contenu",
+    resume: "Éditions · rapports · présentations · capsules vidéo",
     carte:
       "Un atelier externe sur un rythme régulier : éditions, rapports, présentations, capsules vidéo. Pour les structures qui veulent un flux cohérent sans recruter en interne.",
     promesse:
