@@ -4,18 +4,12 @@ titre: MAG Agency
 sousTitre: « Protéger le capital avant de le déployer. »
 secteur: Aéronautique — Conseil en investissement
 marches: Dubaï · Europe, Moyen-Orient, Afrique
-type: Site web & direction artistique
-# TODO — année à confirmer par Kamil (le pied de page du site client indique 2025)
+type: Identité, site web & direction artistique
 annee: 2025
 ordre: 5
-# TODO — périmètre à confirmer : ajouter « Identité » si post_ a dessiné le
-# logotype ; sinon retirer les visuels 06, 07, 08 et 09 (signe, logo, animation).
-champs: Architecture · Direction artistique · Site
+champs: Identité · Architecture · Direction artistique · Site
 lien: https://mag-agency.com
 ideeDirectrice: « Avant de choisir un conseil, l'investisseur choisit un univers. »
-# TODO — accord du client pour publier l'étude de cas et les visuels ;
-# retirer « brouillon » une fois les trois points validés.
-brouillon: true
 suivant:
   titre: Fennec Coffee Roasters
   slug: fennec-coffee-roasters
