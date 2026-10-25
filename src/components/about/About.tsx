@@ -19,7 +19,7 @@ const FONDATEURS = [
 
 const TRAVAUX = [
   "IMLEAD",
-  "Fennec Coffee Roasters",
+  "Fennec Café",
   "Atelier Spoon",
   "Astarté",
   "Marpharma",

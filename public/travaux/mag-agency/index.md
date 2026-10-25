@@ -11,7 +11,7 @@ champs: Identité · Architecture · Direction artistique · Site
 lien: https://mag-agency.com
 ideeDirectrice: « Avant de choisir un conseil, l'investisseur choisit un univers. »
 suivant:
-  titre: Fennec Coffee Roasters
+  titre: Fennec Café
   slug: fennec-coffee-roasters
 ---
 

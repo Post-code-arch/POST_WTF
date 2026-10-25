@@ -1,15 +1,11 @@
 ---
 slug: fennec-coffee-roasters
-# TODO — nom à afficher à confirmer : « Fennec Coffee Roasters » ou « Fennec Café »
-# (le sachet porte « FENNEC CAFÉ »)
-titre: Fennec Coffee Roasters
+titre: Fennec Café
 sousTitre: « Trois massifs, trois cafés, une même matière. »
 secteur: Café de spécialité — torréfaction
 gamme: Trois cafés, 500 g
 type: Identité & packaging
-# TODO — année à confirmer
-annee: 2026
-# TODO — statut à confirmer : commande client ou projet de marque initié par post_
+annee: 2025
 ordre: 6
 champs: Identité · Packaging · Illustration · Film
 ideeDirectrice: « Un nom de massif, une couleur, un relief. »

@@ -95,9 +95,9 @@ export const travaux: Travail[] = [
     role: "Branding · Packaging · Réseaux sociaux",
     annee: "2025",
     projet:
-      "Identité, illustration, packaging et signalétique d'un torréfacteur de café de spécialité, créé de zéro pour une compagnie américaine.",
+      "Identité, packaging, illustration et films d'une gamme de trois cafés de spécialité torréfiés en Algérie, chacun nommé d'après un massif : Aurès, Hogar, Tassili.",
     defi:
-      "Donner à des clients d'ailleurs les codes d'ici, sans carte postale ni cliché, et faire qu'un sachet parle de torréfaction et d'un imaginaire, en rayon.",
+      "Le café de spécialité a ses codes, venus d'ailleurs, et partout ils se ressemblent. Il fallait une marque qui parle le même langage de qualité, mais qui ne puisse venir que d'ici.",
   },
   {
     slug: "spoon-atelier",
@@ -169,7 +169,7 @@ export const missions: Ligne[] = [
   { annee: "2025", titre: "MAG Agency", detail: "Identité · Web · Direction artistique" },
   {
     annee: "2025",
-    titre: "Fennec Coffee Roasters",
+    titre: "Fennec Café",
     detail: "Branding · Packaging · Réseaux sociaux",
   },
   {
