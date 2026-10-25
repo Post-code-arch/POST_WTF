@@ -1,5 +1,3 @@
-import Link from "next/link";
-import POSTLogo from "@/components/POSTLogo";
 import Todo from "@/components/Todo";
 import {
   identite,
@@ -54,14 +52,14 @@ function Lignes({ items }: { items: Ligne[] }) {
 }
 
 /**
- * One-pager portfolio de Kamil Grimes — copie de la grammaire du site post_ :
+ * One-pager portfolio de Kamil Grimes — même grammaire que le site du studio :
  * hero image plein cadre + bandeau défilant, intro sur fond sombre, travaux,
  * parcours en tableaux, contact et pied de page.
  */
 export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
   return (
     <div className={styles.page}>
-      {/* nav : nom · ancres · retour vers post_ */}
+      {/* nav : nom · ancres · contact */}
       <nav className={styles.nav}>
         <a href="#top" className={styles.navName}>
           {identite.nom}
@@ -71,19 +69,16 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
           <a href="#parcours">Parcours</a>
           <a href="#contact">Contact</a>
         </div>
-        <Link href="/" className={styles.navPost}>
-          post_ ↗
-        </Link>
+        <a href={`tel:${identite.tel.replace(/\s/g, "")}`} className={styles.navPost}>
+          {identite.tel}
+        </a>
       </nav>
 
       {/* HERO */}
       <section className={styles.hero} id="top">
         <div className={styles.heroFrame}>
-          <picture>
-            <source media="(max-width: 760px)" srcSet="/home/aventures/av-5.webp" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.heroBg} src="/home/aventures/av-8.webp" alt="" aria-hidden />
-          </picture>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className={styles.heroBg} src="/home/aventures/av-6.webp" alt="" aria-hidden />
           <h1 className={styles.heroName}>{identite.nom}</h1>
           <div className={styles.heroFoot}>
             <ul className={styles.heroRoles}>
@@ -148,17 +143,17 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
         <div className={styles.secHead}>
           <span className={styles.mono}>(Travaux)</span>
           <h2 className={styles.secTitle}>Sélection.</h2>
-          <span className={styles.mono}>Avec post_ — {cases.length} études de cas</span>
+          <span className={styles.mono}>{cases.length} projets</span>
         </div>
 
         {cases.map((c, i) => (
           <article key={c.slug} className={styles.case}>
-            <Link href={`/travaux/${c.slug}`} className={styles.caseHero}>
+            <div className={styles.caseHero}>
               {c.hero && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={c.hero} alt={c.titre} loading="lazy" />
               )}
-            </Link>
+            </div>
             <div className={styles.caseInfo}>
               <span className={styles.mono}>
                 {String(i + 1).padStart(2, "0")} / {String(cases.length).padStart(2, "0")}
@@ -173,9 +168,6 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
                 <dt>Année</dt>
                 <dd>{c.annee}</dd>
               </dl>
-              <Link href={`/travaux/${c.slug}`} className={styles.caseLink}>
-                Voir l’étude de cas →
-              </Link>
             </div>
             {c.strip.length > 0 && (
               <div className={styles.strip}>
@@ -243,13 +235,15 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
             <span className={styles.mono}>Tél</span>
             <span>{identite.tel}</span>
           </div>
+          {identite.mail && (
+            <div>
+              <span className={styles.mono}>Mail</span>
+              <a href={`mailto:${identite.mail}`}>{identite.mail}</a>
+            </div>
+          )}
           <div>
-            <span className={styles.mono}>Mail</span>
-            <a href={`mailto:${identite.mail}`}>{identite.mail}</a>
-          </div>
-          <div>
-            <span className={styles.mono}>Agence</span>
-            <Link href="/">post_ — architectes d’image, Alger</Link>
+            <span className={styles.mono}>Ville</span>
+            <span>Alger, Algérie</span>
           </div>
         </div>
       </section>
@@ -257,11 +251,11 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
       <footer className={styles.footer}>
         <div className={styles.footTop}>
           <span>{identite.nomComplet}</span>
-          <span>Co-fondateur de post_</span>
+          <span>{roles.map((r) => r.titre).join(" · ")}</span>
           <span>Alger, Algérie</span>
         </div>
-        <div className={styles.footLogo}>
-          <POSTLogo />
+        <div className={styles.footName} aria-hidden>
+          {identite.nom}
         </div>
       </footer>
     </div>

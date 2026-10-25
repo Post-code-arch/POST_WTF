@@ -1,4 +1,4 @@
-/* One-pager Kamil Grimes — mêmes ingrédients que le site post_ : palette
+/* One-pager Kamil Grimes — palette
    en gris, General Sans + Space Mono, hero image plein cadre, bandeau
    défilant, intro sombre, filets. */
 
@@ -73,6 +73,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 40% 50%;
 }
 .heroFrame::after {
   content: "";
@@ -277,8 +278,8 @@
   object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.caseHero:hover img {
-  transform: scale(1.04);
+.case:hover .caseHero img {
+  transform: scale(1.03);
 }
 .caseInfo {
   display: flex;
@@ -318,19 +319,6 @@
   text-transform: uppercase;
   opacity: 0.55;
   padding-top: 2px;
-}
-.caseLink {
-  align-self: flex-start;
-  font-family: var(--fl);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 3px;
-}
-.caseLink:hover {
-  opacity: 0.6;
 }
 .strip {
   grid-column: 1 / -1;
@@ -479,13 +467,16 @@
 .footTop span:last-child {
   text-align: right;
 }
-.footLogo {
-  padding: 0 var(--pad) clamp(10px, 1.5vw, 24px);
-}
-.footLogo svg {
-  display: block;
-  width: 100%;
-  height: auto;
+/* nom en très grand, pleine largeur, en guise de logotype */
+.footName {
+  padding: 0 var(--pad) clamp(6px, 1vw, 16px);
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(48px, 13.4vw, 250px);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* ---------- responsive ---------- */

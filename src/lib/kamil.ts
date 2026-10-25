@@ -11,9 +11,10 @@ export const identite = {
   // TODO — bio rédigée par Kamil (affichée à la place de l'accroche)
   bio: null as string | null,
   accroche:
-    "Directeur créatif, producteur et artiste visuel basé à Alger. Co-fondateur de post_.",
+    "Directeur créatif, producteur et artiste visuel basé à Alger.",
   tel: "+213 540 87 73 98",
-  mail: "wearepostagency@gmail.com",
+  // TODO — email personnel de Kamil (l'adresse de l'agence est retirée)
+  mail: null as string | null,
 };
 
 /** les trois casquettes du CV, avec leurs champs */
@@ -23,7 +24,7 @@ export const roles = [
   { titre: "Artiste visuel", champs: ["Installation", "Musique"] },
 ];
 
-/** études de cas post_ montrées, avec le rôle de Kamil (CV) */
+/** projets montrés (visuels des études de cas), avec le rôle de Kamil (CV) */
 export const travaux: { slug: string; role: string; annee: string }[] = [
   { slug: "imlead", role: "Direction créative · Web · Branding · Audit stratégique", annee: "2026" },
   { slug: "astarte-conseils", role: "Direction créative · Web · Branding", annee: "2026" },
