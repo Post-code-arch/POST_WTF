@@ -51,6 +51,15 @@ export default function Contact() {
               <span>+213 540 87 73 98</span>
             </div>
           </div>
+
+          {/* sloughi décoratif (encre sur transparent), sous les coordonnées */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className={`${styles.sloughi} ${styles.sloughiAside}`}
+            src="/about/sloughi/sloughi-08.webp"
+            alt=""
+            aria-hidden
+          />
         </aside>
 
         {/* colonne droite : formulaire */}
@@ -61,10 +70,10 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* sloughi bas-gauche (encre sur transparent) */}
+      {/* mobile : le sloughi passe en bas de page, après le formulaire */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className={styles.sloughi}
+        className={`${styles.sloughi} ${styles.sloughiEnd}`}
         src="/about/sloughi/sloughi-08.webp"
         alt=""
         aria-hidden

@@ -1,6 +1,6 @@
 /* Pages Offres (index + gabarit programme / offre) — mêmes ingrédients que
-   l'ancienne page Champs : nom en display, filet, accroche en Space Grotesk,
-   corps en Instrument, listes à puce, liens soulignés. */
+   l'ancienne page Champs : nom en display, filet, accroche, corps en General
+   Sans, labels en Space Mono, listes à puce, liens soulignés. */
 
 .page {
   --pad: clamp(16px, 4vw, 56px);

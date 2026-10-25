@@ -12,12 +12,12 @@
   --line: rgba(23, 23, 23, 0.18);
   --line-cream: rgba(242, 242, 242, 0.2);
 
-  /* Rôles typographiques */
-  --fd: var(--font-clash), var(--font-cabinet), sans-serif;   /* H1 — titres display */
-  --fh: var(--font-space), sans-serif;                        /* H2 / sous-titres */
-  --fb: var(--font-instrument), sans-serif;                   /* body */
-  --fl: var(--font-space), sans-serif;                        /* petits labels */
-  --fc: var(--font-cabinet), sans-serif;                      /* dispo si besoin */
+  /* Rôles typographiques — deux familles seulement : General Sans + Space Mono */
+  --fd: var(--font-general), sans-serif;   /* H1 — titres display */
+  --fh: var(--font-general), sans-serif;   /* H2 / sous-titres */
+  --fb: var(--font-general), sans-serif;   /* body */
+  --fl: var(--font-mono), monospace;       /* petits labels (numéros, kickers, méta) */
+  --fc: var(--font-general), sans-serif;   /* noms de projets, usages secondaires */
 
   --gutter: clamp(20px, 5vw, 80px);
 }
