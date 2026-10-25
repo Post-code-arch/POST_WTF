@@ -13,8 +13,7 @@ export const identite = {
   accroche:
     "Directeur créatif, producteur et artiste visuel basé à Alger.",
   tel: "+213 540 87 73 98",
-  // TODO — email personnel de Kamil (l'adresse de l'agence est retirée)
-  mail: null as string | null,
+  mail: "grimeskamil@gmail.com" as string | null,
 };
 
 /** les trois casquettes du CV, avec leurs champs */
