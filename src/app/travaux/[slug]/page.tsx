@@ -3,12 +3,12 @@ import { Fragment, type ReactNode } from "react";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Link from "next/link";
+import JustifiedRow from "@/components/JustifiedRow";
 import StickyAside from "@/components/case/StickyAside";
 import css from "@/components/case/Case.module.css";
 import { typo } from "@/lib/typo";
 import {
   Media,
-  Gallery,
   Manifesto,
   Testimonial,
   NextCase,
@@ -18,6 +18,7 @@ import {
   getPublishedSlugs,
   SECTION_VISUAL_SLOT,
   FULL_WIDTH,
+  GRAND,
   type Visual,
 } from "@/lib/projects";
 
@@ -96,23 +97,55 @@ export default async function ProjectPage({
     ...visuals.filter((v) => v.slot === SECTION_VISUAL_SLOT[bloc as keyof typeof SECTION_VISUAL_SLOT]),
     ...(bloc === lastBloc ? assets : []),
   ];
+  // les visuels en grand (FULL_WIDTH + GRAND) prennent toute la colonne, à
+  // leur place dans le fil ; les autres vont par deux. Un visuel vertical ne
+  // reste jamais seul en bout de série (il passerait sur toute la colonne) :
+  // il rejoint la rangée précédente, qui passe à trois.
+  const grand = GRAND[slug];
+  const isGrand = (v: Visual) => isFull(v) || (grand?.test(v.src) ?? false);
+  const rangees = (vs: Visual[]) => {
+    const rows: Visual[][] = [];
+    let i = 0;
+    while (i < vs.length) {
+      const left = vs.length - i;
+      const portrait = (v: Visual) => v.ratio < 1;
+      if (left === 1) {
+        const last = rows[rows.length - 1];
+        if (portrait(vs[i]) && last && last.length < 3) last.push(vs[i]);
+        else rows.push([vs[i]]);
+        i += 1;
+      } else if (left === 3 && vs.slice(i).some(portrait)) {
+        rows.push(vs.slice(i, i + 3));
+        i += 3;
+      } else {
+        rows.push(vs.slice(i, i + 2));
+        i += 2;
+      }
+    }
+    return rows;
+  };
   const visualColumn = (vs: Visual[]) => {
-    const rowed = vs.filter((v) => !isFull(v));
-    return (
-      <>
-        {vs.filter((v) => fullPos(v) === "before").map((v) => (
-          <Media key={v.src} v={v} />
-        ))}
-        {rowed.length === 1 ? (
-          <Media v={rowed[0]} />
-        ) : rowed.length > 1 ? (
-          <Gallery visuals={rowed} maxPerRow={2} />
-        ) : null}
-        {vs.filter((v) => fullPos(v) === "after").map((v) => (
-          <Media key={v.src} v={v} />
-        ))}
-      </>
-    );
+    const blocks: ReactNode[] = [];
+    let buffer: Visual[] = [];
+    const flush = () => {
+      for (const row of rangees(buffer))
+        blocks.push(
+          row.length === 1 ? (
+            <Media key={row[0].src} v={row[0]} />
+          ) : (
+            <JustifiedRow key={row[0].src} visuals={row} />
+          )
+        );
+      buffer = [];
+    };
+    for (const v of vs) {
+      if (isGrand(v)) {
+        flush();
+        blocks.push(<Media key={v.src} v={v} />);
+      } else buffer.push(v);
+    }
+    flush();
+    return blocks;
   };
   const dossier: [string, ReactNode][] = [
     ["Type", meta.type],

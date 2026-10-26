@@ -371,3 +371,15 @@ export const FULL_WIDTH: Record<string, { re: RegExp; pos: "before" | "after" }[
     { re: /2[45]-application-film-tassili-sable-/, pos: "after" },
   ],
 };
+
+// Mise en page en deux colonnes (études de cas post_) : visuels montrés en
+// grand, sur toute la colonne des visuels (les 2/3 de l'écran), à leur
+// place dans le fil — en plus de ceux de FULL_WIDTH.
+export const GRAND: Record<string, RegExp> = {
+  "mag-agency":
+    /(02-vibe-hublot|05-direction-slider|06-direction-slider-anim|08-fabrication-logo|13-fabrication-ui|14-application-devices|15-application-moment)\./,
+  imlead: /07-application-site-ecran\./,
+  marpharmal: /(05-fabrication-matiere|08-application-scene)\./,
+  "spoon-atelier": /(04-fabrication-systeme-couleur|08-application-chaise)\./,
+  "fennec-coffee-roasters": /18-application-tassili-oasis\./,
+};
