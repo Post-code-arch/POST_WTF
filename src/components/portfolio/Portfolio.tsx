@@ -1,7 +1,9 @@
 import Todo from "@/components/Todo";
+import AutoVideo from "@/components/AutoVideo";
 import {
   identite,
   roles,
+  productionsIA,
   experiences,
   missions,
   formation,
@@ -68,6 +70,7 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
         </a>
         <div className={styles.navLinks}>
           <a href="#travaux">Travaux</a>
+          <a href="#ia">IA</a>
           <a href="#parcours">Parcours</a>
           <a href="#contact">Contact</a>
         </div>
@@ -186,6 +189,40 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
                 {c.strip.map((s) => (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img key={s} src={s} alt="" loading="lazy" />
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </section>
+
+      {/* PRODUCTIONS IA */}
+      <section className={styles.ia} id="ia">
+        <div className={styles.secHead}>
+          <span className={styles.mono}>(Productions IA)</span>
+          <h2 className={styles.secTitle}>Images en mouvement.</h2>
+        </div>
+        {productionsIA.map((p) => (
+          <article key={p.titre} className={styles.iaProject}>
+            <div className={styles.iaHead}>
+              <h3 className={styles.caseTitle}>{p.titre}</h3>
+              <span className={styles.mono}>{p.tag}</span>
+            </div>
+            <div className={styles.iaGrid} data-count={p.films.length}>
+              {p.films.map((f) => (
+                <figure key={f.src} className={styles.iaFilm}>
+                  <AutoVideo src={f.src} poster={f.poster} className={styles.iaVideo} />
+                  {p.films.length > 1 && (
+                    <figcaption className={styles.mono}>{typo(f.label)}</figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+            {p.images && (
+              <div className={styles.iaStills}>
+                {p.images.map((src) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img key={src} src={src} alt="" loading="lazy" />
                 ))}
               </div>
             )}

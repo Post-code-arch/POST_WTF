@@ -360,6 +360,67 @@
   background: var(--cream-2);
 }
 
+/* ---------- productions IA ---------- */
+.ia {
+  background: var(--espresso);
+  color: var(--cream);
+  padding: clamp(70px, 10vw, 140px) var(--pad);
+}
+.ia .caseTitle {
+  color: var(--cream);
+}
+.iaProject {
+  padding: clamp(20px, 2.6vw, 34px) 0 clamp(40px, 6vw, 80px);
+  border-top: 1px solid var(--line-cream);
+}
+.iaHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: clamp(16px, 2vw, 28px);
+}
+.iaHead .mono {
+  opacity: 0.6;
+}
+.iaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 18px);
+}
+.iaGrid[data-count="1"] {
+  grid-template-columns: 1fr;
+}
+.iaFilm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.iaFilm figcaption {
+  opacity: 0.6;
+}
+.iaVideo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2.35 / 1;
+  object-fit: cover;
+  border-radius: 2px;
+  background: #000;
+  filter: none;
+}
+.iaStills {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 18px);
+  margin-top: clamp(10px, 1.2vw, 18px);
+}
+.iaStills img {
+  width: 100%;
+  aspect-ratio: 2.35 / 1;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
 /* ---------- parcours ---------- */
 .cv {
   padding: clamp(70px, 10vw, 140px) var(--pad);
@@ -541,6 +602,10 @@
     border-left: none;
     border-top: 1px solid var(--line-cream);
     margin-top: 18px;
+  }
+  .iaGrid,
+  .iaStills {
+    grid-template-columns: 1fr;
   }
   .strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));

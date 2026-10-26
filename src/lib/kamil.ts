@@ -110,6 +110,36 @@ export const travaux: Travail[] = [
   },
 ];
 
+/** productions en image générée (anciens projets du Lab) : boucles courtes
+ *  tirées des films, avec une image d'affiche */
+export interface ProductionIA {
+  titre: string;
+  tag: string;
+  films: { label: string; src: string; poster: string }[];
+  images?: string[];
+}
+
+const IA = "/kamil-grimes/ia";
+
+export const productionsIA: ProductionIA[] = [
+  {
+    titre: "Bassit",
+    tag: "VFX",
+    films: [{ label: "Bassit", src: `${IA}/bassit/bassit.webm`, poster: `${IA}/bassit/bassit-poster.jpg` }],
+    images: [`${IA}/bassit/still-1.jpg`, `${IA}/bassit/still-2.jpg`, `${IA}/bassit/still-3.jpg`],
+  },
+  {
+    titre: "Cristor",
+    tag: "VFX · Packshot IA",
+    films: [
+      { label: "Cuisinière — spot", src: `${IA}/cristor/cuisiniere.webm`, poster: `${IA}/cristor/cuisiniere-poster.jpg` },
+      { label: "Climatiseur — spot", src: `${IA}/cristor/climatiseur.webm`, poster: `${IA}/cristor/climatiseur-poster.jpg` },
+      { label: "Film corporate — 45 s", src: `${IA}/cristor/film-corporate.webm`, poster: `${IA}/cristor/film-corporate-poster.jpg` },
+      { label: "Showroom", src: `${IA}/cristor/showroom.webm`, poster: `${IA}/cristor/showroom-poster.jpg` },
+    ],
+  },
+];
+
 export interface Ligne {
   annee: string;
   titre: string;
