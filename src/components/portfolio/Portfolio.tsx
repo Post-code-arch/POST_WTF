@@ -4,6 +4,7 @@ import {
   identite,
   roles,
   productionsIA,
+  lithicMemory as lm,
   experiences,
   missions,
   formation,
@@ -70,6 +71,7 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
         </a>
         <div className={styles.navLinks}>
           <a href="#travaux">Travaux</a>
+          <a href="#lithic">Lithic Memory</a>
           <a href="#ia">IA</a>
           <a href="#parcours">Parcours</a>
           <a href="#contact">Contact</a>
@@ -194,6 +196,105 @@ export default function Portfolio({ cases }: { cases: PortfolioCase[] }) {
             )}
           </article>
         ))}
+      </section>
+
+      {/* LITHIC MEMORY — production (section sombre, bleu du titre en accent) */}
+      <section className={styles.lm} id="lithic">
+        <div className={styles.lmHead}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={lm.signeSvg} alt="" className={styles.lmSigne} />
+          <span className={styles.mono}>(Production)</span>
+        </div>
+        <h2 className={styles.lmTitle}>{lm.titre}</h2>
+        <p className={styles.lmSub}>
+          {typo(`« ${lm.morceau} » — ${lm.signature}`)}
+        </p>
+
+        <AutoVideo src={lm.boucleTitre} poster={lm.posterTitre} className={styles.lmWide} />
+
+        <div className={styles.lmInfo}>
+          <div className={styles.caseText}>
+            <p>
+              <span className={styles.mono}>Le projet</span>
+              {typo(lm.projet)}
+            </p>
+            <p>
+              <span className={styles.mono}>Le défi</span>
+              {typo(lm.defi)}
+            </p>
+            <p>
+              <span className={styles.mono}>La direction</span>
+              {typo(lm.direction)}
+            </p>
+          </div>
+          <dl className={styles.caseMeta}>
+            <dt>Rôle</dt>
+            <dd>{typo(lm.role)}</dd>
+            <dt>Cadre</dt>
+            <dd>{lm.cadre}</dd>
+            <dt>Année</dt>
+            <dd>{lm.annee}</dd>
+          </dl>
+        </div>
+
+        <div className={styles.lmLoops}>
+          {lm.boucles.map((b) => (
+            <figure key={b.src}>
+              <AutoVideo src={b.src} poster={b.poster} className={styles.lmVideo} />
+              <figcaption className={styles.mono}>{b.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <h3 className={styles.lmLabel}>Les couvertures</h3>
+        <div className={styles.lmCovers}>
+          {lm.couvertures.map((c) => (
+            <figure key={c.src}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={c.src} alt={c.label} loading="lazy" />
+              <figcaption className={styles.mono}>{typo(c.label)}</figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <h3 className={styles.lmLabel}>Le signe dans le paysage</h3>
+        <div className={styles.lmPair}>
+          {lm.signe.map((src) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt="" loading="lazy" />
+          ))}
+        </div>
+
+        <h3 className={styles.lmLabel}>La mémoire minérale, puis le troupeau</h3>
+        <div className={styles.lmGrid4}>
+          {lm.mineral.map((src) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt="" loading="lazy" />
+          ))}
+        </div>
+        <div className={styles.lmGrid3}>
+          {lm.troupeau.map((src) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt="" loading="lazy" />
+          ))}
+        </div>
+
+        <h3 className={styles.lmLabel}>Le storyboard</h3>
+        <a href={lm.storyboard.png} target="_blank" rel="noreferrer" className={styles.lmBoard}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={lm.storyboard.image} alt="Storyboard du clip « Tlagh »" loading="lazy" />
+          <span className={styles.mono}>Agrandir ↗</span>
+        </a>
+
+        <h3 className={styles.lmLabel}>{typo(`Le clip — « ${lm.morceau} », 2 min 42`)}</h3>
+        <video
+          className={styles.lmClip}
+          src={lm.clip.src}
+          poster={lm.clip.poster}
+          controls
+          preload="none"
+          playsInline
+        />
       </section>
 
       {/* PRODUCTIONS IA */}

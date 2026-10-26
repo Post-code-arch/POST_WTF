@@ -360,6 +360,165 @@
   background: var(--cream-2);
 }
 
+/* ---------- LITHIC MEMORY (sombre, bleu du titre en accent) ---------- */
+.lm {
+  --lm-blue: #2a3dff;
+  background: #0b0b0c;
+  color: #e8e8ea;
+  padding: clamp(70px, 10vw, 140px) var(--pad);
+}
+.lmHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.lmHead .mono {
+  opacity: 0.6;
+}
+.lmSigne {
+  width: clamp(120px, 14vw, 200px);
+  height: auto;
+  filter: none;
+}
+.lmTitle {
+  margin-top: clamp(24px, 4vw, 56px);
+  font-family: var(--fd);
+  font-weight: 600;
+  font-size: clamp(44px, 10vw, 180px);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: var(--lm-blue);
+}
+.lmSub {
+  margin-top: 14px;
+  font-size: clamp(16px, 1.4vw, 22px);
+  opacity: 0.8;
+}
+.lmWide,
+.lmClip {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+  border-radius: 2px;
+  filter: none;
+  margin-top: clamp(28px, 4vw, 56px);
+}
+.lmClip {
+  object-fit: contain;
+  margin-top: 0;
+}
+.lmInfo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 70px);
+  margin-top: clamp(28px, 4vw, 56px);
+}
+.lm .caseText {
+  color: rgba(232, 232, 234, 0.85);
+}
+.lm .caseText .mono {
+  color: var(--lm-blue);
+  opacity: 1;
+}
+.lm .caseMeta {
+  border-top-color: rgba(232, 232, 234, 0.2);
+  margin-top: 0;
+  align-self: start;
+}
+.lmLoops {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 18px);
+  margin-top: clamp(36px, 5vw, 70px);
+}
+.lmLoops figure,
+.lmCovers figure {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lmLoops figcaption,
+.lmCovers figcaption {
+  opacity: 0.55;
+}
+.lmVideo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+  border-radius: 2px;
+  filter: none;
+}
+.lmLabel {
+  margin: clamp(44px, 6vw, 90px) 0 clamp(14px, 1.6vw, 22px);
+  padding-top: 14px;
+  border-top: 1px solid rgba(232, 232, 234, 0.18);
+  font-family: var(--fl);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lm-blue);
+}
+.lmCovers {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(8px, 1vw, 16px);
+}
+.lmCovers img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.lmPair,
+.lmGrid4,
+.lmGrid3 {
+  display: grid;
+  gap: clamp(8px, 1vw, 16px);
+}
+.lmPair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lmGrid4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.lmGrid3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(8px, 1vw, 16px);
+}
+.lmPair img,
+.lmGrid4 img,
+.lmGrid3 img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.lmPair img {
+  aspect-ratio: 2 / 1;
+}
+.lmBoard {
+  position: relative;
+  display: block;
+  color: inherit;
+}
+.lmBoard img {
+  width: 100%;
+  border-radius: 2px;
+}
+.lmBoard .mono {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  background: #0b0b0c;
+  color: #e8e8ea;
+}
+
 /* ---------- productions IA ---------- */
 .ia {
   background: var(--espresso);
@@ -604,8 +763,19 @@
     margin-top: 18px;
   }
   .iaGrid,
-  .iaStills {
+  .iaStills,
+  .lmInfo,
+  .lmLoops,
+  .lmPair {
     grid-template-columns: 1fr;
+  }
+  .lmCovers,
+  .lmGrid4,
+  .lmGrid3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lmCovers figure:first-child {
+    grid-column: 1 / -1;
   }
   .strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -110,6 +110,59 @@ export const travaux: Travail[] = [
   },
 ];
 
+/** LITHIC MEMORY — album produit par Kamil (CV : « Producteur — Lithic Memory,
+ *  projet Al Mawred ») et son univers visuel. Textes d'après le dossier du
+ *  projet ; aucune mention d'outil ni de procédé de fabrication des images. */
+const LM = "/kamil-grimes/lithic-memory";
+
+export const lithicMemory = {
+  titre: "LITHIC MEMORY",
+  morceau: "Tlagh",
+  signature: "Une mémoire de pierre, et une route vers la lumière.",
+  // TODO — année à confirmer (CV : 2025 ; fichiers du projet : 2026)
+  annee: "2025",
+  role: "Producteur — production de l'album et de son univers visuel, gestion financière, démarchage",
+  cadre: "Projet Al Mawred",
+  projet:
+    "Un album musical et son univers visuel : un signe, un titre, une série de couvertures et le clip du morceau « Tlagh », en deux minutes quarante-deux.",
+  defi:
+    "« Tlagh » porte le nom d'une ville de l'Ouest algérien. LITHIC MEMORY part d'une idée simple : la pierre se souvient. Il fallait une image à la hauteur : un signe qui tienne seul, des couvertures qui s'imposent en petit sur un écran de téléphone, et un clip qui installe un monde en moins de trois minutes.",
+  direction:
+    "Le noir et blanc, et le grain : une image qui a l'air d'avoir traversé le temps. Une seule couleur pour la marque, le bleu du titre ; une seule couleur d'alerte, réservée aux couvertures, le rouge. Et une figure, le taureau : gravé dans la pierre, vivant dans le troupeau qui charge, seul dans la plaine de nuit.",
+  boucleTitre: `${LM}/films/lithic-01-titre.mp4`,
+  posterTitre: `${LM}/films/lithic-01-titre-poster.jpg`,
+  boucles: [
+    { label: "Le troupeau", src: `${LM}/films/lithic-02-troupeau.mp4`, poster: `${LM}/films/lithic-02-troupeau-poster.jpg` },
+    { label: "Le signe", src: `${LM}/films/lithic-03-signe.mp4`, poster: `${LM}/films/lithic-03-signe-poster.jpg` },
+    { label: "La piste", src: `${LM}/films/lithic-04-piste.mp4`, poster: `${LM}/films/lithic-04-piste-poster.jpg` },
+  ],
+  couvertures: [
+    { label: "La porte aux taureaux", src: `${LM}/couvertures/couverture-03-porte.jpg` },
+    { label: "Le troupeau", src: `${LM}/couvertures/couverture-01-troupeau.jpg` },
+    { label: "Le trait rouge", src: `${LM}/couvertures/couverture-02-troupeau-rouge.jpg` },
+    { label: "L'horizon", src: `${LM}/couvertures/couverture-04-horizon.jpg` },
+    { label: "La nuit", src: `${LM}/couvertures/couverture-05-horizon-large.jpg` },
+  ],
+  signe: [`${LM}/images/still-01-signe-lac.jpg`, `${LM}/images/still-02-signe-monolithes.jpg`],
+  mineral: [
+    `${LM}/images/still-03-roches.jpg`,
+    `${LM}/images/still-04-falaise.jpg`,
+    `${LM}/images/still-12-taureau-nuit.jpg`,
+    `${LM}/images/still-06-colonne.jpg`,
+  ],
+  troupeau: [
+    `${LM}/images/still-07-troupeau.jpg`,
+    `${LM}/images/still-08-troupeau-nuit.jpg`,
+    `${LM}/images/still-09-troupeau-horizon.jpg`,
+    `${LM}/images/still-10-plaine.jpg`,
+    `${LM}/images/still-05-tours.jpg`,
+    `${LM}/images/still-11-oeil.jpg`,
+  ],
+  storyboard: { image: `${LM}/storyboard.jpg`, png: `${LM}/storyboard.png` },
+  clip: { src: `${LM}/films/clip-tlagh-720p.mp4`, poster: `${LM}/images/still-08-troupeau-nuit.jpg` },
+  signeSvg: `${LM}/phase0.svg`,
+};
+
 /** productions en image générée (anciens projets du Lab) : boucles courtes
  *  tirées des films, avec une image d'affiche */
 export interface ProductionIA {
