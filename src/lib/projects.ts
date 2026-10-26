@@ -353,3 +353,21 @@ export function getProjectsForGrid(): GridWork[] {
     };
   });
 }
+
+// Certains visuels sortent du flux en rangées pour passer en pleine
+// largeur. `pos` place chaque visuel avant ou après la grille de sa
+// section. Marpharmal : badge + couvertures en fin ; Astarté : le banner
+// (billboard) en tête ; Fennec : paysage, sachet de profil, carte et
+// films en pleine largeur.
+export const FULL_WIDTH: Record<string, { re: RegExp; pos: "before" | "after" }[]> = {
+  marpharmal: [{ re: /(11-application-badge|12-application-programme)\.webp$/, pos: "after" }],
+  "astarte-conseils": [{ re: /02-application-billboard\.webp$/, pos: "before" }],
+  imlead: [{ re: /05-fabrication-social-stories\.webp$/, pos: "after" }],
+  "fennec-coffee-roasters": [
+    { re: /02-vibe-paysage-tassili\./, pos: "before" },
+    { re: /04-direction-tassili-profil-embossage\./, pos: "before" },
+    { re: /14-fabrication-carte-logo\./, pos: "after" },
+    { re: /17-application-film-aures-nuit\./, pos: "before" },
+    { re: /2[45]-application-film-tassili-sable-/, pos: "after" },
+  ],
+};
