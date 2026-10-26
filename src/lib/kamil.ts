@@ -201,6 +201,8 @@ export interface ProjetEtude extends ProjetBase {
   source: string;
   /** visuel principal choisi à la main (sinon : le hero de l'étude) */
   principal?: string;
+  /** visuels de l'étude à ne pas montrer ici (ex. ceux qui portent le nom du studio) */
+  exclure?: RegExp;
 }
 /** LITHIC MEMORY — page sur mesure */
 export interface ProjetLithic extends ProjetBase {
@@ -274,6 +276,35 @@ export const projets: Projet[] = [
       video: `${LM}/films/lithic-01-titre.mp4`,
       poster: `${LM}/films/lithic-01-titre-poster.jpg`,
     },
+  },
+  {
+    kind: "etude",
+    slug: "banbiom",
+    source: "banbiom",
+    titre: "BANBIOM",
+    filtres: ["identite", "web"],
+    annee: "2026",
+    sousTitre: { fr: "« La mer, cellule par cellule. »", en: "“The sea, cell by cell.”" },
+    secteur: {
+      fr: "Biodiversité marine — Données scientifiques",
+      en: "Marine biodiversity — Scientific data",
+    },
+    // TODO — rôle de Kamil à confirmer (absent du CV) : repris des champs du projet
+    role: {
+      fr: "Direction créative · Identité · Système graphique · Application web",
+      en: "Creative direction · Identity · Graphic system · Web application",
+    },
+    projet: {
+      fr: "Identité, système graphique et application d'une banque de données des écosystèmes marins de la côte algérienne : une fiche par espèce, et un espace où les chercheurs ajoutent les leurs.",
+      en: "Identity, graphic system and application for a database of marine ecosystems along the Algerian coast: one record per species, and a space where researchers add their own.",
+    },
+    defi: {
+      fr: "Une base scientifique a deux publics : le chercheur, qui veut des fiches vérifiables, et le visiteur, qui veut comprendre ce qui vit sous la surface. Il fallait une image qui serve les deux. Réponse : le diagramme de Voronoï, où une cellule est une espèce et chaque forme porte une donnée.",
+      en: "A scientific database has two audiences: researchers, who want verifiable records, and visitors, who want to understand what lives below the surface. The image had to serve both. The answer: the Voronoi diagram, where a cell is a species and every shape carries data.",
+    },
+    vignette: { image: "/travaux/banbiom/01-hero.webp" },
+    // la couverture de la charte et l'animation d'étude de cas citent le studio
+    exclure: /(02-vibe-couverture|18-application-etude-de-cas)/,
   },
   {
     kind: "etude",

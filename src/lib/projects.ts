@@ -382,4 +382,6 @@ export const GRAND: Record<string, RegExp> = {
   marpharmal: /(05-fabrication-matiere|08-application-scene)\./,
   "spoon-atelier": /(04-fabrication-systeme-couleur|08-application-chaise)\./,
   "fennec-coffee-roasters": /18-application-tassili-oasis\./,
+  banbiom:
+    /(06-direction-couleurs|10-fabrication-voronoi|11-fabrication-signatures|14-application-console|15-application-ecrans|18-application-etude-de-cas)\./,
 };

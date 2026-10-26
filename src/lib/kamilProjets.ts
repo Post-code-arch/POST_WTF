@@ -88,7 +88,8 @@ export function visuelsEtude(p: ProjetEtude): { hero?: string; lien?: string; gr
   const groupes = ordre
     .map((slot) => {
       const vs = e.visuals.filter(
-        (v) => v.slot === slot && v.src !== hero && !isMobileHero(v)
+        (v) =>
+          v.slot === slot && v.src !== hero && !isMobileHero(v) && !p.exclure?.test(v.src)
       );
       return {
         slot,

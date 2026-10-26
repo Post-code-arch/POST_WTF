@@ -9,8 +9,8 @@ ordre: 7
 champs: Identité · Charte · Visualisation 3D · Fiches produit
 ideeDirectrice: « Chaque meuble est une pièce, pas un produit. »
 suivant:
-  titre: Marpharmal
-  slug: marpharmal
+  titre: BANBIOM
+  slug: banbiom
 ---
 
 ## (01) Lecture — (Le dossier)
