@@ -1,0 +1,125 @@
+/* Étude de cas en deux colonnes : visuels (2/3) à gauche, rédaction (1/3)
+   à droite, collée à l'écran pendant que les visuels de la section défilent. */
+
+.case {
+  padding-top: clamp(84px, 9vw, 120px);
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 80px);
+  align-items: start;
+  padding: 0 var(--gutter) clamp(48px, 7vw, 120px);
+}
+/* les visuels prennent toute la largeur de leur colonne */
+.vis {
+  --gutter: 0px;
+}
+.txt {
+  position: sticky;
+  top: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.back {
+  align-self: flex-start;
+  font-family: var(--fl);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.55;
+}
+.back:hover {
+  opacity: 1;
+}
+.kicker {
+  font-family: var(--fh);
+  font-size: clamp(18px, 1.5vw, 24px);
+  line-height: 1.2;
+}
+.num {
+  font-family: var(--fh);
+  font-size: clamp(18px, 1.5vw, 24px);
+  line-height: 1;
+}
+.title {
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(40px, 4.6vw, 80px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-top: clamp(16px, 3vw, 48px);
+}
+.lede {
+  font-family: var(--fh);
+  font-size: clamp(19px, 1.6vw, 26px);
+  line-height: 1.3;
+  color: rgba(14, 14, 14, 0.75);
+}
+.heading {
+  font-family: var(--fh);
+  font-weight: 500;
+  font-size: clamp(28px, 2.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-top: clamp(8px, 1.6vw, 24px);
+}
+.body p {
+  font-size: clamp(16px, 1.15vw, 19px);
+  line-height: 1.55;
+  color: rgba(14, 14, 14, 0.78);
+}
+.body p + p {
+  margin-top: 1em;
+}
+
+/* (Le dossier) — tableau libellé / valeur */
+.dossier {
+  margin-top: clamp(20px, 3vw, 44px);
+}
+.dossierLabel {
+  font-family: var(--fh);
+  font-size: clamp(18px, 1.5vw, 24px);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ink);
+}
+.dossier dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+.dossier dt,
+.dossier dd {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.35;
+}
+.dossier dt {
+  padding-right: 20px;
+  color: rgba(14, 14, 14, 0.55);
+}
+.dossier dd {
+  text-align: right;
+}
+.dossier dd a {
+  color: inherit;
+}
+.sep {
+  opacity: 0.4;
+  margin: 0 0.35em;
+}
+
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+  /* sur mobile : le texte d'abord, puis ses visuels */
+  .txt {
+    position: static;
+    order: -1;
+  }
+}
