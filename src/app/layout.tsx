@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { fontVariables } from "@/lib/fonts";
 import "@/styles/globals.css";
-import LoadingBar from "@/components/LoadingBar";
-import { LOADING_BAR_SCRIPT } from "@/lib/loadingBar";
+import Intro from "@/components/Intro";
+import { INTRO_SCRIPT } from "@/lib/intro";
 
 export const metadata: Metadata = {
   title: {
@@ -19,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // suppressHydrationWarning : le script de tête pose data-pl sur <html>
+    // suppressHydrationWarning : le script de tête pose data-intro sur <html>
     <html lang="fr" className={fontVariables} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: LOADING_BAR_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
       </head>
       <body>
-        <LoadingBar />
+        <Intro />
         {children}
       </body>
     </html>
