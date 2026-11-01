@@ -383,5 +383,5 @@ export const GRAND: Record<string, RegExp> = {
   "spoon-atelier": /(04-fabrication-systeme-couleur|08-application-chaise)\./,
   "fennec-coffee-roasters": /18-application-tassili-oasis\./,
   banbiom:
-    /(06-direction-couleurs|10-fabrication-voronoi|11-fabrication-signatures|14-application-console|15-application-ecrans|18-application-etude-de-cas)\./,
+    /(02-vibe-scene|07-fabrication-tableau-de-bord|11-application-etudes-de-cas|15-application-etude-de-cas)\./,
 };

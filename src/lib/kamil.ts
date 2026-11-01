@@ -303,8 +303,8 @@ export const projets: Projet[] = [
       en: "A scientific database has two audiences: researchers, who want verifiable records, and visitors, who want to understand what lives below the surface. The image had to serve both. The answer: the Voronoi diagram, where a cell is a species and every shape carries data.",
     },
     vignette: { image: "/travaux/banbiom/01-hero.webp" },
-    // la couverture de la charte et l'animation d'étude de cas citent le studio
-    exclure: /(02-vibe-couverture|18-application-etude-de-cas)/,
+    // l'animation d'étude de cas cite le studio
+    exclure: /15-application-etude-de-cas/,
   },
   {
     kind: "etude",
