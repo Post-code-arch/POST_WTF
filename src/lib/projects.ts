@@ -379,7 +379,7 @@ export const GRAND: Record<string, RegExp> = {
   "mag-agency":
     /(02-vibe-hublot|05-direction-slider|06-direction-slider-anim|08-fabrication-logo|13-fabrication-ui|14-application-devices|15-application-moment)\./,
   imlead: /07-application-site-ecran\./,
-  marpharmal: /(05-fabrication-matiere|08-application-scene)\./,
+  marpharmal: /(0[34]-fabrication-symbole|05-fabrication-matiere|08-application-scene)/,
   "spoon-atelier": /(04-fabrication-systeme-couleur|08-application-chaise)\./,
   "fennec-coffee-roasters": /18-application-tassili-oasis\./,
   banbiom:
