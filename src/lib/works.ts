@@ -10,6 +10,11 @@ export interface Work {
   color: string;
   /** chemin du visuel (survol en liste / vignette en grille) — placeholder si absent */
   image?: string;
+  /** phrase du projet (sous-titre, sans guillemets) */
+  tagline: string;
+  /** étiquettes tirées du secteur */
+  tags: string[];
+  annee: string;
 }
 
 /**

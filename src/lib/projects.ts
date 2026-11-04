@@ -316,6 +316,11 @@ export interface GridWork {
   color: string;
   /** visuel de couverture — absent : la carte s'affiche en texte seul */
   image?: string;
+  /** phrase du projet (sous-titre, sans guillemets) */
+  tagline: string;
+  /** étiquettes : le secteur découpé à ses tirets (« Aéronautique — Conseil… ») */
+  tags: string[];
+  annee: string;
 }
 
 /** Taxonomie de filtrage : replie les « champs » fins de chaque projet
@@ -342,7 +347,10 @@ function disciplinesFor(champs: string[]): string[] {
 
 export function getProjectsForGrid(): GridWork[] {
   return getAllProjects().map((p) => {
-    const hero = p.visuals.find((v) => v.slot === "hero") ?? p.visuals[0];
+    const hero =
+      p.visuals.find((v) => v.slot === "hero" && !/-hero-mobile\./.test(v.src)) ??
+      p.visuals[0];
+    const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
     return {
       slug: p.meta.slug,
       title: p.meta.titre,
@@ -350,6 +358,9 @@ export function getProjectsForGrid(): GridWork[] {
       disciplines: disciplinesFor(p.meta.champs),
       color: p.meta.couleur ?? "#262626",
       image: hero?.src,
+      tagline: p.meta.sousTitre.replace(/^\s*«\s*|\s*»\s*$/g, ""),
+      tags: p.meta.secteur.split(/\s+—\s+/).map((t) => cap(t.trim())).filter(Boolean),
+      annee: String(p.meta.annee),
     };
   });
 }

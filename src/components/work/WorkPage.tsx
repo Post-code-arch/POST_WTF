@@ -1,153 +1,46 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { useAnimationFrame } from "framer-motion";
 import Nav from "@/components/Nav";
 import type { Work } from "@/lib/works";
+import { typo } from "@/lib/typo";
 import styles from "./Work.module.css";
 
-type GridHover = { key: string; proj: number } | null;
-
-function cVar(color: string): CSSProperties {
-  return { ["--c" as string]: color } as CSSProperties;
-}
-
 /**
- * Index des travaux — vue GRILLE uniquement : rangée horizontale infinie
- * (molette + avance auto), survol = aperçu plein écran + désaturation des
- * autres cartes. (Plus de toggle Liste ni de phrase d'intro.)
+ * Index des travaux — grille de cartes sur trois colonnes : grand visuel,
+ * nom du projet, sa phrase, et ses étiquettes (secteur). Filtre par type
+ * au-dessus de la grille.
  */
 export default function WorkPage({ works }: { works: Work[] }) {
-  const [gridHover, setGridHover] = useState<GridHover>(null);
-  const [bg, setBg] = useState<Work | null>(null);
   const [filter, setFilter] = useState<string | null>(null);
 
-  // liste ordonnée des disciplines présentes dans les projets — sert de
-  // barre de filtres (« Tous » + chaque discipline rencontrée, dans l'ordre
-  // de première apparition dérivé de la taxonomie de projects.ts).
-  const filters = (() => {
-    const seen: string[] = [];
-    for (const w of works)
-      for (const d of w.disciplines) if (!seen.includes(d)) seen.push(d);
-    return seen;
-  })();
-
-  const visible = filter
-    ? works.filter((w) => w.disciplines.includes(filter))
-    : works;
-
-  const hgridRef = useRef<HTMLDivElement>(null);
-  const htrackRef = useRef<HTMLDivElement>(null);
-  const grid = useRef({ pos: 0, vel: 0, unit: 0, pause: false });
-
-  const measure = () => {
-    if (htrackRef.current) grid.current.unit = htrackRef.current.scrollWidth / 3;
-  };
-
-  // le jeu de cartes change avec le filtre : on remet la piste à zéro et on
-  // recalcule l'unité de boucle.
-  useEffect(() => {
-    grid.current.pos = 0;
-    grid.current.vel = 0;
-    measure();
-  }, [filter]);
-
-  useEffect(() => {
-    const hg = hgridRef.current;
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      grid.current.vel += (e.deltaY + e.deltaX) * 0.18;
-    };
-    let tx = 0;
-    const onTS = (e: TouchEvent) => (tx = e.touches[0].clientX);
-    const onTM = (e: TouchEvent) => {
-      const x = e.touches[0].clientX;
-      grid.current.vel += (tx - x) * 0.5;
-      tx = x;
-    };
-    hg?.addEventListener("wheel", onWheel, { passive: false });
-    hg?.addEventListener("touchstart", onTS, { passive: true });
-    hg?.addEventListener("touchmove", onTM, { passive: true });
-    const onResize = () => measure();
-    window.addEventListener("resize", onResize);
-    measure();
-
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      hg?.removeEventListener("wheel", onWheel);
-      hg?.removeEventListener("touchstart", onTS);
-      hg?.removeEventListener("touchmove", onTM);
-      window.removeEventListener("resize", onResize);
-      document.body.style.overflow = prev;
-    };
+  // disciplines présentes dans les projets, dans l'ordre de première apparition
+  const filters = works.reduce<string[]>((acc, w) => {
+    for (const d of w.disciplines) if (!acc.includes(d)) acc.push(d);
+    return acc;
   }, []);
-
-  useAnimationFrame(() => {
-    const G = grid.current;
-    G.vel *= 0.9;
-    const auto = G.pause ? 0 : 0.5;
-    G.pos += auto + G.vel;
-    if (!G.unit) measure();
-    if (G.unit) {
-      while (G.pos >= G.unit) G.pos -= G.unit;
-      while (G.pos < 0) G.pos += G.unit;
-    }
-    if (htrackRef.current)
-      htrackRef.current.style.transform = `translateX(${-G.pos}px)`;
-  });
-
-  const enterCard = (key: string, projIdx: number) => {
-    grid.current.pause = true;
-    setBg(visible[projIdx]);
-    setGridHover({ key, proj: projIdx });
-  };
-  const leaveCard = () => {
-    grid.current.pause = false;
-    setGridHover(null);
-  };
-
-  const sets = [0, 1, 2];
-  const catLine = (categories: string[]) =>
-    categories.map((c, i) => (
-      <span key={c}>
-        {i > 0 && <span className={styles.sep}>،</span>}
-        {c}
-      </span>
-    ));
-
-  const bgStyle: CSSProperties | undefined = bg
-    ? bg.image
-      ? { backgroundImage: `url(${bg.image})` }
-      : { backgroundColor: bg.color }
-    : undefined;
+  const visible = filter ? works.filter((w) => w.disciplines.includes(filter)) : works;
 
   return (
     <div className={styles.work}>
       <Nav />
+      <main className={styles.main}>
+        <header className={styles.head}>
+          <h1 className={styles.title}>Travaux</h1>
+          <span className={styles.count}>
+            ({String(visible.length).padStart(2, "0")})
+          </span>
+        </header>
 
-      {/* aperçu plein écran au survol */}
-      <div
-        className={`${styles.gridBg} ${gridHover ? styles.on : ""}`}
-        style={bgStyle}
-        aria-hidden
-      />
-
-      <div
-        ref={hgridRef}
-        className={`${styles.hgrid} ${styles.on} ${
-          gridHover ? styles.hovering : ""
-        }`}
-      >
-        {/* filtre par type — juste au-dessus de la rangée de travaux */}
         <div className={styles.filters}>
           <span className={styles.filterHead}>Type</span>
-          <ul className={styles.filterList}>
+          <ul>
             <li>
               <button
                 type="button"
-                className={`${styles.opt} ${filter === null ? styles.optActive : ""}`}
+                className={filter === null ? styles.on : undefined}
+                aria-pressed={filter === null}
                 onClick={() => setFilter(null)}
               >
                 Tous
@@ -157,7 +50,8 @@ export default function WorkPage({ works }: { works: Work[] }) {
               <li key={f}>
                 <button
                   type="button"
-                  className={`${styles.opt} ${filter === f ? styles.optActive : ""}`}
+                  className={filter === f ? styles.on : undefined}
+                  aria-pressed={filter === f}
                   onClick={() => setFilter((cur) => (cur === f ? null : f))}
                 >
                   {f}
@@ -167,37 +61,27 @@ export default function WorkPage({ works }: { works: Work[] }) {
           </ul>
         </div>
 
-        <div ref={htrackRef} className={styles.htrack}>
-          {sets.map((s) =>
-            visible.map((w, i) => {
-              const key = `${s}-${i}`;
-              const dim = gridHover != null && gridHover.key !== key;
-              return (
-                <Link
-                  key={key}
-                  href={`/travaux/${w.slug}`}
-                  className={`${styles.hcard} ${dim ? styles.dim : ""}`}
-                  style={cVar(w.color)}
-                  onMouseEnter={() => enterCard(key, i)}
-                  onMouseLeave={leaveCard}
-                >
-                  <div className={styles.thumb}>
-                    {w.image ? (
-                      <img src={w.image} alt={w.title} />
-                    ) : (
-                      <span>{w.title}</span>
-                    )}
-                  </div>
-                  <div className={styles.meta}>
-                    <span className={styles.t}>{w.title}</span>
-                    <span className={styles.c}>{catLine(w.categories)}</span>
-                  </div>
-                </Link>
-              );
-            })
-          )}
+        <div className={styles.grid}>
+          {visible.map((w) => (
+            <Link key={w.slug} href={`/travaux/${w.slug}`} className={styles.card}>
+              <div className={styles.media} style={{ background: w.color }}>
+                {w.image && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={w.image} alt={w.title} loading="lazy" />
+                )}
+              </div>
+              <h2 className={styles.name}>{w.title}</h2>
+              <p className={styles.line}>{typo(w.tagline)}</p>
+              <ul className={styles.tags}>
+                {w.tags.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+                <li>{w.annee}</li>
+              </ul>
+            </Link>
+          ))}
         </div>
-      </div>
+      </main>
     </div>
   );
 }
